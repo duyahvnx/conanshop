@@ -26,7 +26,6 @@
   .panel{background:var(--panel);border:1px solid var(--line); transition: all 0.4s ease; border-radius: var(--radius);}
   .panel:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,212,255,0.1); }
   
-  /* FIX: Xóa clip-path và ::before gây lỗi xung đột nút bấm */
   .btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#001a1f;font-weight:700;transition:all .3s ease; padding: 0.5rem 1rem; cursor:pointer; border-radius: 4px;}
   .btn:hover{filter:brightness(1.2); transform: translateY(-2px); box-shadow: 0 5px 20px var(--accent);}
   .btn:active{transform:scale(.97)}.btn:disabled{filter:grayscale(1);opacity:.5;cursor:not-allowed}
@@ -60,7 +59,6 @@
 
   .tag-ok{color:#00ff9d;border-color:#00ff9d55}.tag-bad{color:#ffcc33;border-color:#ffcc3355}.tag-no{color:#ff4d6d;border-color:#ff4d6d55}
   
-  /* FIX: Modal không dùng animation scale để tránh kẹt */
   .modal-bg{position:fixed;inset:0;background:rgba(1,7,10,.85);backdrop-filter:blur(8px);z-index:60;display:none;align-items:center;justify-content:center;padding:1rem; opacity: 0; transition: opacity 0.3s;}
   .modal-bg.open{display:flex; opacity: 1;}
   
@@ -123,14 +121,14 @@
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="sticky top-0 z-40 border-b" style="background:rgba(5,10,14,.92);backdrop-filter:blur(10px);border-color:var(--line)">
+<!-- HEADER MỚI ĐẸP HƠN -->
+<header class="sticky top-0 z-40 border-b shadow-lg" style="background:rgba(5,10,14,.95);backdrop-filter:blur(15px);border-color:var(--line)">
   <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-    <a href="#" onclick="switchTab('shop');return false" class="display neon text-3xl font-extrabold">CONAN VNX</a>
-    <div class="flex flex-wrap items-center gap-2 text-sm">
+    <a href="#" onclick="switchTab('shop');return false" class="display neon text-4xl font-extrabold tracking-wider">CONAN VNX</a>
+    <div class="flex flex-wrap items-center gap-3 text-sm">
       <div id="userBox" class="hidden flex-wrap items-center gap-2">
         <div class="relative">
-          <button class="btn-ghost px-3 py-1.5 relative" onclick="toggleNotifications()" style="font-size:1.1rem">🔔
+          <button class="btn-ghost px-3 py-2 rounded-full relative hover:bg-white/5 transition" onclick="toggleNotifications()" style="font-size:1.2rem">🔔
             <span id="notiBadge" class="badge-dot hidden">0</span>
           </button>
           <div id="notiDropdown" class="hidden absolute right-0 mt-2 w-80 max-h-96 overflow-auto panel" style="box-shadow:0 10px 40px rgba(0,0,0,.7)">
@@ -142,116 +140,152 @@
           </div>
         </div>
         <div class="relative">
-          <button class="btn-ghost px-3 py-1.5 relative" onclick="openCart()" style="font-size:1.1rem">🛒
+          <button class="btn-ghost px-3 py-2 rounded-full relative hover:bg-white/5 transition" onclick="openCart()" style="font-size:1.2rem">🛒
             <span id="cartBadge" class="badge-dot hidden">0</span>
           </button>
         </div>
-        <div class="avatar" id="uAvatar" onclick="openProfile()" title="Hồ sơ">?</div>
-        <span class="panel px-3 py-1.5 cursor-pointer hover:opacity-80" onclick="openProfile()">👤 <b id="uName"></b> <span id="uRole" class="text-xs" style="color:var(--green)"></span></span>
-        <button id="adminBtn" class="btn px-4 py-1.5 hidden" onclick="openAdmin()">Quản lý</button>
-        <button class="btn-ghost px-3 py-1.5" onclick="logout()">Thoát</button>
+        <div class="avatar border-2 border-green-400" id="uAvatar" onclick="openProfile()" title="Hồ sơ">?</div>
+        <span class="panel px-4 py-2 rounded-full cursor-pointer hover:border-accent transition" onclick="openProfile()">👤 <b id="uName"></b> <span id="uRole" class="text-xs" style="color:var(--green)"></span></span>
+        <button id="adminBtn" class="btn px-5 py-2 rounded-full hidden font-extrabold" onclick="openAdmin()">⚙️ Quản lý</button>
+        <button class="btn-ghost px-5 py-2 rounded-full hover:text-red-400" onclick="logout()">Thoát</button>
       </div>
       <div id="guestBox" class="flex gap-2">
-        <button class="btn-ghost px-3 py-1.5" onclick="openAuth('login')">Đăng nhập</button>
-        <button class="btn px-5 py-1.5" onclick="openAuth('register')">Đăng ký</button>
+        <button class="btn-ghost px-5 py-2 rounded-full" onclick="openAuth('login')">Đăng nhập</button>
+        <button class="btn px-6 py-2 rounded-full" onclick="openAuth('register')">Đăng ký</button>
       </div>
     </div>
   </div>
 </header>
 
 <main class="max-w-7xl mx-auto px-4">
-  <section class="py-8 grid md:grid-cols-5 gap-6 items-center">
+  <section class="py-10 grid md:grid-cols-5 gap-8 items-center">
     <div class="md:col-span-3">
-      <p class="mb-2 text-sm" style="color:var(--mute)">Sàn giao dịch Tool & Panel Free Fire · Thanh toán tự động 24/7</p>
-      <h1 class="display text-5xl md:text-7xl font-extrabold leading-[.95]">Mua bán tool<br>tại <span class="neon">CONAN VNX</span></h1>
-      <p class="mt-4 max-w-lg text-sm" style="color:var(--mute)">Thanh toán qua chuyển khoản ngân hàng (VietQR). Nhận key tự động ngay lập tức.</p>
-      <div class="mt-5 flex flex-wrap gap-3">
-        <button onclick="switchTab('shop')" class="btn px-6 py-3">🛒 Xem sản phẩm</button>
-        <a href="https://zalo.me/0971139244" target="_blank" class="btn-ghost px-6 py-3">💬 Zalo: 0971139244</a>
+      <p class="mb-3 text-sm uppercase tracking-widest font-bold" style="color:var(--accent)">Sàn giao dịch Tool & Panel Free Fire · Uy tín 24/7</p>
+      <h1 class="display text-6xl md:text-8xl font-extrabold leading-[.95] mb-4">Mua bán tool<br>tại <span class="neon">CONAN VNX</span></h1>
+      <p class="mt-4 max-w-lg text-base" style="color:var(--mute)">Hệ thống thanh toán tự động qua VietQR. Nhận key ngay lập tức, hỗ trợ 24/7. Đối tác tin cậy của hàng nghìn game thủ.</p>
+      <div class="mt-6 flex flex-wrap gap-4">
+        <button onclick="switchTab('shop')" class="btn px-8 py-4 text-lg rounded-lg">🛒 Xem sản phẩm</button>
+        <a href="https://zalo.me/0971139244" target="_blank" class="btn-ghost px-8 py-4 text-lg rounded-lg flex items-center gap-2">💬 Zalo: 0971139244</a>
       </div>
     </div>
-    <div class="md:col-span-2 panel scan p-5 text-sm leading-7">
-      <div style="color:var(--mute)">conan-vnx@panel:~$ status</div>
-      <div>server ........ <span class="tag-ok">ONLINE</span></div>
-      <div>giao key ...... <span class="tag-ok">TỰ ĐỘNG QUA QR</span></div>
-      <div>sản phẩm ...... <b id="statProducts">0</b> tool</div>
-      <div>key còn lại ... <b id="statKeys">0</b></div>
-      <div class="caret">sẵn sàng nhận đơn</div>
+    <div class="md:col-span-2 panel scan p-6 text-sm leading-8 rounded-xl border-l-4" style="border-left-color:var(--green)">
+      <div style="color:var(--mute)" class="font-mono">conan-vnx@panel:~$ status</div>
+      <div class="font-mono">server ........ <span class="tag-ok font-bold">ONLINE</span></div>
+      <div class="font-mono">giao key ...... <span class="tag-ok font-bold">TỰ ĐỘNG QUA QR</span></div>
+      <div class="font-mono">sản phẩm ...... <b id="statProducts">0</b> tool</div>
+      <div class="font-mono">key còn lại ... <b id="statKeys">0</b></div>
+      <div class="caret font-mono mt-2">sẵn sàng nhận đơn</div>
     </div>
   </section>
 
   <nav class="border-b mb-6" style="border-color:var(--line)">
-    <div class="flex flex-wrap overflow-x-auto">
+    <div class="flex flex-wrap overflow-x-auto gap-2">
       <div class="nav-tab active" data-tab="shop" onclick="switchTab('shop')">🛒 Sản phẩm</div>
-      <div class="nav-tab" data-tab="seller" onclick="switchTab('seller')">🏪 Kênh người bán</div>
+      <div class="nav-tab" data-tab="free" onclick="switchTab('free')">🎁 Key Free</div>
+      <div class="nav-tab" data-tab="seller" onclick="switchTab('seller')">🏪 Hợp tác</div>
       <div class="nav-tab" data-tab="contact" onclick="switchTab('contact')">💬 Liên hệ</div>
     </div>
   </nav>
 
-  <div class="grid lg:grid-cols-[260px_1fr] gap-6">
+  <div class="grid lg:grid-cols-[260px_1fr] gap-8">
     <aside class="hidden lg:block">
-      <div class="sticky top-24 space-y-4">
-        <div class="panel">
+      <div class="sticky top-28 space-y-4">
+        <div class="panel rounded-xl">
           <div class="sidebar-title">📌 Danh mục chính</div>
           <div class="sidebar-item active" data-tab="shop" onclick="switchTab('shop')">🛒 Tất cả sản phẩm</div>
-          <div class="sidebar-item" data-tab="seller" onclick="switchTab('seller')">🏪 Kênh người bán</div>
+          <div class="sidebar-item" data-tab="free" onclick="switchTab('free')">🎁 Key Free</div>
+          <div class="sidebar-item" data-tab="seller" onclick="switchTab('seller')">🏪 Hợp tác</div>
           <div class="sidebar-item" data-tab="contact" onclick="switchTab('contact')">💬 Liên hệ Admin</div>
         </div>
-        <div class="panel">
+        <div class="panel rounded-xl">
           <div class="sidebar-title">🎧 Hỗ trợ</div>
           <a href="https://zalo.me/0971139244" target="_blank" class="sidebar-item">💬 Zalo: 0971139244</a>
           <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="sidebar-item">🎵 TikTok: ahduy.93210</a>
           <div class="sidebar-item" onclick="openProfile();switchProfileTab('orders')">📦 Lịch sử mua</div>
         </div>
-        <div class="panel p-4 text-center" style="background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,255,157,0.1));border-color:var(--accent)">
-          <div class="display text-lg font-extrabold" style="color:var(--green)">🎁 ƯU ĐÃI HÔM NAY</div>
-          <div class="text-xs mt-1" style="color:var(--mute)">Thanh toán QR - Nhận Key Ngay</div>
-          <button class="btn w-full py-2 mt-3 text-xs" onclick="switchTab('shop')">Mua ngay</button>
-        </div>
       </div>
     </aside>
 
     <div>
+      <!-- TAB SẢN PHẨM -->
       <section id="tab-shop" class="tab-content active pb-16">
-        <div class="flex flex-wrap gap-2 mb-5 items-center">
-          <input id="searchBox" class="inp" style="max-width:300px" placeholder="🔍 Tìm tool..." oninput="renderProducts()">
-          <select id="filterType" class="inp" style="max-width:200px" onchange="renderProducts()">
+        <div class="flex flex-wrap gap-3 mb-6 items-center">
+          <input id="searchBox" class="inp rounded-lg" style="max-width:300px" placeholder="🔍 Tìm tool..." oninput="renderProducts()">
+          <select id="filterType" class="inp rounded-lg" style="max-width:200px" onchange="renderProducts()">
             <option value="">Tất cả loại</option>
             <option>Tool PC</option>
             <option>Panel iOS</option>
             <option>Panel Android</option>
             <option>Acc Clone FF LV5</option>
           </select>
-          <select id="filterSort" class="inp" style="max-width:180px" onchange="renderProducts()">
+          <select id="filterSort" class="inp rounded-lg" style="max-width:180px" onchange="renderProducts()">
             <option value="new">Mới nhất</option><option value="priceUp">Giá tăng dần</option><option value="priceDown">Giá giảm dần</option>
           </select>
         </div>
         <div id="productGrid" class="layout-grid"><div style="color:var(--mute)">Đang tải...</div></div>
       </section>
 
-      <section id="tab-seller" class="tab-content pb-16">
-        <div class="panel p-8 mb-6 text-center" style="background:linear-gradient(135deg,#0a1419,#0a2028);border-color:var(--accent)">
-          <div style="font-size:4rem">🏪</div>
-          <h2 class="display text-4xl font-extrabold mb-3 mt-3" style="color:var(--green)">KÊNH NGƯỜI BÁN</h2>
-          <p class="text-base max-w-2xl mx-auto" style="color:var(--mute)">Bạn có tool/panel chất lượng muốn bán? Hợp tác với <b style="color:var(--accent)">CONAN VNX</b> để tiếp cận hàng nghìn khách hàng!</p>
+      <!-- TAB KEY FREE -->
+      <section id="tab-free" class="tab-content pb-16">
+        <div class="panel p-8 mb-6 text-center rounded-xl" style="background:linear-gradient(135deg,rgba(0,255,157,0.05),rgba(0,212,255,0.05));border-color:var(--green)">
+          <div style="font-size:4rem">🎁</div>
+          <h2 class="display text-4xl font-extrabold mb-3 mt-3" style="color:var(--green)">KEY FREE HÔM NAY</h2>
+          <p class="text-base max-w-2xl mx-auto" style="color:var(--mute)">Admin thỉnh thoảng sẽ đăng key miễn phí cho mọi người dùng thử. Nhấn vào sản phẩm bên dưới để lấy key (số lượng có hạn).</p>
         </div>
-        <div class="panel p-8 text-center" style="border-color:var(--green)">
-          <h3 class="display text-3xl font-extrabold mb-2">🚀 Sẵn sàng hợp tác?</h3>
-          <div class="flex flex-wrap justify-center gap-3 mt-4">
-            <a href="https://zalo.me/0971139244" target="_blank" class="btn px-8 py-3">💬 Zalo: 0971139244</a>
-            <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="btn-ghost px-8 py-3">🎵 TikTok: ahduy.93210</a>
+        <div id="freeKeyGrid" class="grid sm:grid-cols-2 gap-4"><div style="color:var(--mute)">Đang tải...</div></div>
+      </section>
+
+      <!-- TAB HỢP TÁC (KÊNH NGƯỜI BÁN) -->
+      <section id="tab-seller" class="tab-content pb-16">
+        <div class="panel p-10 mb-8 text-center rounded-2xl border-t-4" style="background:linear-gradient(135deg,#0a1419,#051a24);border-top-color:var(--accent);box-shadow: 0 10px 40px rgba(0,212,255,0.1)">
+          <div style="font-size:5rem">🤝</div>
+          <h2 class="display text-5xl font-extrabold mb-4 mt-4 neon">HỢP TÁC CÙNG CONAN VNX</h2>
+          <p class="text-lg max-w-3xl mx-auto leading-relaxed" style="color:var(--text)">Bạn đang sở hữu những con Tool/Panel chất lượng cao? Bạn muốn kiếm thu nhập thụ động? <br><b style="color:var(--accent)">Hãy gia nhập đội ngũ đối tác của CONAN VNX ngay hôm nay!</b> Chúng tôi mang đến nền tảng tiếp cận hàng chục nghìn khách hàng, hệ thống thanh toán tự động và tỷ lệ chia sẻ doanh thu hấp dẫn nhất thị trường.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <div class="panel p-6 rounded-xl text-center hover:border-accent transition"><div style="font-size:3rem">📢</div><b class="display text-2xl block mt-3 mb-2">Miễn phí quảng cáo</b><p class="text-sm" style="color:var(--mute)">Sản phẩm của bạn được đưa lên trang chủ, tiếp cận lượng lớn khách hàng tiềm năng mỗi ngày mà không tốn phí.</p></div>
+          <div class="panel p-6 rounded-xl text-center hover:border-accent transition"><div style="font-size:3rem">💰</div><b class="display text-2xl block mt-3 mb-2">Doanh thu minh bạch</b><p class="text-sm" style="color:var(--mute)">Hệ thống tự động ghi nhận doanh số, chia sẻ lợi nhuận rõ ràng, quyết toán nhanh chóng, không phí ẩn.</p></div>
+          <div class="panel p-6 rounded-xl text-center hover:border-accent transition"><div style="font-size:3rem">🛡️</div><b class="display text-2xl block mt-3 mb-2">Hỗ trợ kỹ thuật 24/7</b><p class="text-sm" style="color:var(--mute)">Đội ngũ Admin luôn sẵn sàng hỗ trợ bạn setup gian hàng, xử lý sự cố kỹ thuật và tư vấn chiến lược bán hàng.</p></div>
+        </div>
+
+        <h3 class="display text-3xl font-extrabold mb-4">📋 Quy trình đăng bán siêu tốc</h3>
+        <div class="grid md:grid-cols-4 gap-4 mb-10">
+          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">1️⃣</div><b class="block text-lg">Gửi Hồ sơ</b><p class="text-xs mt-1" style="color:var(--mute)">Liên hệ Zalo <b>0971139244</b> để được duyệt đối tác.</p></div>
+          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">2️⃣</div><b class="block text-lg">Cung cấp SP</b><p class="text-xs mt-1" style="color:var(--mute)">Gửi thông tin Tool, danh sách Key và hình ảnh.</p></div>
+          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">3️⃣</div><b class="block text-lg">Kiểm duyệt</b><p class="text-xs mt-1" style="color:var(--mute)">Admin test Tool, xác nhận Key và đăng bài.</p></div>
+          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">4️⃣</div><b class="block text-lg">Nhận tiền</b><p class="text-xs mt-1" style="color:var(--mute)">Khách mua hàng → Hệ thống tự động cộng tiền.</p></div>
+        </div>
+
+        <div class="panel p-10 text-center rounded-2xl border" style="border-color:var(--green); background:rgba(0,255,157,0.02)">
+          <h3 class="display text-4xl font-extrabold mb-3" style="color:var(--green)">🚀 Bắt đầu kiếm tiền ngay!</h3>
+          <p class="text-base mb-6" style="color:var(--mute)">Mọi thắc mắc về hợp tác, vui lòng liên hệ trực tiếp Admin qua:</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://zalo.me/0971139244" target="_blank" class="btn px-10 py-4 text-lg rounded-lg">💬 Zalo: 0971139244</a>
+            <a href="mailto:duyanhvnx@gmail.com" target="_blank" class="btn-ghost px-10 py-4 text-lg rounded-lg">📧 duyanhvnx@gmail.com</a>
           </div>
         </div>
       </section>
 
+      <!-- TAB LIÊN HỆ -->
       <section id="tab-contact" class="tab-content pb-16">
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="panel p-6">
-            <h2 class="display text-3xl font-extrabold mb-4">💬 Liên hệ Admin</h2>
-            <div class="space-y-3">
-              <a href="https://zalo.me/0971139244" target="_blank" class="flex items-center gap-3 panel p-4 hover:border-accent transition"><span style="font-size:2rem">💬</span><div><b class="display text-xl">Zalo: 0971139244</b><br><span class="text-xs" style="color:var(--mute)">Phản hồi nhanh 24/7</span></div></a>
-              <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="flex items-center gap-3 panel p-4 hover:border-accent transition"><span style="font-size:2rem">🎵</span><div><b class="display text-xl">TikTok: ahduy.93210</b><br><span class="text-xs" style="color:var(--mute)">Video hướng dẫn & review</span></div></a>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="panel p-8 rounded-xl">
+            <h2 class="display text-3xl font-extrabold mb-6">💬 Liên hệ Admin</h2>
+            <div class="space-y-4">
+              <a href="https://zalo.me/0971139244" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg hover:border-accent transition"><span style="font-size:2.5rem">💬</span><div><b class="display text-xl">Zalo: 0971139244</b><br><span class="text-sm" style="color:var(--mute)">Phản hồi nhanh 24/7</span></div></a>
+              <a href="mailto:duyanhvnx@gmail.com" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg hover:border-accent transition"><span style="font-size:2.5rem">📧</span><div><b class="display text-xl">Gmail: duyanhvnx@gmail.com</b><br><span class="text-sm" style="color:var(--mute)">Hỗ trợ kỹ thuật & bảo hành</span></div></a>
+              <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg hover:border-accent transition"><span style="font-size:2.5rem">🎵</span><div><b class="display text-xl">TikTok: ahduy.93210</b><br><span class="text-sm" style="color:var(--mute)">Video hướng dẫn & review</span></div></a>
             </div>
+          </div>
+          <div class="panel p-8 rounded-xl">
+            <h2 class="display text-3xl font-extrabold mb-6">📌 Lưu ý quan trọng</h2>
+            <ul class="space-y-4 text-sm" style="color:var(--mute)">
+              <li class="flex items-start gap-2">✅ <b style="color:var(--text)">Uy tín:</b> Giao dịch hoàn toàn tự động qua VietQR, không chờ đợi.</li>
+              <li class="flex items-start gap-2">✅ <b style="color:var(--text)">Bảo hành:</b> Hỗ trợ đổi Key 1-1 trong vòng 24h nếu có lỗi từ nhà phát triển.</li>
+              <li class="flex items-start gap-2">⚠️ <b style="color:var(--text)">Cảnh báo:</b> Tuyệt đối không hoàn tiền đối với các Key đã sử dụng.</li>
+              <li class="flex items-start gap-2">💬 <b style="color:var(--text)">Khiếu nại:</b> Mọi vấn đề phát sinh vui lòng liên hệ Zalo 0971139244 để được giải quyết.</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -260,9 +294,17 @@
 </main>
 
 <!-- FOOTER -->
-<footer class="border-t mt-12" style="border-color:var(--line);background:#040d12">
-  <div class="max-w-7xl mx-auto px-4 py-10 text-center text-xs" style="color:var(--mute)">
-    <p>© 2025 <b style="color:var(--accent)">CONAN VNX</b> — Sàn giao dịch Tool & Panel Free Fire uy tín hàng đầu Việt Nam</p>
+<footer class="border-t mt-16" style="border-color:var(--line);background:#020609">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid md:grid-cols-4 gap-8 mb-10">
+      <div><h4 class="display text-xl font-extrabold text-accent mb-4">CONAN VNX</h4><p class="text-sm" style="color:var(--mute)">Sàn giao dịch Tool & Panel Free Fire hàng đầu. Nơi hội tụ những sản phẩm chất lượng nhất với giá cả phải chăng.</p></div>
+      <div><h4 class="font-bold mb-4">Chính sách</h4><a href="#" class="block text-sm py-1 hover:text-accent transition">Bảo hành</a><a href="#" class="block text-sm py-1 hover:text-accent transition">Đổi trả</a><a href="#" class="block text-sm py-1 hover:text-accent transition">Bảo mật</a><a href="#" class="block text-sm py-1 hover:text-accent transition">Điều khoản</a></div>
+      <div><h4 class="font-bold mb-4">Hỗ trợ</h4><a href="#" onclick="switchTab('shop');return false" class="block text-sm py-1 hover:text-accent transition">Hướng dẫn mua</a><a href="#" onclick="openProfile();switchProfileTab('orders')" class="block text-sm py-1 hover:text-accent transition">Tra cứu đơn</a><a href="mailto:duyanhvnx@gmail.com" class="block text-sm py-1 hover:text-accent transition">Gửi Email</a></div>
+      <div><h4 class="font-bold mb-4">Kết nối</h4><a href="https://zalo.me/0971139244" target="_blank" class="block text-sm py-1 hover:text-accent transition">💬 Zalo: 0971139244</a><a href="mailto:duyanhvnx@gmail.com" class="block text-sm py-1 hover:text-accent transition">📧 duyanhvnx@gmail.com</a><a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="block text-sm py-1 hover:text-accent transition">🎵 TikTok: ahduy.93210</a></div>
+    </div>
+    <div class="border-t pt-8 text-center text-xs" style="border-color:var(--line);color:var(--mute)">
+      <p>© 2025 <b style="color:var(--accent)">CONAN VNX</b>. Tất cả các quyền được bảo lưu.</p>
+    </div>
   </div>
 </footer>
 
@@ -341,8 +383,10 @@
         <div class="flex flex-wrap gap-2 mb-3"><span id="pmStatus" class="chip"></span><span id="pmType" class="chip"></span><span id="pmStock" class="chip"></span></div>
         <p id="pmDesc" class="text-sm mb-4" style="color:var(--mute); white-space: pre-wrap;"></p>
         <div id="pmInfo" class="text-xs mb-4"></div>
-        
-        <!-- VOUCHER INPUT -->
+
+        <!-- VIDEO & FILE LINKS -->
+        <div id="pmLinks" class="mb-4 space-y-2"></div>
+
         <div class="mb-4">
           <span class="lbl">Mã giảm giá (Toàn sàn)</span>
           <div class="flex gap-2">
@@ -363,6 +407,18 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- MODAL FREE KEY DETAIL -->
+<div id="freeKeyModal" class="modal-bg" onclick="if(event.target===this)closeModal('freeKeyModal')">
+  <div class="panel w-full max-w-md p-6 text-center border-green-500 border-2">
+    <h3 class="display text-3xl font-extrabold text-green-400">🎁 KEY FREE</h3>
+    <p id="fkProdName" class="mt-1 mb-4 text-lg font-bold"></p>
+    <p id="fkType" class="text-sm mb-2" style="color:var(--mute)"></p>
+    <div id="fkDesc" class="text-sm mb-4" style="color:var(--mute)"></div>
+    <div id="fkKeyVal" class="panel p-3 break-all select-all font-bold text-xl" style="color:var(--green)"></div>
+    <div class="flex gap-2 mt-4"><button class="btn flex-1 py-2.5" onclick="copyFreeKey()">📋 Sao chép</button><button class="btn-ghost flex-1 py-2.5" onclick="closeModal('freeKeyModal')">Đóng</button></div>
   </div>
 </div>
 
@@ -387,12 +443,10 @@
         <b id="qrOrderId" style="color:var(--gold)"></b>
       </div>
       
-      <!-- THÊM DÒNG NÀY VÀO ĐÂY -->
       <div class="flex justify-between">
         <span style="color:var(--mute)">Sản phẩm:</span>
         <b id="qrProdName" style="text-align:right"></b>
       </div>
-      <!-- HẾT PHẦN THÊM -->
 
       <div class="flex justify-between">
         <span style="color:var(--mute)">Số tiền:</span>
@@ -409,12 +463,11 @@
 
     <div class="text-center">
       <p id="qrStatus" class="text-sm mb-3" style="color:var(--gold)">⏳ Đang chờ thanh toán...</p>
-      <button class="btn w-full py-2.5" onclick="checkPaymentStatus()">🔄 Kiểm Tra Ngay</button>
+      <button class="btn w-full py-2.5" onclick="manualCheckPayment()">🔄 Kiểm Tra Ngay</button>
     </div>
   </div>
 </div>
  
-
 <!-- MODAL KEY -->
 <div id="keyModal" class="modal-bg">
   <div class="panel w-full max-w-md p-6 text-center" style="box-shadow:0 0 50px rgba(0,255,157,.3)">
@@ -431,11 +484,12 @@
     <div class="flex justify-between items-center mb-4"><h3 class="display text-4xl font-extrabold neon" id="adminPanelTitle">ADMIN · CONAN VNX</h3><button class="btn-ghost px-4 py-1.5" onclick="closeModal('adminPanel')">Đóng</button></div>
     
     <div class="flex flex-wrap gap-2 mb-5" id="adminTabs">
-      <button class="btn px-5 py-2 admin-only" data-tab="aOrders">📜 Lịch sử bán (Toàn sàn)</button>
+      <button class="btn px-5 py-2 admin-only" data-tab="aOrders">📜 Lịch sử bán</button>
       <button class="btn-ghost px-5 py-2" data-tab="aProducts">📦 Sản phẩm</button>
       <button class="btn-ghost px-5 py-2 admin-only" data-tab="aUsers">👥 Thành viên & CTV</button>
       <button class="btn-ghost px-5 py-2 admin-only" data-tab="aVouchers">🎟️ Mã Giảm Giá</button>
-      <button class="btn-ghost px-5 py-2 admin-only" data-tab="aTheme">🎨 Giao diện & Layout</button>
+      <button class="btn-ghost px-5 py-2 admin-only" data-tab="aFreeKeys">🎁 Key Free</button>
+      <button class="btn-ghost px-5 py-2 admin-only" data-tab="aTheme">🎨 Giao diện</button>
     </div>
 
     <!-- TAB GIAO DIỆN -->
@@ -483,6 +537,29 @@
       <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Ảnh</th><th>Tên / Mô tả</th><th>Loại</th><th>Giá</th><th>Trạng thái</th><th>Key</th><th>Người đăng</th><th>Hành động</th></tr></thead><tbody id="adminProducts"></tbody></table></div>
     </div>
 
+    <!-- TAB KEY FREE -->
+    <div id="aFreeKeys" class="atab hidden admin-only">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="display text-2xl font-extrabold">Quản lý Key Free</h4>
+        <button class="btn px-5 py-2" onclick="showFreeKeyForm()">➕ Đăng Key Free</button>
+      </div>
+      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Sản phẩm</th><th>Thiết bị</th><th>Key</th><th>Hành động</th></tr></thead><tbody id="adminFreeKeys"></tbody></table></div>
+    </div>
+
+    <!-- FORM KEY FREE -->
+    <div id="freeKeyFormBox" class="modal-bg" style="z-index:70">
+      <div class="panel w-full max-w-xl p-6">
+        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold">➕ Đăng Key Free</h4><button onclick="closeModal('freeKeyFormBox')" class="text-2xl">✕</button></div>
+        <div class="space-y-3">
+          <div><span class="lbl">Tên sản phẩm / Tool</span><input id="fkName" class="inp" placeholder="VD: Tool Free Fire"></div>
+          <div><span class="lbl">Thiết bị / Loại</span><input id="fkType" class="inp" placeholder="VD: Tool PC, Panel Android..."></div>
+          <div><span class="lbl">Mô tả / Giới thiệu</span><textarea id="fkDesc" rows="2" class="inp" placeholder="Giới thiệu sơ qua..."></textarea></div>
+          <div><span class="lbl">Key (Mã)</span><input id="fkKey" class="inp" placeholder="Nhập key cần tặng..."></div>
+        </div>
+        <div class="flex gap-2 mt-4"><button class="btn px-6 py-2" onclick="saveFreeKey()">💾 Đăng</button><button class="btn-ghost px-6 py-2" onclick="closeModal('freeKeyFormBox')">Hủy</button></div>
+      </div>
+    </div>
+
     <!-- FORM THÊM/SỬA SẢN PHẨM -->
     <div id="productFormBox" class="modal-bg" style="z-index:70">
       <div class="panel w-full max-w-2xl p-6 max-h-[90vh] overflow-auto">
@@ -498,7 +575,12 @@
           </div>
           <div><span class="lbl">Trạng thái</span><select id="pStatus" class="inp"><option value="undetected">Undetected</option><option value="maintenance">Bảo trì</option></select></div>
           <div><span class="lbl">Link Ảnh</span><input id="pImg" class="inp" placeholder="https://..."></div>
-          <div class="md:col-span-2"><span class="lbl">Mô tả Sản phẩm (Có thể xuống dòng)</span><textarea id="pDesc" rows="3" class="inp" placeholder="Mô tả tính năng..."></textarea></div>
+          
+          <!-- THÊM FILE & VIDEO -->
+          <div class="md:col-span-2"><span class="lbl">Link Tải File (Google Drive, MediaFire...)</span><input id="pFile" class="inp" placeholder="https://drive.google.com/..."></div>
+          <div class="md:col-span-2"><span class="lbl">Link Video Hướng Dẫn (YouTube, TikTok...)</span><input id="pVideo" class="inp" placeholder="https://youtube.com/..."></div>
+
+          <div class="md:col-span-2"><span class="lbl">Mô tả Sản phẩm</span><textarea id="pDesc" rows="3" class="inp" placeholder="Mô tả tính năng..."></textarea></div>
         </div>
         <div class="flex gap-2 mt-4">
           <button class="btn px-6 py-2" onclick="saveProduct()">💾 Lưu Sản Phẩm</button>
@@ -805,6 +887,64 @@ function renderProducts(){
   }).join('');
 }
 
+/* ===== FREE KEYS RENDER ===== */
+db.ref('free_keys').on('value', s => {
+  const fk = s.val() || {};
+  const arr = Object.values(fk).sort((a,b) => b.time - a.time);
+  if (!arr.length) { $('freeKeyGrid').innerHTML = '<div style="color:var(--mute)">Chưa có key free nào.</div>'; return; }
+  $('freeKeyGrid').innerHTML = arr.map(k => `
+    <div class="panel p-4 rounded-xl border border-green-500/50 hover:border-green-400 cursor-pointer transition" onclick="openFreeKey('${esc(k.key)}', '${esc(k.name)}', '${esc(k.type)}', '${esc(k.desc)}')">
+      <div class="flex items-center gap-3">
+        <div style="font-size:2rem">🎁</div>
+        <div>
+          <b class="display text-xl text-green-400">${esc(k.name)}</b>
+          <div class="text-xs" style="color:var(--mute)">${esc(k.type)}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+});
+
+function openFreeKey(key, name, type, desc) {
+  $('fkProdName').textContent = name;
+  $('fkType').textContent = type;
+  $('fkDesc').textContent = desc;
+  $('fkKeyVal').textContent = key;
+  openModal('freeKeyModal');
+}
+function copyFreeKey(){navigator.clipboard.writeText($('fkKeyVal').textContent).then(()=>toast('Đã sao chép key','success'));}
+
+/* ===== ADMIN FREE KEYS RENDER ===== */
+db.ref('free_keys').on('value', s => {
+  const fk = s.val() || {};
+  const arr = Object.entries(fk).sort((a,b) => b[1].time - a[1].time);
+  if (!arr.length) { $('adminFreeKeys').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:1rem;color:var(--mute)">Chưa có key free.</td></tr>'; return; }
+  $('adminFreeKeys').innerHTML = arr.map(([id, k]) => `
+    <tr>
+      <td><b>${esc(k.name)}</b></td>
+      <td>${esc(k.type)}</td>
+      <td class="select-all font-bold text-green-400">${esc(k.key)}</td>
+      <td><button class="btn-ghost px-3 py-1" style="color:var(--red)" onclick="deleteFreeKey('${id}')">🗑️ Xóa</button></td>
+    </tr>
+  `).join('');
+});
+
+function showFreeKeyForm() {
+  $('fkName').value = ''; $('fkType').value = ''; $('fkDesc').value = ''; $('fkKey').value = '';
+  openModal('freeKeyFormBox');
+}
+async function saveFreeKey() {
+  const name = $('fkName').value.trim(), type = $('fkType').value.trim(), desc = $('fkDesc').value.trim(), key = $('fkKey').value.trim();
+  if (!name || !key) return toast('Nhập tên và key', 'warning');
+  await db.ref('free_keys').push({ name, type, desc, key, time: Date.now() });
+  toast('Đã đăng key free', 'success'); closeModal('freeKeyFormBox');
+}
+async function deleteFreeKey(id) {
+  if (!confirm('Xóa key free này?')) return;
+  await db.ref('free_keys/' + id).remove(); toast('Đã xóa', 'success');
+}
+
+/* ===== PRODUCT DETAIL ===== */
 let currentPid=null;
 function openProduct(pid){
   const p=products[pid];if(!p)return;
@@ -822,6 +962,12 @@ function openProduct(pid){
   
   const isAcc=p.type==='Acc Clone FF LV5';
   $('pmInfo').innerHTML=p.info?`<div class="panel p-2"><span class="lbl">${isAcc?'🎮 Thông tin tài khoản':'📝 Thông tin TK/MK + Key'}</span><div class="text-xs" style="color:var(--green);white-space:pre-wrap">${esc(p.info)}</div></div>`:'';
+
+  // Render Links (Video + File)
+  let linksHtml = '';
+  if (p.file) linksHtml += `<a href="${esc(p.file)}" target="_blank" class="btn-ghost w-full block text-center py-2 text-sm rounded border border-blue-500 text-blue-400 hover:bg-blue-900/20">📥 Tải File (Google Drive/MediaFire)</a>`;
+  if (p.video) linksHtml += `<a href="${esc(p.video)}" target="_blank" class="btn-ghost w-full block text-center py-2 text-sm rounded border border-red-500 text-red-400 hover:bg-red-900/20">▶️ Xem Video Hướng Dẫn</a>`;
+  $('pmLinks').innerHTML = linksHtml;
   
   const btn=$('pmBuyBtn'),btnCart=$('pmCartBtn');
   if(isAdmin||isCTV){btn.textContent='⚠️ Quản trị';btn.disabled=true;btnCart.disabled=true;}
@@ -853,7 +999,6 @@ function checkVoucher(){
   });
 }
 
-/* FIX CỰC MẠNH: Mở QR trước, đóng SP sau để không bị kẹt */
 async function confirmBuy(){
   if(!me){closeModal('productModal');openAuth('login');return toast('Đăng nhập','warning');}
   if(isAdmin||isCTV)return toast('Quản trị viên không mua','warning');
@@ -866,9 +1011,7 @@ async function confirmBuy(){
     if(finalPrice < 0) finalPrice = 0;
   }
   
-  // MỞ QR TRƯỚC
   openQrPayment(currentPid, p.name, finalPrice);
-  // ĐÓNG SP SAU
   closeModal('productModal'); 
 }
 
@@ -884,8 +1027,10 @@ function openQrPayment(pid, prodName, price) {
   const orderCode = `VNX${userPrefix}${randomNum}`; 
   currentOrderId = orderCode; 
 
-  $('qrOrderId').textContent = orderCode;$('qrProdName').textContent = prodName;
-  $('qrAmount').textContent = fmt(price) + ' VNĐ';$('qrMemo').textContent = orderCode;
+  $('qrOrderId').textContent = orderCode;
+  $('qrProdName').textContent = prodName;
+  $('qrAmount').textContent = fmt(price) + ' VNĐ';
+  $('qrMemo').textContent = orderCode;
   
   const qrUrl = `https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${orderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
   $('qrImage').src = qrUrl;
@@ -897,24 +1042,56 @@ function openQrPayment(pid, prodName, price) {
   });
   
   if (checkInterval) clearInterval(checkInterval);
-  checkInterval = setInterval(checkPaymentStatus, 3000);
+  // Tự động check ngầm nhưng không hiện thông báo nếu chưa thanh toán
+  checkInterval = setInterval(() => checkPaymentStatus(false), 3000);
 }
 
 function copyQrMemo() {if (!currentOrderId) return;navigator.clipboard.writeText(currentOrderId).then(() => toast('Đã copy nội dung CK', 'success'));}
 
-async function checkPaymentStatus() {
+function manualCheckPayment() {
+  if (!currentOrderId) return toast('Chưa có mã đơn hàng!', 'error');
+  $('qrStatus').textContent = '⏳ Đang kiểm tra...';
+  $('qrStatus').style.color = 'var(--gold)';
+  checkPaymentStatus(true);
+}
+
+async function checkPaymentStatus(isManual = false) {
   if (!currentOrderId) return;
+  
   try {
     const snap = await db.ref('qr_pending_orders/' + currentOrderId).once('value');
     const data = snap.val();
+    
     if (data && data.status === 'paid') {
       clearInterval(checkInterval);
-      $('qrStatus').textContent = '✅ Thanh toán thành công! Đang lấy key...';$('qrStatus').style.color = 'var(--green)';
-      if (data.productId) {await processQrSuccess(data.productId, data.price, data.productName);} 
-      else {for (const item of cart) { await processQrSuccess(item.id, item.price, item.name); }cart = []; saveCart();}
-      setTimeout(() => { closeModal('qrPayModal'); toast('Mua hàng thành công!', 'success'); }, 1500);
+      $('qrStatus').textContent = '✅ Thanh toán thành công! Đang lấy key...';
+      $('qrStatus').style.color = 'var(--green)';
+      
+      if (data.productId) {
+        await processQrSuccess(data.productId, data.price, data.productName);
+      } else {
+        for (const item of cart) {
+           await processQrSuccess(item.id, item.price, item.name);
+        }
+        cart = []; saveCart();
+      }
+      
+      setTimeout(() => {
+        closeModal('qrPayModal');
+        toast('Mua hàng thành công!', 'success');
+      }, 1500);
+    } else if (isManual) {
+      $('qrStatus').textContent = '❌ Chưa nhận được thanh toán. Vui lòng thử lại sau!';
+      $('qrStatus').style.color = 'var(--red)';
+      toast('Hệ thống chưa nhận được tiền, vui lòng chờ 1-2 phút!', 'warning');
     }
-  } catch (e) {}
+  } catch (e) {
+    console.error('Lỗi kiểm tra:', e);
+    if (isManual) {
+      $('qrStatus').textContent = '❌ Lỗi kết nối. Vui lòng thử lại!';
+      $('qrStatus').style.color = 'var(--red)';
+    }
+  }
 }
 
 async function processQrSuccess(pid, price, prodName) {
@@ -1060,16 +1237,21 @@ function showProductForm(id){
     const p=products[id];
     $('pId').value=id;$('pName').value=p.name;$('pImg').value=p.img||'';$('pPrice').value=p.price;
     $('pType').value=p.type||'Tool PC';$('pStatus').value=p.status||'undetected';$('pDesc').value=p.desc||'';
+    $('pFile').value=p.file||''; $('pVideo').value=p.video||'';
     $('pFormTitle').textContent='✏️ Sửa: '+p.name;
   }else{
-    ['pId','pName','pImg','pPrice','pDesc'].forEach(i=>$(i).value='');
+    ['pId','pName','pImg','pPrice','pDesc','pFile','pVideo'].forEach(i=>$(i).value='');
     $('pType').value='Tool PC';$('pStatus').value='undetected';$('pFormTitle').textContent='➕ Thêm SP Mới';
   }
   openModal('productFormBox');
 }
 
 async function saveProduct(){
-  const data={ name:$('pName').value.trim(), img:$('pImg').value.trim(), price:Number($('pPrice').value), type:$('pType').value, status:$('pStatus').value, desc:$('pDesc').value.trim(), time:Date.now() };
+  const data={ 
+    name:$('pName').value.trim(), img:$('pImg').value.trim(), price:Number($('pPrice').value), 
+    type:$('pType').value, status:$('pStatus').value, desc:$('pDesc').value.trim(), 
+    file:$('pFile').value.trim(), video:$('pVideo').value.trim(), time:Date.now() 
+  };
   if(!data.name||$('pPrice').value===''||!(data.price>=0))return toast('Nhập tên và giá','warning');
   const id=$('pId').value;
   if(id){
