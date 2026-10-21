@@ -15,66 +15,54 @@
     --mute:#6d8f9c; --gold:#ffcc33; --red:#ff4d6d;
     --radius: 8px;
   }
-  
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:'Chakra Petch',sans-serif; transition: background 0.5s, color 0.5s; overflow-x: hidden;
     background-image:radial-gradient(900px 500px at 85% -10%,rgba(0,255,157,.15),transparent),radial-gradient(700px 500px at -10% 30%,rgba(0,212,255,.14),transparent);}
   
-  /* Hiệu ứng chữ Neon */
   .display{font-family:'Saira Condensed',sans-serif;letter-spacing:.02em}
   .neon{color:#fff;text-shadow:0 0 6px var(--accent),0 0 18px var(--accent),0 0 38px var(--green);animation:flick 5s infinite}
   @keyframes flick{0%,92%,100%{opacity:1}93%{opacity:.55}94%{opacity:1}96%{opacity:.7}97%{opacity:1}}
   
-  /* Hiệu ứng Panels */
   .panel{background:var(--panel);border:1px solid var(--line); transition: all 0.4s ease; border-radius: var(--radius);}
   .panel:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,212,255,0.1); }
   
-  /* Nút bấm */
-  .btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#001a1f;font-weight:700;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:all .3s ease; padding: 0.5rem 1rem; cursor:pointer; position: relative; overflow: hidden;}
-  .btn::before {content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: all 0.5s;}
-  .btn:hover::before {left: 100%;}
+  /* FIX: Xóa clip-path và ::before gây lỗi xung đột nút bấm */
+  .btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#001a1f;font-weight:700;transition:all .3s ease; padding: 0.5rem 1rem; cursor:pointer; border-radius: 4px;}
   .btn:hover{filter:brightness(1.2); transform: translateY(-2px); box-shadow: 0 5px 20px var(--accent);}
   .btn:active{transform:scale(.97)}.btn:disabled{filter:grayscale(1);opacity:.5;cursor:not-allowed}
   
   .btn-ghost{border:1px solid var(--line);color:var(--text);transition:all .3s ease; padding: 0.5rem 1rem; cursor:pointer; border-radius: var(--radius);}
   .btn-ghost:hover{border-color:var(--accent); background:rgba(0,212,255,0.1); transform: translateY(-2px);}
   
-  /* Ô nhập liệu */
   .inp{width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--line);padding:.55rem .75rem;color:var(--text);outline:none; transition: all 0.3s; border-radius: var(--radius);}
   .inp:focus{border-color:var(--green);box-shadow:0 0 10px rgba(0,255,157,.25)}
   
-  /* === HIỆU ỨNG THẺ SẢN PHẨM === */
   .card{position:relative;transition:all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);cursor:pointer; overflow: hidden; background:var(--panel); border:1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column;}
-  
   .effect-lift:hover{border-color:var(--accent);transform:translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.6);}
   .effect-glow:hover{border-color:var(--accent); box-shadow: 0 0 25px var(--accent), inset 0 0 10px rgba(0,212,255,0.2);}
   .effect-blur:hover{filter: brightness(0.7) blur(2px);}
-  
   .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--green)); opacity: 0.8; transition: height 0.3s;}
   .card:hover::before{height: 5px;}
 
-  /* Layout Grid */
   .layout-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.25rem; }
   @media(min-width: 640px) { .layout-grid { grid-template-columns: repeat(2, 1fr); } }
   @media(min-width: 1280px) { .layout-grid { grid-template-columns: repeat(3, 1fr); } }
 
-  /* Layout List */
   .layout-list { display: flex; flex-direction: column; gap: 1rem; }
   .layout-list .card { flex-direction: row; align-items: center; padding: 1rem; }
   .layout-list .card img { width: 100px; height: 100px; margin-bottom: 0; margin-right: 1rem; }
   .layout-list .card .flex-1 { width: 100%; }
 
-  /* Layout Masonry (Ghép hình) */
   .layout-masonry { column-count: 1; column-gap: 1.25rem; }
   @media(min-width: 640px) { .layout-masonry { column-count: 2; } }
   @media(min-width: 1280px) { .layout-masonry { column-count: 3; } }
   .layout-masonry .card { break-inside: avoid; margin-bottom: 1.25rem; display: inline-flex; width: 100%; }
 
-  /* Các thành phần khác */
   .tag-ok{color:#00ff9d;border-color:#00ff9d55}.tag-bad{color:#ffcc33;border-color:#ffcc3355}.tag-no{color:#ff4d6d;border-color:#ff4d6d55}
+  
+  /* FIX: Modal không dùng animation scale để tránh kẹt */
   .modal-bg{position:fixed;inset:0;background:rgba(1,7,10,.85);backdrop-filter:blur(8px);z-index:60;display:none;align-items:center;justify-content:center;padding:1rem; opacity: 0; transition: opacity 0.3s;}
-  .modal-bg.open{display:flex; opacity: 1; animation: modalFadeIn 0.3s ease forwards;}
-  @keyframes modalFadeIn { from {opacity: 0; transform: scale(0.95);} to {opacity: 1; transform: scale(1);} }
+  .modal-bg.open{display:flex; opacity: 1;}
   
   .scan{background:repeating-linear-gradient(0deg,rgba(0,255,157,.03) 0 1px,transparent 1px 3px)}
   .caret::after{content:"▍";animation:blink 1s steps(2) infinite;color:var(--accent)}@keyframes blink{50%{opacity:0}}
@@ -87,8 +75,7 @@
   .nav-tab{padding:.75rem 1.25rem;font-weight:700;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;color:var(--mute)}
   .nav-tab:hover{color:var(--text)}
   .nav-tab.active{color:var(--text);border-color:var(--accent);text-shadow:0 0 8px var(--accent)}
-  .tab-content{display:none}.tab-content.active{display:block; animation: fadeIn 0.4s ease;}
-  @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+  .tab-content{display:none}.tab-content.active{display:block;}
   
   .chip{display:inline-block;padding:.15rem .55rem;font-size:.7rem;border-radius:99px;background:#0a2028;border:1px solid var(--line)}
   .chip-green{background:#052a1e;border-color:#00ff9d55;color:var(--green)}
@@ -394,11 +381,19 @@
       </div>
     </div>
 
-    <div class="panel p-3 mb-4 text-sm space-y-2" style="border-color:var(--line)">
+       <div class="panel p-3 mb-4 text-sm space-y-2" style="border-color:var(--line)">
       <div class="flex justify-between">
         <span style="color:var(--mute)">Mã đơn:</span>
         <b id="qrOrderId" style="color:var(--gold)"></b>
       </div>
+      
+      <!-- THÊM DÒNG NÀY VÀO ĐÂY -->
+      <div class="flex justify-between">
+        <span style="color:var(--mute)">Sản phẩm:</span>
+        <b id="qrProdName" style="text-align:right"></b>
+      </div>
+      <!-- HẾT PHẦN THÊM -->
+
       <div class="flex justify-between">
         <span style="color:var(--mute)">Số tiền:</span>
         <b id="qrAmount" style="color:var(--red);font-size:1.1rem"></b>
@@ -418,6 +413,7 @@
     </div>
   </div>
 </div>
+ 
 
 <!-- MODAL KEY -->
 <div id="keyModal" class="modal-bg">
@@ -762,7 +758,7 @@ async function checkoutCart(){
   if(!me)return openAuth('login');if(!cart.length)return toast('Giỏ trống','warning');
   const total=cart.reduce((s,i)=>s+i.price,0);
   closeModal('cartModal');
-  setTimeout(() => { openQrPayment(null, 'Giỏ hàng ('+cart.length+' SP)', total); }, 100);
+  openQrPayment(null, 'Giỏ hàng ('+cart.length+' SP)', total);
 }
 
 /* ===== PRODUCTS ===== */
@@ -816,7 +812,6 @@ function openProduct(pid){
   
   const n=stock[pid]||0,maint=p.status==='maintenance',out=n===0;
   $('pmName').textContent=p.name;
-  // Giữ nguyên định dạng xuống dòng
   $('pmDesc').textContent=p.desc||'(Chưa có mô tả)';
   $('pmImg').src=p.img||'';
   $('pmImg').onerror=function(){this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22><rect width=%22400%22 height=%22400%22 fill=%22%23040d12%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%2312303a%22 font-size=%2236%22 text-anchor=%22middle%22>CONAN VNX</text></svg>';};
@@ -858,6 +853,7 @@ function checkVoucher(){
   });
 }
 
+/* FIX CỰC MẠNH: Mở QR trước, đóng SP sau để không bị kẹt */
 async function confirmBuy(){
   if(!me){closeModal('productModal');openAuth('login');return toast('Đăng nhập','warning');}
   if(isAdmin||isCTV)return toast('Quản trị viên không mua','warning');
@@ -870,13 +866,10 @@ async function confirmBuy(){
     if(finalPrice < 0) finalPrice = 0;
   }
   
-  // Đóng modal sản phẩm trước
+  // MỞ QR TRƯỚC
+  openQrPayment(currentPid, p.name, finalPrice);
+  // ĐÓNG SP SAU
   closeModal('productModal'); 
-  
-  // Mở modal QR sau 1 nhịp để tránh xung đột giao diện
-  setTimeout(() => {
-    openQrPayment(currentPid, p.name, finalPrice);
-  }, 200);
 }
 
 /* ===== THANH TOÁN VIETQR ===== */
