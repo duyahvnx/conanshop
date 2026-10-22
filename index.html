@@ -8,146 +8,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Saira+Condensed:wght@600;800&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<!-- THƯ VIỆN EMAILJS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
   :root{
-    --bg:#050a0e; --panel:#0a1419; --line:#12303a; 
-    --accent:#00d4ff; --green:#00ff9d; --text:#d9f7ff; 
+    --bg:#050a0e; --panel:#0a1419; --line:#12303a;
+    --accent:#00d4ff; --green:#00ff9d; --text:#d9f7ff;
     --mute:#6d8f9c; --gold:#ffcc33; --red:#ff4d6d;
-    --radius: 8px;
+    --radius:8px;
   }
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:'Chakra Petch',sans-serif; transition: background 0.5s, color 0.5s; overflow-x: hidden;
+  body{background:var(--bg);color:var(--text);font-family:'Chakra Petch',sans-serif;transition:background .5s,color .5s;overflow-x:hidden;
     background-image:radial-gradient(900px 500px at 85% -10%,rgba(0,255,157,.15),transparent),radial-gradient(700px 500px at -10% 30%,rgba(0,212,255,.14),transparent);}
-  
   .display{font-family:'Saira Condensed',sans-serif;letter-spacing:.02em}
   .neon{color:#fff;text-shadow:0 0 6px var(--accent),0 0 18px var(--accent),0 0 38px var(--green);animation:flick 5s infinite}
   @keyframes flick{0%,92%,100%{opacity:1}93%{opacity:.55}94%{opacity:1}96%{opacity:.7}97%{opacity:1}}
-  
-  .panel{background:var(--panel);border:1px solid var(--line); transition: all 0.4s ease; border-radius: var(--radius);}
-  .panel:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,212,255,0.1); }
-  
-  .btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#001a1f;font-weight:700;transition:all .3s ease; padding: 0.5rem 1rem; cursor:pointer; border-radius: 4px;}
-  .btn:hover{filter:brightness(1.2); transform: translateY(-2px); box-shadow: 0 5px 20px var(--accent);}
+  .panel{background:var(--panel);border:1px solid var(--line);transition:all .4s ease;border-radius:var(--radius)}
+  .panel:hover{border-color:var(--accent);box-shadow:0 0 15px rgba(0,212,255,.1)}
+  .btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#001a1f;font-weight:700;transition:all .3s ease;padding:.5rem 1rem;cursor:pointer;border-radius:4px}
+  .btn:hover{filter:brightness(1.2);transform:translateY(-2px);box-shadow:0 5px 20px var(--accent)}
   .btn:active{transform:scale(.97)}.btn:disabled{filter:grayscale(1);opacity:.5;cursor:not-allowed}
-  
-  .btn-ghost{border:1px solid var(--line);color:var(--text);transition:all .3s ease; padding: 0.5rem 1rem; cursor:pointer; border-radius: var(--radius);}
-  .btn-ghost:hover{border-color:var(--accent); background:rgba(0,212,255,0.1); transform: translateY(-2px);}
-  
-  .inp{width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--line);padding:.55rem .75rem;color:var(--text);outline:none; transition: all 0.3s; border-radius: var(--radius);}
+  .btn-ghost{border:1px solid var(--line);color:var(--text);transition:all .3s ease;padding:.5rem 1rem;cursor:pointer;border-radius:var(--radius)}
+  .btn-ghost:hover{border-color:var(--accent);background:rgba(0,212,255,.1);transform:translateY(-2px)}
+  .inp{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);padding:.55rem .75rem;color:var(--text);outline:none;transition:all .3s;border-radius:var(--radius)}
   .inp:focus{border-color:var(--green);box-shadow:0 0 10px rgba(0,255,157,.25)}
-  
-  .card{position:relative;transition:all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);cursor:pointer; overflow: hidden; background:var(--panel); border:1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column;}
-  .effect-lift:hover{border-color:var(--accent);transform:translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.6);}
-  .effect-glow:hover{border-color:var(--accent); box-shadow: 0 0 25px var(--accent), inset 0 0 10px rgba(0,212,255,0.2);}
-  .effect-blur:hover{filter: brightness(0.7) blur(2px);}
-  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--green)); opacity: 0.8; transition: height 0.3s;}
-  .card:hover::before{height: 5px;}
-
-  .layout-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.25rem; }
-  @media(min-width: 640px) { .layout-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media(min-width: 1280px) { .layout-grid { grid-template-columns: repeat(3, 1fr); } }
-
-  .layout-list { display: flex; flex-direction: column; gap: 1rem; }
-  .layout-list .card { flex-direction: row; align-items: center; padding: 1rem; }
-  .layout-list .card img { width: 100px; height: 100px; margin-bottom: 0; margin-right: 1rem; }
-  .layout-list .card .flex-1 { width: 100%; }
-
-  .layout-masonry { column-count: 1; column-gap: 1.25rem; }
-  @media(min-width: 640px) { .layout-masonry { column-count: 2; } }
-  @media(min-width: 1280px) { .layout-masonry { column-count: 3; } }
-  .layout-masonry .card { break-inside: avoid; margin-bottom: 1.25rem; display: inline-flex; width: 100%; }
-
+  .card{position:relative;transition:all .4s cubic-bezier(.175,.885,.32,1.275);cursor:pointer;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);display:flex;flex-direction:column}
+  .effect-lift:hover{border-color:var(--accent);transform:translateY(-8px);box-shadow:0 15px 30px rgba(0,0,0,.6)}
+  .effect-glow:hover{border-color:var(--accent);box-shadow:0 0 25px var(--accent),inset 0 0 10px rgba(0,212,255,.2)}
+  .effect-blur:hover{filter:brightness(.7) blur(2px)}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--green));opacity:.8;transition:height .3s}
+  .card:hover::before{height:5px}
+  .layout-grid{display:grid;grid-template-columns:repeat(1,1fr);gap:1.25rem}
+  @media(min-width:640px){.layout-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1280px){.layout-grid{grid-template-columns:repeat(3,1fr)}}
+  .layout-list{display:flex;flex-direction:column;gap:1rem}
+  .layout-list .card{flex-direction:row;align-items:center;padding:1rem}
+  .layout-list .card img{width:100px;height:100px;margin-bottom:0;margin-right:1rem}
+  .layout-masonry{column-count:1;column-gap:1.25rem}
+  @media(min-width:640px){.layout-masonry{column-count:2}}
+  @media(min-width:1280px){.layout-masonry{column-count:3}}
+  .layout-masonry .card{break-inside:avoid;margin-bottom:1.25rem;display:inline-flex;width:100%}
   .tag-ok{color:#00ff9d;border-color:#00ff9d55}.tag-bad{color:#ffcc33;border-color:#ffcc3355}.tag-no{color:#ff4d6d;border-color:#ff4d6d55}
-  
-  .modal-bg{position:fixed;inset:0;background:rgba(1,7,10,.85);backdrop-filter:blur(8px);z-index:60;display:none;align-items:center;justify-content:center;padding:1rem; opacity: 0; transition: opacity 0.3s;}
-  .modal-bg.open{display:flex; opacity: 1;}
-  
+  .modal-bg{position:fixed;inset:0;background:rgba(1,7,10,.85);backdrop-filter:blur(8px);z-index:60;display:none;align-items:center;justify-content:center;padding:1rem;opacity:0;transition:opacity .3s}
+  .modal-bg.open{display:flex;opacity:1}
   .scan{background:repeating-linear-gradient(0deg,rgba(0,255,157,.03) 0 1px,transparent 1px 3px)}
   .caret::after{content:"▍";animation:blink 1s steps(2) infinite;color:var(--accent)}@keyframes blink{50%{opacity:0}}
-  
   a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
   table td,table th{padding:.5rem .6rem;text-align:left;border-bottom:1px solid var(--line);font-size:.85rem;vertical-align:top}
-  
   .lbl{display:block;font-size:.72rem;color:var(--mute);margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.05em}
   .nav-tab{padding:.75rem 1.25rem;font-weight:700;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;color:var(--mute)}
   .nav-tab:hover{color:var(--text)}
   .nav-tab.active{color:var(--text);border-color:var(--accent);text-shadow:0 0 8px var(--accent)}
-  .tab-content{display:none}.tab-content.active{display:block;}
-  
+  .tab-content{display:none}.tab-content.active{display:block}
   .chip{display:inline-block;padding:.15rem .55rem;font-size:.7rem;border-radius:99px;background:#0a2028;border:1px solid var(--line)}
   .chip-green{background:#052a1e;border-color:#00ff9d55;color:var(--green)}
   .chip-red{background:#2a0812;border-color:#ff4d6d55;color:var(--red)}
   .chip-gold{background:#2a2208;border-color:#ffcc3355;color:var(--gold)}
-  
   .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--green));display:flex;align-items:center;justify-content:center;font-weight:800;color:#001a1f;cursor:pointer;border:2px solid var(--line);transition:.15s}
-  .avatar:hover{border-color:var(--accent);transform:scale(1.05) rotate(10deg);}
+  .avatar:hover{border-color:var(--accent);transform:scale(1.05) rotate(10deg)}
   .badge-dot{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:.65rem;font-weight:800;min-width:18px;height:18px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--bg)}
-  
   .noti-item{padding:.75rem;border-bottom:1px solid var(--line);cursor:pointer;transition:.15s}
-  .noti-item:hover{background:#0a2028; padding-left: 1.5rem;}
+  .noti-item:hover{background:#0a2028;padding-left:1.5rem}
   .noti-item.unread{background:#051a24;border-left:3px solid var(--accent)}
-  
   .sidebar-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;cursor:pointer;transition:.15s;border-left:3px solid transparent;font-weight:600}
-  .sidebar-item:hover{background:#0a2028;border-color:var(--accent); padding-left: 1.5rem;}
+  .sidebar-item:hover{background:#0a2028;border-color:var(--accent);padding-left:1.5rem}
   .sidebar-item.active{background:#0a2028;border-color:var(--green);color:var(--green)}
   .sidebar-title{font-size:.7rem;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;padding:.75rem 1rem .25rem;font-weight:700}
-  
-  .footer-col h4{font-size:.95rem;font-weight:800;margin-bottom:.75rem;color:var(--text);text-transform:uppercase;letter-spacing:.05em}
-  .footer-col a{display:block;font-size:.85rem;color:var(--mute);padding:.25rem 0;transition:.15s}
-  .footer-col a:hover{color:var(--accent);padding-left:.5rem;}
-  
   #toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);z-index:100;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.68,-.55,.27,1.55)}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast-box{display:flex;align-items:center;gap:.75rem;padding:.9rem 1.25rem;min-width:280px;max-width:90vw;background:linear-gradient(135deg,#0a1419,#0a2028);border:1px solid var(--accent);border-radius:8px;box-shadow:0 10px 40px rgba(0,212,255,.4)}
-  .toast-icon{font-size:1.6rem;flex-shrink:0}
-  .toast-content{flex:1}
+  .toast-icon{font-size:1.6rem;flex-shrink:0}.toast-content{flex:1}
   .toast-title{font-weight:800;font-size:.9rem;color:var(--accent);margin-bottom:.1rem}
   .toast-msg{font-size:.85rem;color:var(--text)}
-  .toast-box.success{border-color:var(--green);box-shadow:0 10px 40px rgba(0,255,157,.4)}
-  .toast-box.success .toast-title{color:var(--green)}
-  .toast-box.error{border-color:var(--red);box-shadow:0 10px 40px rgba(255,77,109,.4)}
-  .toast-box.error .toast-title{color:var(--red)}
-  .toast-box.warning{border-color:var(--gold);box-shadow:0 10px 40px rgba(255,204,51,.4)}
-  .toast-box.warning .toast-title{color:var(--gold)}
-  
-  .history-item{padding:.75rem;border:1px solid var(--line);background:rgba(0,0,0,0.2);border-radius:6px;transition:.15s}
-  .history-item:hover{border-color:var(--accent);background:#0a1419; transform: translateX(5px);}
-
-  .card-select{padding:.9rem;border:2px solid var(--line);background:rgba(0,0,0,0.2);cursor:pointer;text-align:center;font-weight:700;transition:.2s; border-radius: 4px; font-size: 0.9rem;}
-  .card-select:hover{border-color:var(--accent); transform: translateY(-2px);}
-  .card-select.selected{border-color:var(--green);background:rgba(0,255,157,0.1); box-shadow: 0 0 10px rgba(0,255,157,0.2);}
+  .toast-box.success{border-color:var(--green)}.toast-box.success .toast-title{color:var(--green)}
+  .toast-box.error{border-color:var(--red)}.toast-box.error .toast-title{color:var(--red)}
+  .toast-box.warning{border-color:var(--gold)}.toast-box.warning .toast-title{color:var(--gold)}
+  .history-item{padding:.75rem;border:1px solid var(--line);background:rgba(0,0,0,.2);border-radius:6px;transition:.15s}
+  .history-item:hover{border-color:var(--accent);background:#0a1419;transform:translateX(5px)}
+  .card-select{padding:.9rem;border:2px solid var(--line);background:rgba(0,0,0,.2);cursor:pointer;text-align:center;font-weight:700;transition:.2s;border-radius:4px;font-size:.9rem}
+  .card-select:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .card-select.selected{border-color:var(--green);background:rgba(0,255,157,.1);box-shadow:0 0 10px rgba(0,255,157,.2)}
+  .free-post{border:1px solid var(--line);border-radius:10px;padding:1rem;background:rgba(0,0,0,.2);transition:.2s}
+  .free-post:hover{border-color:var(--green);box-shadow:0 0 20px rgba(0,255,157,.15)}
+  .vip-tag{background:linear-gradient(90deg,#ffcc33,#ff9933);color:#001a1f;font-weight:800;padding:.15rem .55rem;border-radius:99px;font-size:.7rem}
+  .order-item{padding:.6rem;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;gap:.5rem;background:rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
 
-<!-- HEADER MỚI ĐẸP HƠN -->
+<!-- POPUP VỪA CÓ NGƯỜI MUA -->
+<div id="livePurchasePopup" class="fixed bottom-4 left-4 z-50 transform -translate-x-[150%] transition-transform duration-500 ease-in-out">
+  <div class="panel p-3 pr-8 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-l-green-500 relative" style="background:rgba(10,20,25,0.95); backdrop-filter:blur(10px); border-color:var(--line);">
+    <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-xl text-black font-bold" id="lpAvatar">T</div>
+    <div>
+      <div class="text-sm font-bold text-white" id="lpUser">Tuấn Anh</div>
+      <div class="text-xs text-gray-400" id="lpAction">vừa mua <span class="text-green-400 font-bold">Tool Free Fire</span></div>
+      <div class="text-[10px] text-gray-500 mt-1" id="lpTime">1 phút trước</div>
+    </div>
+    <button onclick="document.getElementById('livePurchasePopup').classList.add('-translate-x-[150%]')" class="absolute top-1 right-1 text-gray-500 hover:text-white">✕</button>
+  </div>
+</div>
+
+<!-- HEADER -->
 <header class="sticky top-0 z-40 border-b shadow-lg" style="background:rgba(5,10,14,.95);backdrop-filter:blur(15px);border-color:var(--line)">
   <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
     <a href="#" onclick="switchTab('shop');return false" class="display neon text-4xl font-extrabold tracking-wider">CONAN VNX</a>
     <div class="flex flex-wrap items-center gap-3 text-sm">
       <div id="userBox" class="hidden flex-wrap items-center gap-2">
         <div class="relative">
-          <button class="btn-ghost px-3 py-2 rounded-full relative hover:bg-white/5 transition" onclick="toggleNotifications()" style="font-size:1.2rem">🔔
+          <button class="btn-ghost px-3 py-2 rounded-full relative" onclick="toggleNotifications()" style="font-size:1.2rem">🔔
             <span id="notiBadge" class="badge-dot hidden">0</span>
           </button>
           <div id="notiDropdown" class="hidden absolute right-0 mt-2 w-80 max-h-96 overflow-auto panel" style="box-shadow:0 10px 40px rgba(0,0,0,.7)">
             <div class="flex justify-between items-center p-3 border-b" style="border-color:var(--line)">
               <b class="display text-lg">Thông báo</b>
-              <button class="text-xs underline" onclick="markAllRead()">Đánh dấu đã đọc</button>
+              <button class="text-xs underline" onclick="markAllRead()">Đọc hết</button>
             </div>
             <div id="notiList"></div>
           </div>
         </div>
-        <div class="relative">
-          <button class="btn-ghost px-3 py-2 rounded-full relative hover:bg-white/5 transition" onclick="openCart()" style="font-size:1.2rem">🛒
-            <span id="cartBadge" class="badge-dot hidden">0</span>
-          </button>
-        </div>
-        <div class="avatar border-2 border-green-400" id="uAvatar" onclick="openProfile()" title="Hồ sơ">?</div>
-        <span class="panel px-4 py-2 rounded-full cursor-pointer hover:border-accent transition" onclick="openProfile()">👤 <b id="uName"></b> <span id="uRole" class="text-xs" style="color:var(--green)"></span></span>
-        <button id="adminBtn" class="btn px-5 py-2 rounded-full hidden font-extrabold" onclick="openAdmin()">⚙️ Quản lý</button>
-        <button class="btn-ghost px-5 py-2 rounded-full hover:text-red-400" onclick="logout()">Thoát</button>
+        <button class="btn-ghost px-3 py-2 rounded-full relative" onclick="openCart()" style="font-size:1.2rem">🛒
+          <span id="cartBadge" class="badge-dot hidden">0</span>
+        </button>
+        <div class="avatar" id="uAvatar" onclick="openProfile()" title="Hồ sơ">?</div>
+        <span class="panel px-4 py-2 rounded-full cursor-pointer" onclick="openProfile()">👤 <b id="uName"></b> <span id="uRole" class="text-xs" style="color:var(--green)"></span></span>
+        <button id="adminBtn" class="btn px-5 py-2 rounded-full hidden" onclick="openAdmin()">⚙️ Quản lý</button>
+        <button class="btn-ghost px-5 py-2 rounded-full" onclick="logout()">Thoát</button>
       </div>
       <div id="guestBox" class="flex gap-2">
         <button class="btn-ghost px-5 py-2 rounded-full" onclick="openAuth('login')">Đăng nhập</button>
@@ -162,16 +149,16 @@
     <div class="md:col-span-3">
       <p class="mb-3 text-sm uppercase tracking-widest font-bold" style="color:var(--accent)">Sàn giao dịch Tool & Panel Free Fire · Uy tín 24/7</p>
       <h1 class="display text-6xl md:text-8xl font-extrabold leading-[.95] mb-4">Mua bán tool<br>tại <span class="neon">CONAN VNX</span></h1>
-      <p class="mt-4 max-w-lg text-base" style="color:var(--mute)">Hệ thống thanh toán tự động qua VietQR. Nhận key ngay lập tức, hỗ trợ 24/7. Đối tác tin cậy của hàng nghìn game thủ.</p>
+      <p class="mt-4 max-w-lg" style="color:var(--mute)">Thanh toán tự động qua VietQR. Nhận key ngay. Hỗ trợ 24/7.</p>
       <div class="mt-6 flex flex-wrap gap-4">
         <button onclick="switchTab('shop')" class="btn px-8 py-4 text-lg rounded-lg">🛒 Xem sản phẩm</button>
-        <a href="https://zalo.me/0971139244" target="_blank" class="btn-ghost px-8 py-4 text-lg rounded-lg flex items-center gap-2">💬 Zalo: 0971139244</a>
+        <a href="https://zalo.me/0971139244" target="_blank" class="btn-ghost px-8 py-4 text-lg rounded-lg">💬 Zalo: 0971139244</a>
       </div>
     </div>
     <div class="md:col-span-2 panel scan p-6 text-sm leading-8 rounded-xl border-l-4" style="border-left-color:var(--green)">
       <div style="color:var(--mute)" class="font-mono">conan-vnx@panel:~$ status</div>
       <div class="font-mono">server ........ <span class="tag-ok font-bold">ONLINE</span></div>
-      <div class="font-mono">giao key ...... <span class="tag-ok font-bold">TỰ ĐỘNG QUA QR</span></div>
+      <div class="font-mono">giao key ...... <span class="tag-ok font-bold">TỰ ĐỘNG QR</span></div>
       <div class="font-mono">sản phẩm ...... <b id="statProducts">0</b> tool</div>
       <div class="font-mono">key còn lại ... <b id="statKeys">0</b></div>
       <div class="caret font-mono mt-2">sẵn sàng nhận đơn</div>
@@ -179,12 +166,7 @@
   </section>
 
   <nav class="border-b mb-6" style="border-color:var(--line)">
-    <div class="flex flex-wrap overflow-x-auto gap-2">
-      <div class="nav-tab active" data-tab="shop" onclick="switchTab('shop')">🛒 Sản phẩm</div>
-      <div class="nav-tab" data-tab="free" onclick="switchTab('free')">🎁 Key Free</div>
-      <div class="nav-tab" data-tab="seller" onclick="switchTab('seller')">🏪 Hợp tác</div>
-      <div class="nav-tab" data-tab="contact" onclick="switchTab('contact')">💬 Liên hệ</div>
-    </div>
+    <div id="mainTabs" class="flex flex-wrap overflow-x-auto gap-2"></div>
   </nav>
 
   <div class="grid lg:grid-cols-[260px_1fr] gap-8">
@@ -192,10 +174,7 @@
       <div class="sticky top-28 space-y-4">
         <div class="panel rounded-xl">
           <div class="sidebar-title">📌 Danh mục chính</div>
-          <div class="sidebar-item active" data-tab="shop" onclick="switchTab('shop')">🛒 Tất cả sản phẩm</div>
-          <div class="sidebar-item" data-tab="free" onclick="switchTab('free')">🎁 Key Free</div>
-          <div class="sidebar-item" data-tab="seller" onclick="switchTab('seller')">🏪 Hợp tác</div>
-          <div class="sidebar-item" data-tab="contact" onclick="switchTab('contact')">💬 Liên hệ Admin</div>
+          <div id="sidebarItems"></div>
         </div>
         <div class="panel rounded-xl">
           <div class="sidebar-title">🎧 Hỗ trợ</div>
@@ -207,62 +186,48 @@
     </aside>
 
     <div>
-      <!-- TAB SẢN PHẨM -->
+      <!-- TAB SHOP -->
       <section id="tab-shop" class="tab-content active pb-16">
         <div class="flex flex-wrap gap-3 mb-6 items-center">
           <input id="searchBox" class="inp rounded-lg" style="max-width:300px" placeholder="🔍 Tìm tool..." oninput="renderProducts()">
           <select id="filterType" class="inp rounded-lg" style="max-width:200px" onchange="renderProducts()">
             <option value="">Tất cả loại</option>
-            <option>Tool PC</option>
-            <option>Panel iOS</option>
-            <option>Panel Android</option>
-            <option>Acc Clone FF LV5</option>
+            <option>Tool PC</option><option>Panel iOS</option><option>Panel Android</option><option>Acc Clone FF LV5</option>
           </select>
           <select id="filterSort" class="inp rounded-lg" style="max-width:180px" onchange="renderProducts()">
-            <option value="new">Mới nhất</option><option value="priceUp">Giá tăng dần</option><option value="priceDown">Giá giảm dần</option>
+            <option value="new">Mới nhất</option><option value="priceUp">Giá tăng</option><option value="priceDown">Giá giảm</option>
           </select>
         </div>
         <div id="productGrid" class="layout-grid"><div style="color:var(--mute)">Đang tải...</div></div>
       </section>
 
-      <!-- TAB KEY FREE -->
+      <!-- TAB FREE -->
       <section id="tab-free" class="tab-content pb-16">
-        <div class="panel p-8 mb-6 text-center rounded-xl" style="background:linear-gradient(135deg,rgba(0,255,157,0.05),rgba(0,212,255,0.05));border-color:var(--green)">
+        <div class="panel p-8 mb-6 text-center rounded-xl" style="background:linear-gradient(135deg,rgba(0,255,157,.05),rgba(0,212,255,.05));border-color:var(--green)">
           <div style="font-size:4rem">🎁</div>
-          <h2 class="display text-4xl font-extrabold mb-3 mt-3" style="color:var(--green)">KEY FREE HÔM NAY</h2>
-          <p class="text-base max-w-2xl mx-auto" style="color:var(--mute)">Admin thỉnh thoảng sẽ đăng key miễn phí cho mọi người dùng thử. Nhấn vào sản phẩm bên dưới để lấy key (số lượng có hạn).</p>
+          <h2 class="display text-4xl font-extrabold mb-3 mt-3" style="color:var(--green)">KEY & TOOL FREE</h2>
+          <p class="max-w-2xl mx-auto" style="color:var(--mute)">Key thường mở ngay. Tool có mật khẩu RAR → bấm <b>"Vượt link"</b> để lấy mật khẩu + link tải.</p>
         </div>
-        <div id="freeKeyGrid" class="grid sm:grid-cols-2 gap-4"><div style="color:var(--mute)">Đang tải...</div></div>
+        <div id="freePostGrid" class="grid md:grid-cols-2 gap-4"></div>
       </section>
 
-      <!-- TAB HỢP TÁC (KÊNH NGƯỜI BÁN) -->
+      <!-- TAB HỢP TÁC -->
       <section id="tab-seller" class="tab-content pb-16">
-        <div class="panel p-10 mb-8 text-center rounded-2xl border-t-4" style="background:linear-gradient(135deg,#0a1419,#051a24);border-top-color:var(--accent);box-shadow: 0 10px 40px rgba(0,212,255,0.1)">
+        <div class="panel p-10 mb-8 text-center rounded-2xl border-t-4" style="background:linear-gradient(135deg,#0a1419,#051a24);border-top-color:var(--accent)">
           <div style="font-size:5rem">🤝</div>
           <h2 class="display text-5xl font-extrabold mb-4 mt-4 neon">HỢP TÁC CÙNG CONAN VNX</h2>
-          <p class="text-lg max-w-3xl mx-auto leading-relaxed" style="color:var(--text)">Bạn đang sở hữu những con Tool/Panel chất lượng cao? Bạn muốn kiếm thu nhập thụ động? <br><b style="color:var(--accent)">Hãy gia nhập đội ngũ đối tác của CONAN VNX ngay hôm nay!</b> Chúng tôi mang đến nền tảng tiếp cận hàng chục nghìn khách hàng, hệ thống thanh toán tự động và tỷ lệ chia sẻ doanh thu hấp dẫn nhất thị trường.</p>
+          <p class="max-w-3xl mx-auto" style="color:var(--text)">Bạn có Tool/Panel chất lượng? Gia nhập đội ngũ đối tác ngay hôm nay! Tiếp cận hàng nghìn khách hàng, thanh toán tự động, chia sẻ doanh thu hấp dẫn.</p>
         </div>
-        
         <div class="grid md:grid-cols-3 gap-6 mb-8">
-          <div class="panel p-6 rounded-xl text-center hover:border-accent transition"><div style="font-size:3rem">📢</div><b class="display text-2xl block mt-3 mb-2">Miễn phí quảng cáo</b><p class="text-sm" style="color:var(--mute)">Sản phẩm của bạn được đưa lên trang chủ, tiếp cận lượng lớn khách hàng tiềm năng mỗi ngày mà không tốn phí.</p></div>
-          <div class="panel p-6 rounded-xl text-center hover:border-accent transition"><div style="font-size:3rem">💰</div><b class="display text-2xl block mt-3 mb-2">Doanh thu minh bạch</b><p class="text-sm" style="color:var(--mute)">Hệ thống tự động ghi nhận doanh số, chia sẻ lợi nhuận rõ ràng, quyết toán nhanh chóng, không phí ẩn.</p></div>
-          <div class="panel p-6 rounded-xl text-center hover:border-accent transition"><div style="font-size:3rem">🛡️</div><b class="display text-2xl block mt-3 mb-2">Hỗ trợ kỹ thuật 24/7</b><p class="text-sm" style="color:var(--mute)">Đội ngũ Admin luôn sẵn sàng hỗ trợ bạn setup gian hàng, xử lý sự cố kỹ thuật và tư vấn chiến lược bán hàng.</p></div>
+          <div class="panel p-6 rounded-xl text-center"><div style="font-size:3rem">📢</div><b class="display text-2xl block mt-3 mb-2">Miễn phí quảng cáo</b><p class="text-sm" style="color:var(--mute)">Lên trang chủ, tiếp cận khách hàng tiềm năng mỗi ngày.</p></div>
+          <div class="panel p-6 rounded-xl text-center"><div style="font-size:3rem">💰</div><b class="display text-2xl block mt-3 mb-2">Doanh thu minh bạch</b><p class="text-sm" style="color:var(--mute)">Tự động ghi nhận, chia sẻ rõ ràng, không phí ẩn.</p></div>
+          <div class="panel p-6 rounded-xl text-center"><div style="font-size:3rem">🛡️</div><b class="display text-2xl block mt-3 mb-2">Hỗ trợ 24/7</b><p class="text-sm" style="color:var(--mute)">Admin hỗ trợ setup, xử lý sự cố, tư vấn bán hàng.</p></div>
         </div>
-
-        <h3 class="display text-3xl font-extrabold mb-4">📋 Quy trình đăng bán siêu tốc</h3>
-        <div class="grid md:grid-cols-4 gap-4 mb-10">
-          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">1️⃣</div><b class="block text-lg">Gửi Hồ sơ</b><p class="text-xs mt-1" style="color:var(--mute)">Liên hệ Zalo <b>0971139244</b> để được duyệt đối tác.</p></div>
-          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">2️⃣</div><b class="block text-lg">Cung cấp SP</b><p class="text-xs mt-1" style="color:var(--mute)">Gửi thông tin Tool, danh sách Key và hình ảnh.</p></div>
-          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">3️⃣</div><b class="block text-lg">Kiểm duyệt</b><p class="text-xs mt-1" style="color:var(--mute)">Admin test Tool, xác nhận Key và đăng bài.</p></div>
-          <div class="panel p-5 text-center rounded-lg"><div class="text-4xl mb-2">4️⃣</div><b class="block text-lg">Nhận tiền</b><p class="text-xs mt-1" style="color:var(--mute)">Khách mua hàng → Hệ thống tự động cộng tiền.</p></div>
-        </div>
-
-        <div class="panel p-10 text-center rounded-2xl border" style="border-color:var(--green); background:rgba(0,255,157,0.02)">
-          <h3 class="display text-4xl font-extrabold mb-3" style="color:var(--green)">🚀 Bắt đầu kiếm tiền ngay!</h3>
-          <p class="text-base mb-6" style="color:var(--mute)">Mọi thắc mắc về hợp tác, vui lòng liên hệ trực tiếp Admin qua:</p>
-          <div class="flex flex-wrap justify-center gap-4">
+        <div class="panel p-10 text-center rounded-2xl border" style="border-color:var(--green)">
+          <h3 class="display text-4xl font-extrabold mb-3" style="color:var(--green)">🚀 Bắt đầu ngay!</h3>
+          <div class="flex flex-wrap justify-center gap-4 mt-4">
             <a href="https://zalo.me/0971139244" target="_blank" class="btn px-10 py-4 text-lg rounded-lg">💬 Zalo: 0971139244</a>
-            <a href="mailto:duyanhvnx@gmail.com" target="_blank" class="btn-ghost px-10 py-4 text-lg rounded-lg">📧 duyanhvnx@gmail.com</a>
+            <a href="mailto:duyanhvnx@gmail.com" class="btn-ghost px-10 py-4 text-lg rounded-lg">📧 duyanhvnx@gmail.com</a>
           </div>
         </div>
       </section>
@@ -273,18 +238,18 @@
           <div class="panel p-8 rounded-xl">
             <h2 class="display text-3xl font-extrabold mb-6">💬 Liên hệ Admin</h2>
             <div class="space-y-4">
-              <a href="https://zalo.me/0971139244" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg hover:border-accent transition"><span style="font-size:2.5rem">💬</span><div><b class="display text-xl">Zalo: 0971139244</b><br><span class="text-sm" style="color:var(--mute)">Phản hồi nhanh 24/7</span></div></a>
-              <a href="mailto:duyanhvnx@gmail.com" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg hover:border-accent transition"><span style="font-size:2.5rem">📧</span><div><b class="display text-xl">Gmail: duyanhvnx@gmail.com</b><br><span class="text-sm" style="color:var(--mute)">Hỗ trợ kỹ thuật & bảo hành</span></div></a>
-              <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg hover:border-accent transition"><span style="font-size:2.5rem">🎵</span><div><b class="display text-xl">TikTok: ahduy.93210</b><br><span class="text-sm" style="color:var(--mute)">Video hướng dẫn & review</span></div></a>
+              <a href="https://zalo.me/0971139244" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg"><span style="font-size:2.5rem">💬</span><div><b class="display text-xl">Zalo: 0971139244</b><br><span class="text-sm" style="color:var(--mute)">Phản hồi 24/7</span></div></a>
+              <a href="mailto:duyanhvnx@gmail.com" class="flex items-center gap-4 panel p-4 rounded-lg"><span style="font-size:2.5rem">📧</span><div><b class="display text-xl">Gmail</b><br><span class="text-sm" style="color:var(--mute)">duyanhvnx@gmail.com</span></div></a>
+              <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="flex items-center gap-4 panel p-4 rounded-lg"><span style="font-size:2.5rem">🎵</span><div><b class="display text-xl">TikTok</b><br><span class="text-sm" style="color:var(--mute)">@ahduy.93210</span></div></a>
             </div>
           </div>
           <div class="panel p-8 rounded-xl">
-            <h2 class="display text-3xl font-extrabold mb-6">📌 Lưu ý quan trọng</h2>
+            <h2 class="display text-3xl font-extrabold mb-6">📌 Lưu ý</h2>
             <ul class="space-y-4 text-sm" style="color:var(--mute)">
-              <li class="flex items-start gap-2">✅ <b style="color:var(--text)">Uy tín:</b> Giao dịch hoàn toàn tự động qua VietQR, không chờ đợi.</li>
-              <li class="flex items-start gap-2">✅ <b style="color:var(--text)">Bảo hành:</b> Hỗ trợ đổi Key 1-1 trong vòng 24h nếu có lỗi từ nhà phát triển.</li>
-              <li class="flex items-start gap-2">⚠️ <b style="color:var(--text)">Cảnh báo:</b> Tuyệt đối không hoàn tiền đối với các Key đã sử dụng.</li>
-              <li class="flex items-start gap-2">💬 <b style="color:var(--text)">Khiếu nại:</b> Mọi vấn đề phát sinh vui lòng liên hệ Zalo 0971139244 để được giải quyết.</li>
+              <li>✅ <b style="color:var(--text)">Uy tín:</b> Giao dịch tự động qua VietQR.</li>
+              <li>✅ <b style="color:var(--text)">Bảo hành:</b> Đổi Key 1-1 trong 24h nếu lỗi.</li>
+              <li>⚠️ <b style="color:var(--text)">Cảnh báo:</b> Không hoàn tiền Key đã dùng.</li>
+              <li>💬 <b style="color:var(--text)">Khiếu nại:</b> Zalo 0971139244.</li>
             </ul>
           </div>
         </div>
@@ -293,27 +258,24 @@
   </div>
 </main>
 
-<!-- FOOTER -->
 <footer class="border-t mt-16" style="border-color:var(--line);background:#020609">
   <div class="max-w-7xl mx-auto px-4 py-12">
     <div class="grid md:grid-cols-4 gap-8 mb-10">
-      <div><h4 class="display text-xl font-extrabold text-accent mb-4">CONAN VNX</h4><p class="text-sm" style="color:var(--mute)">Sàn giao dịch Tool & Panel Free Fire hàng đầu. Nơi hội tụ những sản phẩm chất lượng nhất với giá cả phải chăng.</p></div>
-      <div><h4 class="font-bold mb-4">Chính sách</h4><a href="#" class="block text-sm py-1 hover:text-accent transition">Bảo hành</a><a href="#" class="block text-sm py-1 hover:text-accent transition">Đổi trả</a><a href="#" class="block text-sm py-1 hover:text-accent transition">Bảo mật</a><a href="#" class="block text-sm py-1 hover:text-accent transition">Điều khoản</a></div>
-      <div><h4 class="font-bold mb-4">Hỗ trợ</h4><a href="#" onclick="switchTab('shop');return false" class="block text-sm py-1 hover:text-accent transition">Hướng dẫn mua</a><a href="#" onclick="openProfile();switchProfileTab('orders')" class="block text-sm py-1 hover:text-accent transition">Tra cứu đơn</a><a href="mailto:duyanhvnx@gmail.com" class="block text-sm py-1 hover:text-accent transition">Gửi Email</a></div>
-      <div><h4 class="font-bold mb-4">Kết nối</h4><a href="https://zalo.me/0971139244" target="_blank" class="block text-sm py-1 hover:text-accent transition">💬 Zalo: 0971139244</a><a href="mailto:duyanhvnx@gmail.com" class="block text-sm py-1 hover:text-accent transition">📧 duyanhvnx@gmail.com</a><a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="block text-sm py-1 hover:text-accent transition">🎵 TikTok: ahduy.93210</a></div>
+      <div><h4 class="display text-xl font-extrabold mb-4" style="color:var(--accent)">CONAN VNX</h4><p class="text-sm" style="color:var(--mute)">Sàn giao dịch Tool & Panel Free Fire hàng đầu.</p></div>
+      <div><h4 class="font-bold mb-4">Chính sách</h4><a href="#" class="block text-sm py-1">Bảo hành</a><a href="#" class="block text-sm py-1">Đổi trả</a><a href="#" class="block text-sm py-1">Bảo mật</a></div>
+      <div><h4 class="font-bold mb-4">Hỗ trợ</h4><a href="#" onclick="switchTab('shop');return false" class="block text-sm py-1">Hướng dẫn mua</a><a href="#" onclick="openProfile();switchProfileTab('orders');return false" class="block text-sm py-1">Tra cứu đơn</a></div>
+      <div><h4 class="font-bold mb-4">Kết nối</h4><a href="https://zalo.me/0971139244" target="_blank" class="block text-sm py-1">💬 Zalo</a><a href="mailto:duyanhvnx@gmail.com" class="block text-sm py-1">📧 Gmail</a></div>
     </div>
-    <div class="border-t pt-8 text-center text-xs" style="border-color:var(--line);color:var(--mute)">
-      <p>© 2025 <b style="color:var(--accent)">CONAN VNX</b>. Tất cả các quyền được bảo lưu.</p>
-    </div>
+    <div class="border-t pt-8 text-center text-xs" style="border-color:var(--line);color:var(--mute)">© 2025 <b style="color:var(--accent)">CONAN VNX</b></div>
   </div>
 </footer>
 
-<!-- MODAL PROFILE -->
+<!-- MODALS -->
 <div id="profileModal" class="modal-bg" onclick="if(event.target===this)closeModal('profileModal')">
   <div class="panel w-full max-w-3xl max-h-[90vh] overflow-auto p-6">
-    <div class="flex justify-between items-center mb-5"><h3 class="display text-3xl font-extrabold">👤 Hồ sơ cá nhân</h3><button onclick="closeModal('profileModal')" class="text-2xl">✕</button></div>
+    <div class="flex justify-between items-center mb-5"><h3 class="display text-3xl font-extrabold">👤 Hồ sơ</h3><button onclick="closeModal('profileModal')" class="text-2xl">✕</button></div>
     <div class="panel p-4 mb-5"><div class="grid md:grid-cols-2 gap-3 text-sm">
-      <div><span class="lbl">Tên đăng nhập</span><b id="pfUsername">-</b></div>
+      <div><span class="lbl">Tên ĐN</span><b id="pfUsername">-</b></div>
       <div><span class="lbl">Nickname</span><b id="pfNick">-</b></div>
       <div><span class="lbl">Gmail</span><b id="pfEmail">-</b></div>
       <div><span class="lbl">Ngày tạo</span><b id="pfCreated">-</b></div>
@@ -324,48 +286,40 @@
     </div>
     <div id="pfBody-pass">
       <span class="lbl">MK hiện tại</span><input id="pfOldPass" type="password" class="inp mb-3">
-      <span class="lbl">MK mới (≥6 ký tự)</span><input id="pfNewPass" type="password" class="inp mb-3">
-      <span class="lbl">Xác nhận MK mới</span><input id="pfNewPass2" type="password" class="inp mb-4">
+      <span class="lbl">MK mới (≥6)</span><input id="pfNewPass" type="password" class="inp mb-3">
+      <span class="lbl">Xác nhận</span><input id="pfNewPass2" type="password" class="inp mb-4">
       <button class="btn px-6 py-2.5" onclick="changePassword()">💾 Đổi MK</button>
     </div>
-    <div id="pfBody-orders" class="hidden">
-      <div class="flex justify-between items-center mb-3">
-        <span class="text-sm" style="color:var(--mute)">Tất cả sản phẩm bạn đã mua</span>
-      </div>
-      <div id="pfOrderList" class="space-y-2"></div>
-    </div>
+    <div id="pfBody-orders" class="hidden"><div id="pfOrderList" class="space-y-2"></div></div>
   </div>
 </div>
 
-<!-- MODAL CART -->
 <div id="cartModal" class="modal-bg" onclick="if(event.target===this)closeModal('cartModal')">
   <div class="panel w-full max-w-2xl max-h-[90vh] overflow-auto p-6">
     <div class="flex justify-between items-center mb-4"><h3 class="display text-3xl font-extrabold">🛒 Giỏ hàng</h3><button onclick="closeModal('cartModal')" class="text-2xl">✕</button></div>
     <div id="cartList"></div>
     <div id="cartFooter" class="border-t mt-4 pt-4" style="border-color:var(--line)">
-      <div class="flex justify-between items-center mb-3"><span class="text-lg">Tổng cộng:</span><b class="display text-3xl" id="cartTotal" style="color:var(--accent)">0đ</b></div>
-      <button class="btn w-full py-3" onclick="checkoutCart()">💳 Thanh toán tất cả</button>
+      <div class="flex justify-between items-center mb-3"><span class="text-lg">Tổng:</span><b class="display text-3xl" id="cartTotal" style="color:var(--accent)">0đ</b></div>
+      <button class="btn w-full py-3" onclick="checkoutCart()">💳 Thanh toán</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL AUTH -->
 <div id="authModal" class="modal-bg" onclick="if(event.target===this)closeModal('authModal')">
   <div class="panel w-full max-w-sm p-6">
     <h3 id="authTitle" class="display text-3xl font-extrabold mb-4">Đăng nhập</h3>
     <input id="aNick" class="inp mb-3 regOnly" placeholder="Tên hiển thị">
     <input id="aUser" class="inp mb-3" placeholder="Tên đăng nhập hoặc Gmail">
     <input id="aEmail" type="email" class="inp mb-3 regOnly" placeholder="Gmail">
-    <input id="aPass" type="password" class="inp mb-4" placeholder="Mật khẩu (≥6 ký tự)" onkeydown="if(event.key==='Enter')submitAuth()">
+    <input id="aPass" type="password" class="inp mb-4" placeholder="Mật khẩu" onkeydown="if(event.key==='Enter')submitAuth()">
     <button class="btn w-full py-2.5" onclick="submitAuth()" id="authBtn">Đăng nhập</button>
     <p class="mt-3 text-sm text-center" style="color:var(--mute)"><a href="#" id="authSwitch" class="underline" onclick="openAuth(authMode==='login'?'register':'login');return false"></a><span id="forgotLink"> · <a href="#" class="underline" onclick="closeModal('authModal');openModal('forgotModal');return false">Quên MK?</a></span></p>
   </div>
 </div>
 
-<!-- MODAL FORGOT -->
 <div id="forgotModal" class="modal-bg" onclick="if(event.target===this)closeModal('forgotModal')">
   <div class="panel w-full max-w-sm p-6">
-    <h3 class="display text-3xl font-extrabold mb-2">Khôi phục TK</h3>
+    <h3 class="display text-3xl font-extrabold mb-2">Khôi phục</h3>
     <p class="text-sm mb-3" style="color:var(--mute)">Nhập Gmail đã đăng ký.</p>
     <input id="fEmail" type="email" class="inp mb-3" placeholder="Gmail">
     <button class="btn w-full py-2.5" onclick="submitForgot()">Gửi yêu cầu</button>
@@ -373,7 +327,6 @@
   </div>
 </div>
 
-<!-- MODAL PRODUCT DETAIL -->
 <div id="productModal" class="modal-bg" onclick="if(event.target===this)closeModal('productModal')">
   <div class="panel w-full max-w-3xl max-h-[90vh] overflow-auto">
     <div class="grid md:grid-cols-2 gap-0">
@@ -381,26 +334,18 @@
       <div class="p-6">
         <div class="flex justify-between items-start mb-2"><h3 id="pmName" class="display text-3xl font-extrabold leading-tight"></h3><button onclick="closeModal('productModal')" class="text-2xl">✕</button></div>
         <div class="flex flex-wrap gap-2 mb-3"><span id="pmStatus" class="chip"></span><span id="pmType" class="chip"></span><span id="pmStock" class="chip"></span></div>
-        <p id="pmDesc" class="text-sm mb-4" style="color:var(--mute); white-space: pre-wrap;"></p>
+        <p id="pmDesc" class="text-sm mb-4" style="color:var(--mute);white-space:pre-wrap"></p>
         <div id="pmInfo" class="text-xs mb-4"></div>
-
-        <!-- VIDEO & FILE LINKS -->
         <div id="pmLinks" class="mb-4 space-y-2"></div>
-
         <div class="mb-4">
-          <span class="lbl">Mã giảm giá (Toàn sàn)</span>
-          <div class="flex gap-2">
-            <input id="pmVoucher" class="inp" placeholder="Nhập mã...">
-            <button class="btn-ghost px-4" onclick="checkVoucher()">Áp dụng</button>
-          </div>
+          <span class="lbl">Mã giảm giá</span>
+          <div class="flex gap-2"><input id="pmVoucher" class="inp" placeholder="Nhập mã..."><button class="btn-ghost px-4" onclick="checkVoucher()">Áp dụng</button></div>
           <div id="pmVoucherMsg" class="text-xs mt-1" style="color:var(--green)"></div>
         </div>
-
         <div class="border-t pt-4 mb-4" style="border-color:var(--line)">
           <span class="display text-4xl font-extrabold" style="color:var(--accent)" id="pmPrice"></span>
-          <span id="pmOldPrice" class="text-sm line-through ml-2" style="color:var(--mute); display:none;"></span>
+          <span id="pmOldPrice" class="text-sm line-through ml-2" style="color:var(--mute);display:none"></span>
         </div>
-        
         <div class="grid grid-cols-2 gap-2">
           <button id="pmCartBtn" class="btn-ghost py-3" onclick="addToCart()">🛒 Thêm giỏ</button>
           <button id="pmBuyBtn" class="btn py-3" onclick="confirmBuy()">⚡ Mua ngay (QR)</button>
@@ -410,67 +355,67 @@
   </div>
 </div>
 
-<!-- MODAL FREE KEY DETAIL -->
-<div id="freeKeyModal" class="modal-bg" onclick="if(event.target===this)closeModal('freeKeyModal')">
-  <div class="panel w-full max-w-md p-6 text-center border-green-500 border-2">
-    <h3 class="display text-3xl font-extrabold text-green-400">🎁 KEY FREE</h3>
-    <p id="fkProdName" class="mt-1 mb-4 text-lg font-bold"></p>
-    <p id="fkType" class="text-sm mb-2" style="color:var(--mute)"></p>
-    <div id="fkDesc" class="text-sm mb-4" style="color:var(--mute)"></div>
-    <div id="fkKeyVal" class="panel p-3 break-all select-all font-bold text-xl" style="color:var(--green)"></div>
-    <div class="flex gap-2 mt-4"><button class="btn flex-1 py-2.5" onclick="copyFreeKey()">📋 Sao chép</button><button class="btn-ghost flex-1 py-2.5" onclick="closeModal('freeKeyModal')">Đóng</button></div>
-  </div>
-</div>
-
-<!-- MODAL CHUYỂN KHOẢN QR -->
-<div id="qrPayModal" class="modal-bg" onclick="if(event.target===this)closeModal('qrPayModal')">
-  <div class="panel w-full max-w-md p-6" style="border-color:var(--accent); box-shadow:0 0 40px rgba(0,212,255,.3)">
-    <div class="flex justify-between items-center mb-4">
-      <h3 class="display text-2xl font-extrabold" style="color:var(--accent)">Thanh Toán Đơn Hàng</h3>
-      <button onclick="closeModal('qrPayModal')" class="text-2xl">✕</button>
+<!-- FREE POST MODAL -->
+<div id="freePostModal" class="modal-bg" onclick="if(event.target===this)closeModal('freePostModal')">
+  <div class="panel w-full max-w-2xl max-h-[90vh] overflow-auto p-0 border-2" style="border-color:var(--green)">
+    <div class="p-4 border-b flex justify-between items-center sticky top-0 z-20" style="border-color:var(--line); background:rgba(10,20,25,0.95); backdrop-filter:blur(10px);">
+      <div>
+        <h3 class="display text-3xl font-extrabold text-green-400" id="fpTitle">🎁 FREE</h3>
+        <p id="fpType" class="text-sm mt-1" style="color:var(--mute)"></p>
+      </div>
+      <button onclick="closeModal('freePostModal')" class="btn-ghost px-3 py-1 text-xl">✕</button>
     </div>
-    
-    <div class="text-center mb-4">
-      <p class="text-sm mb-2" style="color:var(--mute)">Quét mã QR bằng App Ngân Hàng</p>
-      <div class="bg-white p-2 inline-block rounded">
-        <img id="qrImage" src="" alt="VietQR" style="width:200px;height:200px;object-fit:contain">
-      </div>
+    <div id="fpImgContainer" class="w-full bg-black/50 hidden">
+      <img id="fpImg" src="" alt="Ảnh sản phẩm" class="w-full max-h-80 object-contain mx-auto">
     </div>
-
-       <div class="panel p-3 mb-4 text-sm space-y-2" style="border-color:var(--line)">
-      <div class="flex justify-between">
-        <span style="color:var(--mute)">Mã đơn:</span>
-        <b id="qrOrderId" style="color:var(--gold)"></b>
-      </div>
-      
-      <div class="flex justify-between">
-        <span style="color:var(--mute)">Sản phẩm:</span>
-        <b id="qrProdName" style="text-align:right"></b>
-      </div>
-
-      <div class="flex justify-between">
-        <span style="color:var(--mute)">Số tiền:</span>
-        <b id="qrAmount" style="color:var(--red);font-size:1.1rem"></b>
-      </div>
-      <div class="flex justify-between items-center mt-2 pt-2 border-t" style="border-color:var(--line)">
-        <span style="color:var(--mute)">Nội dung CK:</span>
-        <div class="flex gap-2 items-center">
-          <b id="qrMemo" style="color:var(--accent);font-size:1.1rem;letter-spacing:1px"></b>
-          <button onclick="copyQrMemo()" class="btn-ghost px-2 py-1 text-xs">📋 Copy</button>
+    <div class="p-6">
+      <span class="lbl mb-2">📝 Giới thiệu chi tiết</span>
+      <div id="fpDesc" class="text-sm p-4 rounded mb-6" style="background:rgba(0,0,0,0.2); color:var(--text); white-space: pre-wrap; line-height: 1.6; min-height: 100px;"></div>
+      <div class="space-y-3 mb-6">
+        <a id="fpDownload" href="#" target="_blank" class="btn w-full flex items-center justify-center gap-2 py-3 rounded text-lg font-extrabold shadow-lg" style="background:linear-gradient(90deg, #00bfff, #00d4ff); color:#001a1f">
+          <span style="font-size:1.5rem">📥</span> Tải File Về Máy
+        </a>
+        <a id="fpShortLink" href="#" target="_blank" class="btn-ghost w-full flex items-center justify-center gap-2 py-3 rounded text-lg font-bold border-2 hidden" style="border-color:var(--gold); color:var(--gold)">
+          <span style="font-size:1.5rem">🔗</span> Vượt Link Lấy Pass RAR
+        </a>
+        <p id="fpVipMsg" class="hidden text-xs text-center" style="color:var(--gold)">Bấm vào nút trên để sang trang lấy mật khẩu. Nếu lỗi hãy liên hệ Admin!</p>
+        <div class="grid grid-cols-2 gap-3 pt-3 border-t mt-3" style="border-color:var(--line)">
+          <a href="https://zalo.me/0971139244" target="_blank" class="btn-ghost flex items-center justify-center gap-2 py-2 rounded text-sm text-blue-400 border-blue-500/50 hover:bg-blue-900/20">
+            💬 Zalo Admin
+          </a>
+          <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="btn-ghost flex items-center justify-center gap-2 py-2 rounded text-sm text-white border-white/50 hover:bg-white/10">
+            🎵 TikTok Admin
+          </a>
         </div>
       </div>
+      <div id="fpVideoBox" class="hidden mt-6">
+        <span class="lbl mb-2">🎬 Video Hướng Dẫn</span>
+        <div id="fpVideoIframe" class="w-full rounded overflow-hidden shadow-lg border" style="aspect-ratio: 16/9; background:#000; border-color:var(--line)"></div>
+      </div>
     </div>
-
-    <div class="text-center">
-      <p id="qrStatus" class="text-sm mb-3" style="color:var(--gold)">⏳ Đang chờ thanh toán...</p>
-      <button class="btn w-full py-2.5" onclick="manualCheckPayment()">🔄 Kiểm Tra Ngay</button>
+    <div class="p-4 border-t text-center" style="border-color:var(--line); background:rgba(0,0,0,0.2)">
+      <button class="btn-ghost px-8 py-2" onclick="closeModal('freePostModal')">Đóng</button>
     </div>
   </div>
 </div>
- 
-<!-- MODAL KEY -->
+
+<div id="qrPayModal" class="modal-bg" onclick="if(event.target===this)closeModal('qrPayModal')">
+  <div class="panel w-full max-w-md p-6" style="border-color:var(--accent)">
+    <div class="flex justify-between items-center mb-4"><h3 class="display text-2xl font-extrabold" style="color:var(--accent)">Thanh Toán</h3><button onclick="closeModal('qrPayModal')" class="text-2xl">✕</button></div>
+    <div class="text-center mb-4"><div class="bg-white p-2 inline-block rounded"><img id="qrImage" src="" style="width:200px;height:200px;object-fit:contain"></div></div>
+    <div class="panel p-3 mb-4 text-sm space-y-2">
+      <div class="flex justify-between"><span style="color:var(--mute)">Mã đơn:</span><b id="qrOrderId" style="color:var(--gold)"></b></div>
+      <div class="flex justify-between"><span style="color:var(--mute)">Sản phẩm:</span><b id="qrProdName" style="text-align:right"></b></div>
+      <div class="flex justify-between"><span style="color:var(--mute)">Số tiền:</span><b id="qrAmount" style="color:var(--red)"></b></div>
+      <div class="flex justify-between items-center mt-2 pt-2 border-t" style="border-color:var(--line)"><span style="color:var(--mute)">Nội dung CK:</span><div class="flex gap-2 items-center"><b id="qrMemo" style="color:var(--accent)"></b><button onclick="copyQrMemo()" class="btn-ghost px-2 py-1 text-xs">📋</button></div></div>
+    </div>
+    <p id="qrStatus" class="text-sm mb-3 text-center" style="color:var(--gold)">⏳ Đang chờ thanh toán...</p>
+    <button class="btn w-full py-2.5" onclick="manualCheckPayment()">🔄 Kiểm Tra Ngay</button>
+  </div>
+</div>
+
 <div id="keyModal" class="modal-bg">
-  <div class="panel w-full max-w-md p-6 text-center" style="box-shadow:0 0 50px rgba(0,255,157,.3)">
+  <div class="panel w-full max-w-md p-6 text-center">
     <h3 class="display text-3xl font-extrabold">🎉 Mua thành công</h3>
     <p id="keyProd" class="mt-1 mb-4" style="color:var(--mute)"></p>
     <div id="keyVal" class="panel p-3 break-all select-all font-bold" style="color:var(--green)"></div>
@@ -482,160 +427,201 @@
 <div id="adminPanel" class="modal-bg" style="align-items:stretch">
   <div class="panel w-full max-w-7xl mx-auto overflow-auto p-5">
     <div class="flex justify-between items-center mb-4"><h3 class="display text-4xl font-extrabold neon" id="adminPanelTitle">ADMIN · CONAN VNX</h3><button class="btn-ghost px-4 py-1.5" onclick="closeModal('adminPanel')">Đóng</button></div>
-    
     <div class="flex flex-wrap gap-2 mb-5" id="adminTabs">
-      <button class="btn px-5 py-2 admin-only" data-tab="aOrders">📜 Lịch sử bán</button>
+      <button class="btn px-5 py-2" data-tab="aOrders">📜 Lịch sử bán</button>
       <button class="btn-ghost px-5 py-2" data-tab="aProducts">📦 Sản phẩm</button>
-      <button class="btn-ghost px-5 py-2 admin-only" data-tab="aUsers">👥 Thành viên & CTV</button>
-      <button class="btn-ghost px-5 py-2 admin-only" data-tab="aVouchers">🎟️ Mã Giảm Giá</button>
-      <button class="btn-ghost px-5 py-2 admin-only" data-tab="aFreeKeys">🎁 Key Free</button>
-      <button class="btn-ghost px-5 py-2 admin-only" data-tab="aTheme">🎨 Giao diện</button>
+      <button class="btn-ghost px-5 py-2" data-tab="aUsers">👥 Thành viên & CTV</button>
+      <button class="btn-ghost px-5 py-2" data-tab="aCustomers">🛒 Khách Hàng</button>
+      <button class="btn-ghost px-5 py-2" data-tab="aVouchers">🎟️ Vouchers</button>
+      <button class="btn-ghost px-5 py-2" data-tab="aFree">🎁 Bài Free</button>
+      <button class="btn-ghost px-5 py-2" data-tab="aTheme">🎨 Giao diện & Bố cục</button>
     </div>
 
-    <!-- TAB GIAO DIỆN -->
-    <div id="aTheme" class="atab hidden admin-only">
-      <h4 class="display text-2xl font-extrabold mb-4">Tùy chỉnh giao diện chung</h4>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="panel p-5">
-          <h5 class="font-bold text-lg mb-3">Màu chủ đề (8 Themes)</h5>
-          <div class="grid grid-cols-2 gap-2">
-            <div class="card-select selected" onclick="saveSetting('theme','default',this)">Neon Xanh</div>
-            <div class="card-select" onclick="saveSetting('theme','cyber',this)">Tím Cyber</div>
-            <div class="card-select" onclick="saveSetting('theme','blood',this)">Đỏ Huyết</div>
-            <div class="card-select" onclick="saveSetting('theme','gold',this)">Vàng Gold</div>
-            <div class="card-select" onclick="saveSetting('theme','ocean',this)">Xanh Biển</div>
-            <div class="card-select" onclick="saveSetting('theme','retro',this)">Retro 8x</div>
-            <div class="card-select" onclick="saveSetting('theme','matrix',this)">Matrix</div>
-            <div class="card-select" onclick="saveSetting('theme','anime',this)">Anime Pink</div>
-          </div>
+    <div id="aOrders" class="atab">
+      <!-- THÊM BẢNG DUYỆT ĐƠN VÀO ĐÂY -->
+      <div class="panel p-5 mb-6 border" style="border-color:var(--gold); background:rgba(255,204,51,0.05)">
+        <h4 class="display text-2xl font-extrabold mb-3" style="color:var(--gold)">⚠️ Đơn Đang Chờ Thanh Toán (Duyệt Tay)</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr><th>Mã Đơn</th><th>Khách</th><th>Sản phẩm</th><th>Giá</th><th>Hành động</th></tr>
+            </thead>
+            <tbody id="adminPendingOrders">
+              <tr><td colspan="5" style="text-align:center;padding:1rem;color:var(--mute)">Đang tải...</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="panel p-5">
-          <h5 class="font-bold text-lg mb-3">Kiểu sắp xếp</h5>
-          <div class="grid grid-cols-1 gap-2">
-            <div class="card-select selected" onclick="saveSetting('layout','grid',this)">Dạng Lưới (Grid)</div>
-            <div class="card-select" onclick="saveSetting('layout','list',this)">Dạng Danh sách (List)</div>
-            <div class="card-select" onclick="saveSetting('layout','masonry',this)">Bảng ghép hình (Masonry)</div>
-          </div>
-        </div>
-        <div class="panel p-5">
-          <h5 class="font-bold text-lg mb-3">Hiệu ứng Hover</h5>
-          <div class="grid grid-cols-1 gap-2">
-            <div class="card-select selected" onclick="saveSetting('effect','lift',this)">Nổi lên (Lift)</div>
-            <div class="card-select" onclick="saveSetting('effect','glow',this)">Phát sáng (Glow)</div>
-            <div class="card-select" onclick="saveSetting('effect','blur',this)">Tối đi (Blur)</div>
-          </div>
-        </div>
+      </div>
+
+      <!-- BẢNG LỊCH SỬ BÁN CŨ -->
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead><tr><th>Thời gian</th><th>Khách</th><th>Sản phẩm</th><th>Giá</th><th>Key</th></tr></thead>
+          <tbody id="adminOrders"></tbody>
+        </table>
       </div>
     </div>
 
-    <!-- TAB SẢN PHẨM -->
     <div id="aProducts" class="atab hidden">
       <div class="flex flex-wrap gap-2 mb-4 items-center">
-        <input id="adminSearch" class="inp" style="max-width:280px" placeholder="🔍 Tìm sản phẩm..." oninput="renderAdminProducts()">
-        <button class="btn px-5 py-2" onclick="showProductForm(null)">➕ Đăng SP Mới</button>
+        <input id="adminSearch" class="inp" style="max-width:280px" placeholder="🔍 Tìm SP..." oninput="renderAdminProducts()">
+        <button class="btn px-5 py-2" onclick="showProductForm(null)">➕ Đăng SP</button>
       </div>
-      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Ảnh</th><th>Tên / Mô tả</th><th>Loại</th><th>Giá</th><th>Trạng thái</th><th>Key</th><th>Người đăng</th><th>Hành động</th></tr></thead><tbody id="adminProducts"></tbody></table></div>
+      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Ảnh</th><th>Tên/Mô tả</th><th>Loại</th><th>Giá</th><th>Trạng thái</th><th>Key</th><th>Người đăng</th><th>Hành động</th></tr></thead><tbody id="adminProducts"></tbody></table></div>
     </div>
 
-    <!-- TAB KEY FREE -->
-    <div id="aFreeKeys" class="atab hidden admin-only">
+    <div id="aUsers" class="atab hidden">
       <div class="flex justify-between items-center mb-4">
-        <h4 class="display text-2xl font-extrabold">Quản lý Key Free</h4>
-        <button class="btn px-5 py-2" onclick="showFreeKeyForm()">➕ Đăng Key Free</button>
+        <h4 class="display text-2xl font-extrabold">Quản lý Nhân viên (CTV)</h4>
+        <button class="btn px-5 py-2" onclick="createCTV()">➕ Tạo CTV</button>
       </div>
-      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Sản phẩm</th><th>Thiết bị</th><th>Key</th><th>Hành động</th></tr></thead><tbody id="adminFreeKeys"></tbody></table></div>
+      <p class="text-sm mb-3" style="color:var(--mute)">CTV chỉ có quyền Thêm sản phẩm, không được Sửa/Xóa.</p>
+      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Tài khoản</th><th>Gmail</th><th>Vai trò</th><th>Hành động</th></tr></thead><tbody id="adminUsers"></tbody></table></div>
     </div>
 
-    <!-- FORM KEY FREE -->
-    <div id="freeKeyFormBox" class="modal-bg" style="z-index:70">
-      <div class="panel w-full max-w-xl p-6">
-        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold">➕ Đăng Key Free</h4><button onclick="closeModal('freeKeyFormBox')" class="text-2xl">✕</button></div>
-        <div class="space-y-3">
-          <div><span class="lbl">Tên sản phẩm / Tool</span><input id="fkName" class="inp" placeholder="VD: Tool Free Fire"></div>
-          <div><span class="lbl">Thiết bị / Loại</span><input id="fkType" class="inp" placeholder="VD: Tool PC, Panel Android..."></div>
-          <div><span class="lbl">Mô tả / Giới thiệu</span><textarea id="fkDesc" rows="2" class="inp" placeholder="Giới thiệu sơ qua..."></textarea></div>
-          <div><span class="lbl">Key (Mã)</span><input id="fkKey" class="inp" placeholder="Nhập key cần tặng..."></div>
+    <div id="aCustomers" class="atab hidden">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="display text-2xl font-extrabold">Thống kê Khách Hàng</h4>
+        <span class="text-sm" style="color:var(--mute)">Xem số tiền đã mua và số lần vượt link Free</span>
+      </div>
+      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Tên ĐN (Nickname)</th><th>Gmail</th><th>Ngày tham gia</th><th>Tổng chi tiêu</th><th>Vượt Link Free</th><th>Hành động</th></tr></thead><tbody id="adminCustomers"></tbody></table></div>
+    </div>
+
+    <div id="aVouchers" class="atab hidden">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="display text-2xl font-extrabold">Quản lý Mã Giảm Giá</h4>
+        <button class="btn px-5 py-2" onclick="openVoucherForm()">➕ Tạo mã mới</button>
+      </div>
+      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Mã</th><th>Loại</th><th>Giảm</th><th>Người dùng</th><th>Trạng thái</th><th>Hành động</th></tr></thead><tbody id="adminVouchers"></tbody></table></div>
+    </div>
+
+    <div id="aFree" class="atab hidden">
+      <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold">Bài đăng Free</h4><button class="btn px-5 py-2" onclick="showFreePostForm()">➕ Đăng bài Free</button></div>
+      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Tiêu đề</th><th>Loại</th><th>Vượt Link</th><th>Mật khẩu RAR</th><th>Hành động</th></tr></thead><tbody id="adminFreePosts"></tbody></table></div>
+    </div>
+
+    <div id="aTheme" class="atab hidden">
+      <h4 class="display text-2xl font-extrabold mb-4">Giao diện & Bố cục</h4>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="panel p-5">
+          <h5 class="font-bold mb-3">Màu chủ đề</h5>
+          <div id="themeList" class="grid grid-cols-2 gap-2"></div>
+          <div class="mt-4 flex flex-wrap gap-2 items-center">
+            <label class="text-sm" style="color:var(--mute)">Màu tùy chỉnh:</label>
+            <input type="color" id="customAccent" value="#00d4ff" style="width:42px;height:34px;border:none;background:none;cursor:pointer" onchange="saveSetting('customAccent',this.value,null)">
+            <input type="color" id="customGreen" value="#00ff9d" style="width:42px;height:34px;border:none;background:none;cursor:pointer" onchange="saveSetting('customGreen',this.value,null)">
+            <button class="btn-ghost px-3 py-1 text-sm" onclick="toggleRgb()" id="rgbToggleBtn">🌈 RGB động</button>
+          </div>
         </div>
-        <div class="flex gap-2 mt-4"><button class="btn px-6 py-2" onclick="saveFreeKey()">💾 Đăng</button><button class="btn-ghost px-6 py-2" onclick="closeModal('freeKeyFormBox')">Hủy</button></div>
+        <div class="panel p-5">
+          <h5 class="font-bold mb-3">Kiểu sắp xếp</h5>
+          <div class="grid grid-cols-1 gap-2">
+            <div class="card-select" onclick="saveSetting('layout','grid',this)">Dạng Lưới (Grid)</div>
+            <div class="card-select" onclick="saveSetting('layout','list',this)">Dạng Danh sách (List)</div>
+            <div class="card-select" onclick="saveSetting('layout','masonry',this)">Bảng ghép (Masonry)</div>
+          </div>
+          <h5 class="font-bold mt-4 mb-2">Hiệu ứng Hover</h5>
+          <div class="grid grid-cols-1 gap-2">
+            <div class="card-select" onclick="saveSetting('effect','lift',this)">Nổi lên</div>
+            <div class="card-select" onclick="saveSetting('effect','glow',this)">Phát sáng</div>
+            <div class="card-select" onclick="saveSetting('effect','blur',this)">Tối đi</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel p-5 mt-6">
+        <h5 class="font-bold mb-3">Sắp xếp vị trí các mục</h5>
+        <div id="orderList" class="space-y-2"></div>
       </div>
     </div>
 
-    <!-- FORM THÊM/SỬA SẢN PHẨM -->
     <div id="productFormBox" class="modal-bg" style="z-index:70">
       <div class="panel w-full max-w-2xl p-6 max-h-[90vh] overflow-auto">
-        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold" id="pFormTitle">➕ Thêm SP Mới</h4><button onclick="closeModal('productFormBox')" class="text-2xl">✕</button></div>
+        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold" id="pFormTitle">➕ Thêm SP</h4><button onclick="closeModal('productFormBox')" class="text-2xl">✕</button></div>
         <input type="hidden" id="pId">
         <div class="grid md:grid-cols-2 gap-3 mb-3">
-          <div class="md:col-span-2"><span class="lbl">Tên Phần Mềm / Tool *</span><input id="pName" class="inp" placeholder="VD: FAKE LAG PC"></div>
-          <div><span class="lbl">Giá (VNĐ) *</span><input id="pPrice" type="number" min="0" class="inp"></div>
-          <div><span class="lbl">Loại Tool / Thiết bị</span>
-            <select id="pType" class="inp">
-              <option>Tool PC</option><option>Panel iOS</option><option>Panel Android</option><option>Acc Clone FF LV5</option>
-            </select>
-          </div>
+          <div class="md:col-span-2"><span class="lbl">Tên *</span><input id="pName" class="inp"></div>
+          <div><span class="lbl">Giá *</span><input id="pPrice" type="number" min="0" class="inp"></div>
+          <div><span class="lbl">Loại</span><select id="pType" class="inp"><option>Tool PC</option><option>Panel iOS</option><option>Panel Android</option><option>Acc Clone FF LV5</option></select></div>
           <div><span class="lbl">Trạng thái</span><select id="pStatus" class="inp"><option value="undetected">Undetected</option><option value="maintenance">Bảo trì</option></select></div>
-          <div><span class="lbl">Link Ảnh</span><input id="pImg" class="inp" placeholder="https://..."></div>
-          
-          <!-- THÊM FILE & VIDEO -->
-          <div class="md:col-span-2"><span class="lbl">Link Tải File (Google Drive, MediaFire...)</span><input id="pFile" class="inp" placeholder="https://drive.google.com/..."></div>
-          <div class="md:col-span-2"><span class="lbl">Link Video Hướng Dẫn (YouTube, TikTok...)</span><input id="pVideo" class="inp" placeholder="https://youtube.com/..."></div>
-
-          <div class="md:col-span-2"><span class="lbl">Mô tả Sản phẩm</span><textarea id="pDesc" rows="3" class="inp" placeholder="Mô tả tính năng..."></textarea></div>
+          <div><span class="lbl">Link Ảnh</span><input id="pImg" class="inp"></div>
+          <div class="md:col-span-2"><span class="lbl">Link File</span><input id="pFile" class="inp"></div>
+          <div class="md:col-span-2"><span class="lbl">Link Video</span><input id="pVideo" class="inp"></div>
+          <div class="md:col-span-2"><span class="lbl">Mô tả</span><textarea id="pDesc" rows="3" class="inp"></textarea></div>
         </div>
-        <div class="flex gap-2 mt-4">
-          <button class="btn px-6 py-2" onclick="saveProduct()">💾 Lưu Sản Phẩm</button>
-          <button class="btn-ghost px-6 py-2" onclick="closeModal('productFormBox')">Hủy</button>
-        </div>
+        <div class="flex gap-2"><button class="btn px-6 py-2" onclick="saveProduct()">💾 Lưu</button><button class="btn-ghost px-6 py-2" onclick="closeModal('productFormBox')">Hủy</button></div>
       </div>
     </div>
 
-    <!-- FORM NẠP KEY -->
     <div id="keyFormBox" class="modal-bg" style="z-index:70">
       <div class="panel w-full max-w-2xl p-6">
-        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold">🔑 Nạp Key Cho Sản Phẩm</h4><button onclick="closeModal('keyFormBox')" class="text-2xl">✕</button></div>
-        <div class="panel p-3 mb-3" style="border-color:var(--accent)"><b>Sản phẩm:</b> <span id="kProdName" style="color:var(--green)"></span></div>
+        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold">🔑 Nạp Key</h4><button onclick="closeModal('keyFormBox')" class="text-2xl">✕</button></div>
+        <div class="panel p-3 mb-3"><b>SP:</b> <span id="kProdName" style="color:var(--green)"></span></div>
         <input type="hidden" id="kProd">
-        <span class="lbl">Danh sách key (mỗi dòng 1 key)</span><textarea id="kList" rows="8" class="inp mb-3" placeholder="KEY1&#10;KEY2&#10;KEY3"></textarea>
+        <span class="lbl">Mỗi dòng 1 key</span><textarea id="kList" rows="8" class="inp mb-3"></textarea>
         <div class="flex gap-2"><button class="btn px-6 py-2" onclick="addKeys()">📥 Đẩy Key</button><button class="btn-ghost px-6 py-2" onclick="closeModal('keyFormBox')">Đóng</button></div>
       </div>
     </div>
 
-    <!-- TAB THÀNH VIÊN -->
-    <div id="aUsers" class="atab hidden admin-only">
-      <div class="flex justify-between items-center mb-4">
-        <h4 class="display text-2xl font-extrabold">Quản lý Thành viên & CTV</h4>
-        <button class="btn px-5 py-2" onclick="createCTV()">➕ Tạo Tài Khoản CTV</button>
+    <div id="freePostFormBox" class="modal-bg" style="z-index:70">
+      <div class="panel w-full max-w-xl p-6 max-h-[90vh] overflow-auto">
+        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold" id="fpFormTitle">➕ Bài Free</h4><button onclick="closeModal('freePostFormBox')" class="text-2xl">✕</button></div>
+        <input type="hidden" id="fpEditId">
+        <div class="space-y-3">
+          <div><span class="lbl">Tiêu đề *</span><input id="fpName" class="inp" placeholder="VD: Tool Free Fire"></div>
+          <div><span class="lbl">Loại</span><input id="fpTypeInput" class="inp" placeholder="VD: Tool PC, Panel Android"></div>
+          
+          <div><span class="lbl">Link Ảnh Sản Phẩm (Tùy chọn)</span><input id="fpImgInput" class="inp" placeholder="https://... (Ảnh minh họa tool)"></div>
+
+          <div><span class="lbl">Giới thiệu (Hỗ trợ xuống dòng)</span><textarea id="fpDescInput" rows="4" class="inp" placeholder="Nhập giới thiệu..."></textarea></div>
+          <div><span class="lbl">Link tải File gốc *</span><input id="fpDownloadInput" class="inp" placeholder="Google Drive, MediaFire..."></div>
+          <div><span class="lbl">Link Video Hướng Dẫn (Youtube, TikTok)</span><input id="fpVideoInput" class="inp" placeholder="https://youtube.com/watch?v=..."></div>
+          <div><span class="lbl">Mật khẩu giải nén RAR (Ghi chú nội bộ)</span><input id="fpPassInput" class="inp" placeholder="Nhập pass RAR..."></div>
+          
+          <div class="panel p-4 rounded border mt-2" style="border-color:var(--line); background:rgba(0,0,0,0.2)">
+            <label class="flex items-center gap-3 cursor-pointer font-bold mb-1">
+              <input type="checkbox" id="fpIsVip" style="width:22px;height:22px" onchange="toggleVipInput()">
+              <span style="color:var(--gold)">Bật chế độ Vượt Link (Link4m)</span>
+            </label>
+            <p class="text-xs mb-3" style="color:var(--mute)">Khách sẽ bấm vào link này để sang trang lấy pass.</p>
+            <div id="fpVipLinkBox" class="hidden mt-2">
+              <span class="lbl">Link rút gọn *</span>
+              <input id="fpShortInput" class="inp" placeholder="https://link4m.com/...">
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2 mt-5"><button class="btn px-8 py-2.5" onclick="saveFreePost()">💾 Lưu Bài</button><button class="btn-ghost px-6 py-2" onclick="closeModal('freePostFormBox')">Hủy</button></div>
       </div>
-      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Tài khoản</th><th>Gmail</th><th>Vai trò</th><th>Hành động</th></tr></thead><tbody id="adminUsers"></tbody></table></div>
     </div>
 
-    <!-- TAB VOUCHERS -->
-    <div id="aVouchers" class="atab hidden admin-only">
-      <div class="flex justify-between items-center mb-4">
-        <h4 class="display text-2xl font-extrabold">Quản lý Mã Giảm Giá Toàn Sàn</h4>
-        <button class="btn px-5 py-2" onclick="createGlobalVoucher()">➕ Tạo Mã Giảm Giá</button>
+    <div id="voucherFormBox" class="modal-bg" style="z-index:70">
+      <div class="panel w-full max-w-md p-6">
+        <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold" id="vFormTitle">➕ Tạo Mã Giảm Giá</h4><button onclick="closeModal('voucherFormBox')" class="text-2xl">✕</button></div>
+        <div class="space-y-3">
+          <div><span class="lbl">Tên Mã (VD: GIAM10, VNX50) *</span><input id="vCode" class="inp" placeholder="Viết liền không dấu..." oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')"></div>
+          <div><span class="lbl">Loại giảm giá</span>
+            <select id="vType" class="inp" onchange="toggleVType()">
+              <option value="percent">Giảm theo % (Phần trăm)</option>
+              <option value="fixed">Giảm theo số tiền (VNĐ)</option>
+            </select>
+          </div>
+          <div><span class="lbl">Giá trị giảm *</span><input id="vValue" type="number" class="inp" placeholder="VD: 10 (tức 10%) hoặc 50000 (tức 50k)"></div>
+          <div>
+            <span class="lbl">Áp dụng cho (Tùy chọn)</span>
+            <input id="vUser" class="inp" placeholder="Nhập Tên ĐN để tặng riêng (Bỏ trống = Toàn sàn)">
+            <p class="text-xs mt-1" style="color:var(--mute)">Nếu nhập Tên ĐN, chỉ người đó mới dùng được mã này.</p>
+          </div>
+        </div>
+        <div class="flex gap-2 mt-5"><button class="btn px-8 py-2.5" onclick="saveVoucher()">💾 Tạo Mã</button><button class="btn-ghost px-6 py-2" onclick="closeModal('voucherFormBox')">Hủy</button></div>
       </div>
-      <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Mã</th><th>Giảm giá</th><th>Trạng thái</th><th>Hành động</th></tr></thead><tbody id="adminVouchers"></tbody></table></div>
     </div>
 
-    <!-- TAB LỊCH SỬ BÁN -->
-    <div id="aOrders" class="atab"><div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Thời gian</th><th>Khách</th><th>Sản phẩm</th><th>Giá</th><th>Key</th></tr></thead><tbody id="adminOrders"></tbody></table></div></div>
   </div>
 </div>
 
-<!-- TOAST -->
-<div id="toast">
-  <div class="toast-box">
-    <div class="toast-icon" id="toastIcon">✅</div>
-    <div class="toast-content">
-      <div class="toast-title" id="toastTitle">Thành công</div>
-      <div class="toast-msg" id="toastMsg"></div>
-    </div>
-  </div>
-</div>
+<div id="toast"><div class="toast-box"><div class="toast-icon" id="toastIcon">✅</div><div class="toast-content"><div class="toast-title" id="toastTitle">Thành công</div><div class="toast-msg" id="toastMsg"></div></div></div></div>
 
 <script>
-/* ===== CONFIG ===== */
+/* ================= CONFIG ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyAuGoZ-qmBJa4iIZHu7AWL43Xrhbq_aUvQ",
   authDomain: "conanvnx-shop.firebaseapp.com",
@@ -647,66 +633,183 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'CONANMODS'; 
-const BANK_INFO = { bankId: 'MBBank', accountNo: '0971139244', accountName: 'LE VAN ANH DUY' };
+const ADMIN_USER = 'conan';
+const ADMIN_PASS = 'conanvnx';
+const BANK_INFO = { bankId:'MBBank', accountNo:'0971139244', accountName:'LE VAN ANH DUY' };
 
-/* ===== UTILS ===== */
+/* ================= EMAILJS CONFIG ================= */
+emailjs.init("v8RfR_mKxVbheNOsO"); 
+const EMAILJS_SERVICE_ID = "service_fni0aea"; 
+const EMAILJS_TEMPLATE_ID = "template_in59khn";
+
+/* ================= UTILS ================= */
 const $ = id => document.getElementById(id);
-const fmt = n => Number(n || 0).toLocaleString('vi-VN');
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n||0).toLocaleString('vi-VN');
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const openModal = id => $(id).classList.add('open');
 const closeModal = id => $(id).classList.remove('open');
 const lines = t => String(t||'').split('\n').map(s=>s.trim()).filter(Boolean);
 async function sha256(s){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');}
 
-/* ===== THEME & LAYOUT ===== */
+/* ================= THEME / LAYOUT / ORDER ================= */
 const themes = {
-  default: { accent:'#00d4ff', green:'#00ff9d', text:'#d9f7ff', bg:'#050a0e' },
-  cyber:   { accent:'#c266ff', green:'#ff66c4', text:'#f3e8ff', bg:'#0a0514' },
-  blood:   { accent:'#ff4d6d', green:'#ff9933', text:'#ffe6e6', bg:'#0a0505' },
-  gold:    { accent:'#ffcc33', green:'#ffd700', text:'#fffbe6', bg:'#0a0905' },
-  ocean:   { accent:'#00bfff', green:'#00fa9a', text:'#e0ffff', bg:'#02121a' },
-  retro:   { accent:'#ff8c00', green:'#ffd700', text:'#fff5e6', bg:'#1a0f00' },
-  matrix:  { accent:'#00ff00', green:'#32cd32', text:'#e0ffe0', bg:'#000a00' },
-  anime:   { accent:'#ff69b4', green:'#ffb6c1', text:'#fff0f5', bg:'#14000a' }
+  default:{accent:'#00d4ff',green:'#00ff9d',text:'#d9f7ff',bg:'#050a0e'},
+  cyber:{accent:'#c266ff',green:'#ff66c4',text:'#f3e8ff',bg:'#0a0514'},
+  blood:{accent:'#ff4d6d',green:'#ff9933',text:'#ffe6e6',bg:'#0a0505'},
+  gold:{accent:'#ffcc33',green:'#ffd700',text:'#fffbe6',bg:'#0a0905'},
+  ocean:{accent:'#00bfff',green:'#00fa9a',text:'#e0ffff',bg:'#02121a'},
+  retro:{accent:'#ff8c00',green:'#ffd700',text:'#fff5e6',bg:'#1a0f00'},
+  matrix:{accent:'#00ff00',green:'#32cd32',text:'#e0ffe0',bg:'#000a00'},
+  anime:{accent:'#ff69b4',green:'#ffb6c1',text:'#fff0f5',bg:'#14000a'}
 };
-function applyTheme(n){const t=themes[n]||themes.default;const r=document.documentElement;r.style.setProperty('--accent',t.accent);r.style.setProperty('--green',t.green);r.style.setProperty('--text',t.text);r.style.setProperty('--bg',t.bg);}
-let currentLayout='grid',currentEffect='lift';
-function applyLayout(n){const g=$('productGrid');if(!g)return;g.className='';currentLayout=n;if(n==='list')g.classList.add('layout-list');else if(n==='masonry')g.classList.add('layout-masonry');else g.classList.add('layout-grid');}
-db.ref('settings/theme').on('value',s=>applyTheme(s.val()||'default'));
+let currentLayout='grid', currentEffect='lift', rgbInterval=null;
+let currentOrder = ['shop','free','seller','contact'];
+
+function applyTheme(n){
+  if(n==='custom') return;
+  const t = themes[n] || themes.default;
+  const r = document.documentElement;
+  r.style.setProperty('--accent',t.accent);
+  r.style.setProperty('--green',t.green);
+  r.style.setProperty('--text',t.text);
+  r.style.setProperty('--bg',t.bg);
+}
+function applyLayout(n){const g=$('productGrid');if(!g)return;currentLayout=n;g.className='';if(n==='list')g.classList.add('layout-list');else if(n==='masonry')g.classList.add('layout-masonry');else g.classList.add('layout-grid');}
+
+db.ref('settings/theme').on('value',s=>{const v=s.val()||'default';applyTheme(v);document.querySelectorAll('#themeList .card-select').forEach(x=>x.classList.toggle('selected',x.dataset.theme===v));});
 db.ref('settings/layout').on('value',s=>applyLayout(s.val()||'grid'));
 db.ref('settings/effect').on('value',s=>{currentEffect=s.val()||'lift';renderProducts();});
-async function saveSetting(k,v,el){const p=el.parentElement;p.querySelectorAll('.card-select').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');await db.ref('settings/'+k).set(v);toast('Đã lưu cấu hình','success');}
+db.ref('settings/order').on('value',s=>{currentOrder=s.val()||['shop','free','seller','contact'];renderTabsAndSidebar();});
+db.ref('settings/rgb').on('value',s=>setRgb(s.val()===true));
+db.ref('settings/customAccent').on('value',s=>{if(s.val())document.documentElement.style.setProperty('--accent',s.val());});
+db.ref('settings/customGreen').on('value',s=>{if(s.val())document.documentElement.style.setProperty('--green',s.val());});
 
-/* ===== TOAST ===== */
+async function saveSetting(k,v,el){
+  if(el){const p=el.parentElement;p.querySelectorAll('.card-select').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');}
+  await db.ref('settings/'+k).set(v);toast('Đã lưu','success');
+}
+function setRgb(on){
+  if(rgbInterval){clearInterval(rgbInterval);rgbInterval=null;}
+  if(on){
+    let h=0;
+    rgbInterval=setInterval(()=>{
+      h=(h+3)%360;
+      const c=`hsl(${h},100%,60%)`,g2=`hsl(${(h+60)%360},100%,55%)`;
+      document.documentElement.style.setProperty('--accent',c);
+      document.documentElement.style.setProperty('--green',g2);
+    },80);
+  }
+  $('rgbToggleBtn').textContent=on?'🌈 RGB động: BẬT':'🌈 RGB động';
+}
+function toggleRgb(){db.ref('settings/rgb').once('value').then(s=>db.ref('settings/rgb').set(!s.val()));}
+
+const tabLabels = {
+  shop:{icon:'🛒',label:'Sản phẩm'},
+  free:{icon:'🎁',label:'Key & Tool Free'},
+  seller:{icon:'🏪',label:'Hợp tác'},
+  contact:{icon:'💬',label:'Liên hệ'}
+};
+function renderTabsAndSidebar(){
+  const nav=$('mainTabs'), side=$('sidebarItems');
+  nav.innerHTML='';side.innerHTML='';
+  currentOrder.forEach(key=>{
+    const t=tabLabels[key];if(!t)return;
+    const d=document.createElement('div');
+    d.className='nav-tab'+(key==='shop'?' active':'');
+    d.dataset.tab=key;
+    d.textContent=t.icon+' '+t.label;
+    d.onclick=()=>switchTab(key);
+    nav.appendChild(d);
+    const s=document.createElement('div');
+    s.className='sidebar-item'+(key==='shop'?' active':'');
+    s.dataset.tab=key;
+    s.textContent=t.icon+' '+t.label;
+    s.onclick=()=>switchTab(key);
+    side.appendChild(s);
+  });
+  const ol=$('orderList');
+  if(ol) ol.innerHTML = currentOrder.map((k,i)=>`
+    <div class="order-item">
+      <span class="text-sm flex-1">${tabLabels[k]?.icon} ${tabLabels[k]?.label}</span>
+      <button class="btn-ghost px-2 py-1" ${i===0?'disabled':''} onclick="moveTab(${i},-1)">▲</button>
+      <button class="btn-ghost px-2 py-1" ${i===currentOrder.length-1?'disabled':''} onclick="moveTab(${i},1)">▼</button>
+    </div>`).join('');
+}
+function moveTab(i,dir){
+  const j=i+dir;if(j<0||j>=currentOrder.length)return;
+  const arr=[...currentOrder];[arr[i],arr[j]]=[arr[j],arr[i]];
+  db.ref('settings/order').set(arr);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const tl=$('themeList');
+  if(tl) tl.innerHTML=Object.entries(themes).map(([k,t])=>`<div class="card-select" data-theme="${k}" onclick="saveSetting('theme','${k}',this)" style="border-color:${t.accent}">${k}</div>`).join('');
+});
+
+/* ================= TOAST ================= */
 let toastTimer;
 function toast(msg,type='success',title=''){
-  const t=$('toast');const titles={success:'✅ Thành công',error:'❌ Lỗi',warning:'⚠️ Cảnh báo',info:'ℹ️ Thông báo'};const icons={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
-  $('toastIcon').textContent=icons[type]||'✅';$('toastTitle').textContent=title||titles[type]||'Thông báo';$('toastMsg').textContent=msg;
-  t.querySelector('.toast-box').className='toast-box '+type;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3800);
+  const t=$('toast');
+  const titles={success:'✅ Thành công',error:'❌ Lỗi',warning:'⚠️ Cảnh báo',info:'ℹ️ Thông báo'};
+  const icons={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
+  $('toastIcon').textContent=icons[type]||'✅';
+  $('toastTitle').textContent=title||titles[type]||'Thông báo';
+  $('toastMsg').textContent=msg;
+  t.querySelector('.toast-box').className='toast-box '+type;
+  t.classList.add('show');clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3800);
 }
 
-/* ===== TAB ===== */
+/* ================= POPUP VỪA CÓ NGƯỜI MUA ================= */
+const fakeNames = ["Tuấn Anh", "Minh Hùng", "Hoàng Nam", "Bảo Long", "Gia Bảo", "Khánh Duy", "Thành Đạt", "Văn Hậu", "Quốc Cường", "Đức Phúc"];
+const fakeLocations = ["Hà Nội", "TP.HCM", "Đà Nẵng", "Hải Phòng", "Cần Thơ", "Nghệ An", "Thanh Hóa"];
+
+function showPurchasePopup() {
+  if (!products || Object.keys(products).length === 0) return; 
+  const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+  const randomLoc = fakeLocations[Math.floor(Math.random() * fakeLocations.length)];
+  const productIds = Object.keys(products);
+  const randomPid = productIds[Math.floor(Math.random() * productIds.length)];
+  const prodName = products[randomPid].name;
+  const times = ["1 phút trước", "2 phút trước", "5 phút trước", "Vừa xong"];
+  const randomTime = times[Math.floor(Math.random() * times.length)];
+
+  $('lpAvatar').textContent = randomName.charAt(0);
+  $('lpUser').textContent = `${randomName} (${randomLoc})`;
+  $('lpAction').innerHTML = `vừa mua <span class="text-green-400 font-bold">${prodName}</span>`;
+  $('lpTime').textContent = randomTime;
+
+  const popup = $('livePurchasePopup');
+  popup.classList.remove('-translate-x-[150%]');
+  
+  setTimeout(() => { popup.classList.add('-translate-x-[150%]'); }, 6000);
+}
+
+setTimeout(() => {
+  showPurchasePopup();
+  setInterval(() => {
+    if (Math.random() > 0.4) { showPurchasePopup(); }
+  }, 25000);
+}, 10000);
+
+/* ================= TAB ================= */
 function switchTab(name){
   document.querySelectorAll('.nav-tab[data-tab]').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  $('tab-'+name).classList.add('active');
+  const el=$('tab-'+name);if(el)el.classList.add('active');
   document.querySelectorAll('.sidebar-item[data-tab]').forEach(s=>s.classList.toggle('active',s.dataset.tab===name));
   window.scrollTo({top:250,behavior:'smooth'});
 }
 
-/* ===== AUTH ===== */
+/* ================= AUTH ================= */
 let me=null,meData=null,isAdmin=false,isCTV=false,authMode='login',myRef=null,notiRef=null,ordersRef=null;
 
 function openAuth(mode){
   authMode=mode;const reg=mode==='register';
   document.querySelectorAll('.regOnly').forEach(e=>e.style.display=reg?'':'none');
   $('forgotLink').style.display=reg?'none':'';
-  $('aUser').placeholder=reg?'Tên đăng nhập (viết liền)':'Tên đăng nhập hoặc Gmail';
   $('authTitle').textContent=reg?'Tạo tài khoản':'Đăng nhập';
   $('authBtn').textContent=reg?'Đăng ký':'Đăng nhập';
-  $('authSwitch').textContent=reg?'Đã có TK? Đăng nhập':'Chưa có TK? Đăng ký';
+  $('authSwitch').textContent=reg?'Đã có TK? Đăng nhập':'Chưa có? Đăng ký';
   openModal('authModal');
 }
 async function submitAuth(){
@@ -716,27 +819,30 @@ async function submitAuth(){
   try{
     if(authMode==='register'){
       const nick=$('aNick').value.trim(),email=$('aEmail').value.trim().toLowerCase();
-      if(nick.length<2)return toast('Tên hiển thị ≥2 ký tự','warning');
-      if(!/^[a-z0-9_]{3,20}$/.test(id))return toast('Tên ĐN 3-20 ký tự a-z 0-9 _','warning');
-      if(id===ADMIN_USER)return toast('Tên này bị giữ','warning');
+      if(nick.length<2)return toast('Tên ≥2 ký tự','warning');
+      if(!/^[a-z0-9_]{3,20}$/.test(id))return toast('Tên ĐN 3-20 ký tự a-z0-9_','warning');
+      if(id===ADMIN_USER)return toast('Tên bị giữ','warning');
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return toast('Gmail không hợp lệ','warning');
       if((await db.ref('users/'+id).once('value')).exists())return toast('Tên đã tồn tại','warning');
       if((await db.ref('users').orderByChild('email').equalTo(email).once('value')).exists())return toast('Gmail đã dùng','warning');
       await db.ref('users/'+id).set({username:id,nickname:nick,email,passHash:hash,role:'user',createdAt:Date.now()});
-      saveSession(id,hash);startSession(id);toast('Chào mừng '+nick+'!','success','Đăng ký thành công');
+      saveSession(id,hash);startSession(id);
+      toast('Chào mừng '+nick+'!','success');
     }else{
       if(id===ADMIN_USER){
         if(pass!==ADMIN_PASS)return toast('Sai MK','error');
-        saveSession(ADMIN_USER,hash);startAdminSession();toast('Xin chào Admin','success','Đăng nhập');
+        saveSession(ADMIN_USER,hash);startAdminSession();toast('Xin chào Admin','success');
       }else{
         let uname=id;
         if(id.includes('@')){
           const s=await db.ref('users').orderByChild('email').equalTo(id).once('value');
-          uname=null;s.forEach(c=>{uname=c.key;});if(!uname)return toast('Sai thông tin','error');
+          uname=null;s.forEach(c=>{uname=c.key;});
+          if(!uname)return toast('Sai thông tin','error');
         }
         const snap=await db.ref('users/'+uname).once('value');
         if(!snap.exists()||snap.val().passHash!==hash)return toast('Sai thông tin','error');
-        saveSession(uname,hash);startSession(uname);toast('Chào '+(snap.val().nickname||uname)+'!','success','Đăng nhập');
+        saveSession(uname,hash);startSession(uname);
+        toast('Chào '+(snap.val().nickname||uname)+'!','success');
       }
     }
     closeModal('authModal');$('aPass').value='';
@@ -746,42 +852,39 @@ const saveSession=(u,h)=>localStorage.setItem('vnx_session',JSON.stringify({u,h}
 
 function startSession(u){
   if(myRef)myRef.off();
-  me=u;
-  myRef=db.ref('users/'+u);
+  me=u;myRef=db.ref('users/'+u);
   myRef.on('value',s=>{
     if(!s.exists()){logout();return;}
-    meData=s.val();
-    isAdmin = false; 
-    isCTV = (meData.role === 'ctv');
+    meData=s.val();isAdmin=false;isCTV=(meData.role==='ctv');
     renderHeader();
-    if(isCTV) $('adminPanelTitle').textContent = 'CTV · ' + (meData.nickname || me);
-    else $('adminPanelTitle').textContent = 'ADMIN · CONAN VNX';
+    $('adminPanelTitle').textContent = isCTV ? 'CTV · '+(meData.nickname||me) : 'ADMIN · CONAN VNX';
   });
   if(notiRef)notiRef.off();
   notiRef=db.ref('notifications/'+u);
-  notiRef.on('value',s=>{renderNotifications(s.val()||{});});
+  notiRef.on('value',s=>renderNotifications(s.val()||{}));
   loadCart();
 }
 function startAdminSession(){
   if(myRef){myRef.off();myRef=null;}if(notiRef){notiRef.off();notiRef=null;}
-  me=ADMIN_USER;isAdmin=true;isCTV=false;meData={nickname:'ADMIN',username:'admin',role:'admin'};renderHeader();
-  $('adminPanelTitle').textContent = 'ADMIN · CONAN VNX';
+  me=ADMIN_USER;isAdmin=true;isCTV=false;
+  meData={nickname:'ADMIN',username:'conan',role:'admin'};
+  renderHeader();$('adminPanelTitle').textContent='ADMIN · CONAN VNX';
 }
 function logout(){
   localStorage.removeItem('vnx_session');
   if(myRef)myRef.off();if(notiRef)notiRef.off();myRef=notiRef=null;
   me=meData=null;isAdmin=false;isCTV=false;
-  closeModal('adminPanel');closeModal('profileModal');closeModal('cartModal');closeModal('qrPayModal');
+  ['adminPanel','profileModal','cartModal','qrPayModal'].forEach(closeModal);
   renderHeader();renderNotifications({});renderCart();
   toast('Đã đăng xuất','info');
 }
 function renderHeader(){
   $('userBox').classList.toggle('hidden',!me);$('userBox').classList.toggle('flex',!!me);
   $('guestBox').classList.toggle('hidden',!!me);
-  $('adminBtn').classList.toggle('hidden', !(isAdmin || isCTV));
+  $('adminBtn').classList.toggle('hidden',!(isAdmin||isCTV));
   if(me){
     $('uName').textContent=meData?.nickname||me;
-    $('uRole').textContent = isAdmin ? '[Admin]' : (isCTV ? '[CTV]' : '');
+    $('uRole').textContent=isAdmin?'[Admin]':(isCTV?'[CTV]':'');
     $('uAvatar').textContent=(meData?.nickname||me||'?').charAt(0).toUpperCase();
   }
 }
@@ -800,50 +903,51 @@ async function submitForgot(){
   if(!s.exists()){$('fResult').innerHTML='<span class="tag-no">Không tìm thấy.</span>';return;}
   let uname;s.forEach(c=>{uname=c.key;});
   await db.ref('reset_requests').push({username:uname,email,time:Date.now(),status:'open'});
-  $('fResult').innerHTML='<span class="tag-ok">Đã gửi yêu cầu.</span>';toast('Đã gửi yêu cầu','success');
+  $('fResult').innerHTML='<span class="tag-ok">Đã gửi yêu cầu.</span>';toast('Đã gửi','success');
 }
 
-/* ===== NOTIFICATIONS & CART ===== */
+/* ================= NOTI / CART ================= */
 let notiData={};
 function renderNotifications(data){
-  notiData=data;const all=Object.entries(data).sort((a,b)=>(b[1].time||0)-(a[1].time||0));const unread=all.filter(([,n])=>!n.read).length;
+  notiData=data;
+  const all=Object.entries(data).sort((a,b)=>(b[1].time||0)-(a[1].time||0));
+  const unread=all.filter(([,n])=>!n.read).length;
   $('notiBadge').textContent=unread;$('notiBadge').classList.toggle('hidden',unread===0);
-  $('notiList').innerHTML=all.length?all.map(([id,n])=>`<div class="noti-item ${n.read?'':'unread'}" onclick="readNoti('${id}')"><div class="flex gap-2 items-start"><span style="font-size:1.3rem">${n.icon||'📢'}</span><div class="flex-1"><div class="text-sm font-bold">${esc(n.title||'Thông báo')}</div><div class="text-xs mt-1" style="color:var(--mute)">${esc(n.body||'')}</div></div></div></div>`).join(''):'<div class="p-4 text-center text-sm" style="color:var(--mute)">Không có thông báo</div>';
+  $('notiList').innerHTML=all.length?all.map(([id,n])=>`<div class="noti-item ${n.read?'':'unread'}" onclick="readNoti('${id}')"><div class="flex gap-2 items-start"><span style="font-size:1.3rem">${n.icon||'📢'}</span><div class="flex-1"><div class="text-sm font-bold">${esc(n.title||'')}</div><div class="text-xs mt-1" style="color:var(--mute)">${esc(n.body||'')}</div></div></div></div>`).join(''):'<div class="p-4 text-center text-sm" style="color:var(--mute)">Không có thông báo</div>';
 }
 function toggleNotifications(){$('notiDropdown').classList.toggle('hidden');}
-document.addEventListener('click',e=>{const dd=$('notiDropdown');if(!dd)return;if(!e.target.closest('[onclick*="toggleNotifications"]') && !e.target.closest('#notiDropdown')) dd.classList.add('hidden');});
+document.addEventListener('click',e=>{const dd=$('notiDropdown');if(!dd)return;if(!e.target.closest('[onclick*="toggleNotifications"]')&&!e.target.closest('#notiDropdown'))dd.classList.add('hidden');});
 async function readNoti(id){if(!me)return;await db.ref('notifications/'+me+'/'+id+'/read').set(true);}
-async function markAllRead(){if(!me)return;const upd={};Object.keys(notiData).forEach(id=>upd['notifications/'+me+'/'+id+'/read']=true);await db.ref().update(upd);toast('Đã đánh dấu tất cả','info');}
-async function pushNoti(user,title,body,icon){await db.ref('notifications/'+user).push({title,body,icon:icon||'📢',time:Date.now(),read:false});}
+async function markAllRead(){if(!me)return;const upd={};Object.keys(notiData).forEach(id=>upd['notifications/'+me+'/'+id+'/read']=true);await db.ref().update(upd);toast('Đã đánh dấu','info');}
 
 let cart=[];
 function loadCart(){try{cart=JSON.parse(localStorage.getItem('vnx_cart_'+me)||'[]');}catch(e){cart=[];}renderCart();}
 function saveCart(){localStorage.setItem('vnx_cart_'+me,JSON.stringify(cart));renderCart();}
 function renderCart(){
-  const total=cart.reduce((s,i)=>s+i.price,0);$('cartBadge').textContent=cart.length;$('cartBadge').classList.toggle('hidden',cart.length===0);
+  const total=cart.reduce((s,i)=>s+i.price,0);
+  $('cartBadge').textContent=cart.length;$('cartBadge').classList.toggle('hidden',cart.length===0);
   if(!cart.length){$('cartList').innerHTML='<div class="p-8 text-center" style="color:var(--mute)">🛒 Giỏ hàng trống</div>';$('cartFooter').classList.add('hidden');return;}
   $('cartFooter').classList.remove('hidden');$('cartTotal').textContent=fmt(total)+'đ';
-  $('cartList').innerHTML=cart.map((item,i)=>`<div class="flex items-center gap-3 panel p-3 mb-2"><img src="${esc(item.img||'')}" style="width:60px;height:60px;object-fit:cover;background:#040d12" onerror="this.style.display='none'"><div class="flex-1"><b class="display text-lg">${esc(item.name)}</b><div class="text-sm" style="color:var(--accent)"><b>${fmt(item.price)}đ</b></div></div><button class="btn-ghost px-3 py-1" style="color:var(--red);border-color:#ff4d6d55" onclick="removeCart(${i})">🗑️</button></div>`).join('');
+  $('cartList').innerHTML=cart.map((item,i)=>`<div class="flex items-center gap-3 panel p-3 mb-2"><img src="${esc(item.img||'')}" style="width:60px;height:60px;object-fit:cover" onerror="this.style.display='none'"><div class="flex-1"><b class="display text-lg">${esc(item.name)}</b><div class="text-sm" style="color:var(--accent)"><b>${fmt(item.price)}đ</b></div></div><button class="btn-ghost px-3 py-1" onclick="removeCart(${i})">🗑️</button></div>`).join('');
 }
 function addToCart(){
   if(!me){closeModal('productModal');openAuth('login');return toast('Đăng nhập trước','warning');}
-  if(isAdmin||isCTV)return toast('Quản trị viên không mua được','warning');
+  if(isAdmin||isCTV)return toast('Admin không mua','warning');
   const p=products[currentPid];if(!p)return;if(stock[currentPid]===0)return toast('Hết key','error');
-  if(cart.find(c=>c.id===currentPid))return toast('SP đã có trong giỏ','warning');
+  if(cart.find(c=>c.id===currentPid))return toast('Đã có trong giỏ','warning');
   cart.push({id:currentPid,name:p.name,price:p.price,img:p.img||''});
-  saveCart();toast('Đã thêm "'+p.name+'" vào giỏ','success');closeModal('productModal');
+  saveCart();toast('Đã thêm','success');closeModal('productModal');
 }
-function removeCart(i){cart.splice(i,1);saveCart();toast('Đã xóa','info');}
+function removeCart(i){cart.splice(i,1);saveCart();}
 function openCart(){if(!me)return openAuth('login');openModal('cartModal');renderCart();}
-
 async function checkoutCart(){
   if(!me)return openAuth('login');if(!cart.length)return toast('Giỏ trống','warning');
   const total=cart.reduce((s,i)=>s+i.price,0);
   closeModal('cartModal');
-  openQrPayment(null, 'Giỏ hàng ('+cart.length+' SP)', total);
+  openQrPayment(null,'Giỏ hàng ('+cart.length+' SP)',total);
 }
 
-/* ===== PRODUCTS ===== */
+/* ================= PRODUCTS ================= */
 let products={},stock={},currentVoucher=null;
 db.ref('products').on('value',s=>{products=s.val()||{};renderProducts();renderAdminProducts();});
 db.ref('keys').on('value',s=>{
@@ -851,7 +955,6 @@ db.ref('keys').on('value',s=>{
   s.forEach(c=>{stock[c.key]=c.numChildren();total+=c.numChildren();});
   $('statKeys').textContent=total;renderProducts();renderAdminProducts();
 });
-
 function renderProducts(){
   const search=($('searchBox')?.value||'').toLowerCase();
   const ftype=$('filterType')?.value||'';
@@ -863,93 +966,206 @@ function renderProducts(){
   else if(fsort==='priceDown')ids.sort((a,b)=>products[b].price-products[a].price);
   else ids.sort((a,b)=>(products[b].time||0)-(products[a].time||0));
   $('statProducts').textContent=Object.keys(products).length;
-  
-  if(!ids.length){$('productGrid').innerHTML='<div style="color:var(--mute)">Không có sản phẩm.</div>';return;}
-  
+  if(!ids.length){$('productGrid').innerHTML='<div style="color:var(--mute)">Không có SP.</div>';return;}
   $('productGrid').innerHTML=ids.map(id=>{
     const p=products[id],n=stock[id]||0,maint=p.status==='maintenance',out=n===0;
     const isAcc=p.type==='Acc Clone FF LV5';
-    const infoTag=isAcc?'<span class="clone-tag">🎮 Acc Clone FF LV5</span>':'<span class="clone-tag">🔑 Key</span>';
+    const infoTag=isAcc?'<span class="chip chip-gold">🎮 Acc Clone</span>':'<span class="chip">🔑 Key</span>';
     return `<article class="card effect-${currentEffect} p-4" onclick="openProduct('${id}')">
-      <img src="${esc(p.img)}" alt="${esc(p.name)}" class="w-full h-40 object-cover mb-3" style="background:#040d12"
-           onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22200%22><rect width=%22400%22 height=%22200%22 fill=%22%23040d12%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%2312303a%22 font-size=%2236%22 text-anchor=%22middle%22>CONAN VNX</text></svg>'">
+      <img src="${esc(p.img)}" alt="" class="w-full h-40 object-cover mb-3" style="background:#040d12" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22200%22><rect width=%22400%22 height=%22200%22 fill=%22%23040d12%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%2312303a%22 font-size=%2236%22 text-anchor=%22middle%22>CONAN VNX</text></svg>'">
       <div class="flex justify-between items-start gap-2 w-full">
         <h3 class="display text-2xl font-extrabold leading-tight">${esc(p.name)}</h3>
-        <span class="border px-2 py-0.5 text-xs whitespace-nowrap ${maint?'tag-bad':'tag-ok'}">${maint?'Bảo trì':'Undetected'}</span>
+        <span class="border px-2 py-0.5 text-xs ${maint?'tag-bad':'tag-ok'}">${maint?'Bảo trì':'Undetected'}</span>
       </div>
-      <p class="text-xs mt-1 w-full" style="color:var(--green)">${esc(p.type||'Tool')} · còn ${n} key</p>
-      <div class="mt-1 w-full">${infoTag}</div>
-      <p class="text-sm mt-2 flex-1 w-full" style="color:var(--mute)">${esc((p.desc||'').slice(0,80))}...</p>
+      <p class="text-xs mt-1" style="color:var(--green)">${esc(p.type||'Tool')} · còn ${n} key</p>
+      <div class="mt-1">${infoTag}</div>
+      <p class="text-sm mt-2 flex-1" style="color:var(--mute)">${esc((p.desc||'').slice(0,80))}...</p>
       <div class="flex items-center justify-between mt-4 w-full">
         <b class="display text-3xl" style="color:var(--accent)">${fmt(p.price)}đ</b>
-        <button class="btn px-6 py-2" ${maint||out?'disabled':''}>${maint?'Bảo trì':out?'Hết key':'Mua ngay'}</button>
+        <button class="btn px-6 py-2" ${maint||out?'disabled':''}>${maint?'Bảo trì':out?'Hết':'Mua'}</button>
       </div></article>`;
   }).join('');
 }
 
-/* ===== FREE KEYS RENDER ===== */
-db.ref('free_keys').on('value', s => {
-  const fk = s.val() || {};
-  const arr = Object.values(fk).sort((a,b) => b.time - a.time);
-  if (!arr.length) { $('freeKeyGrid').innerHTML = '<div style="color:var(--mute)">Chưa có key free nào.</div>'; return; }
-  $('freeKeyGrid').innerHTML = arr.map(k => `
-    <div class="panel p-4 rounded-xl border border-green-500/50 hover:border-green-400 cursor-pointer transition" onclick="openFreeKey('${esc(k.key)}', '${esc(k.name)}', '${esc(k.type)}', '${esc(k.desc)}')">
-      <div class="flex items-center gap-3">
-        <div style="font-size:2rem">🎁</div>
-        <div>
-          <b class="display text-xl text-green-400">${esc(k.name)}</b>
-          <div class="text-xs" style="color:var(--mute)">${esc(k.type)}</div>
+/* ================= FREE POSTS ================= */
+db.ref('free_posts').on('value',s=>{
+  const fp=s.val()||{};
+  const arr=Object.entries(fp).sort((a,b)=>(b[1].time||0)-(a[1].time||0));
+  const grid=$('freePostGrid');
+  
+  if(grid){
+    if(!arr.length){grid.innerHTML='<div style="color:var(--mute)">Chưa có bài Free.</div>';}
+    else grid.innerHTML=arr.map(([id,p])=>{
+      // Tạo phần ảnh nếu có
+      let imgHtml = '';
+      if(p.img) {
+        imgHtml = `<img src="${esc(p.img)}" class="w-full h-40 object-cover mb-3 rounded" onerror="this.style.display='none'">`;
+      }
+      
+      return `
+      <div class="free-post cursor-pointer p-4 flex flex-col" onclick="openFreePost('${id}')">
+        ${imgHtml}
+        <div class="flex items-start gap-3">
+          ${!p.img ? `<div style="font-size:2.5rem">${p.isVip?'🔒':'🎁'}</div>` : ''}
+          <div class="flex-1">
+            <b class="display text-xl ${p.isVip?'text-yellow-400':'text-green-400'}">${esc(p.name)}</b>
+            <div class="text-xs mt-1" style="color:var(--mute)">${esc(p.type||'')}</div>
+            ${p.isVip?'<span class="vip-tag mt-1 inline-block">🔒 Vượt link lấy MK</span>':'<span class="chip chip-green mt-1">✅ Mở ngay</span>'}
+          </div>
         </div>
-      </div>
-    </div>
-  `).join('');
+        <p class="text-xs mt-2" style="color:var(--mute)">${esc((p.desc||'').slice(0,100))}...</p>
+      </div>`;
+    }).join('');
+  }
+  
+  // Bảng quản lý Admin
+  const tb=$('adminFreePosts');
+  if(tb){
+    tb.innerHTML=arr.length?arr.map(([id,p])=>`<tr>
+      <td><b>${esc(p.name)}</b></td><td>${esc(p.type||'')}</td>
+      <td>${p.isVip?`<a href="${esc(p.shortLink)}" target="_blank" class="underline text-yellow-400">Link Vượt</a>`:'<span class="text-green-400">Không</span>'}</td>
+      <td class="select-all font-bold" style="color:var(--green)">${esc(p.pass||'—')}</td>
+      <td class="whitespace-nowrap">
+        ${isAdmin ? `<button class="btn-ghost px-3 py-1 text-blue-400 border-blue-500/50" onclick="showFreePostForm('${id}')">✏️ Sửa</button>
+        <button class="btn-ghost px-3 py-1 ml-1" style="color:var(--red)" onclick="deleteFreePost('${id}')">🗑️ Xóa</button>` 
+        : `<span class="text-xs text-red-400">Không có quyền</span>`}
+      </td>
+    </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--mute);padding:1rem">Chưa có bài.</td></tr>';
+  }
 });
 
-function openFreeKey(key, name, type, desc) {
-  $('fkProdName').textContent = name;
-  $('fkType').textContent = type;
-  $('fkDesc').textContent = desc;
-  $('fkKeyVal').textContent = key;
-  openModal('freeKeyModal');
-}
-function copyFreeKey(){navigator.clipboard.writeText($('fkKeyVal').textContent).then(()=>toast('Đã sao chép key','success'));}
-
-/* ===== ADMIN FREE KEYS RENDER ===== */
-db.ref('free_keys').on('value', s => {
-  const fk = s.val() || {};
-  const arr = Object.entries(fk).sort((a,b) => b[1].time - a[1].time);
-  if (!arr.length) { $('adminFreeKeys').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:1rem;color:var(--mute)">Chưa có key free.</td></tr>'; return; }
-  $('adminFreeKeys').innerHTML = arr.map(([id, k]) => `
-    <tr>
-      <td><b>${esc(k.name)}</b></td>
-      <td>${esc(k.type)}</td>
-      <td class="select-all font-bold text-green-400">${esc(k.key)}</td>
-      <td><button class="btn-ghost px-3 py-1" style="color:var(--red)" onclick="deleteFreeKey('${id}')">🗑️ Xóa</button></td>
-    </tr>
-  `).join('');
-});
-
-function showFreeKeyForm() {
-  $('fkName').value = ''; $('fkType').value = ''; $('fkDesc').value = ''; $('fkKey').value = '';
-  openModal('freeKeyFormBox');
-}
-async function saveFreeKey() {
-  const name = $('fkName').value.trim(), type = $('fkType').value.trim(), desc = $('fkDesc').value.trim(), key = $('fkKey').value.trim();
-  if (!name || !key) return toast('Nhập tên và key', 'warning');
-  await db.ref('free_keys').push({ name, type, desc, key, time: Date.now() });
-  toast('Đã đăng key free', 'success'); closeModal('freeKeyFormBox');
-}
-async function deleteFreeKey(id) {
-  if (!confirm('Xóa key free này?')) return;
-  await db.ref('free_keys/' + id).remove(); toast('Đã xóa', 'success');
+function getEmbedUrl(url) {
+  if (!url) return '';
+  let ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  if (ytMatch && ytMatch[1]) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+  let tiktokMatch = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/);
+  if (tiktokMatch && tiktokMatch[1]) return `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`;
+  return url;
 }
 
-/* ===== PRODUCT DETAIL ===== */
+let currentFreePost=null;
+
+function openFreePost(id){
+  db.ref('free_posts/'+id).once('value').then(s=>{
+    const p=s.val();if(!p)return;
+    currentFreePost=p;
+    
+    $('fpTitle').textContent=(p.isVip?'🔒 ':'🎁 ')+p.name;
+    $('fpType').textContent=p.type||'';
+    
+    // Xử lý ảnh
+    if(p.img) {
+      $('fpImgContainer').classList.remove('hidden');
+      $('fpImg').src = p.img;
+      $('fpImg').style.display = 'block';
+    } else {
+      $('fpImgContainer').classList.add('hidden');
+      $('fpImg').style.display = 'none';
+    }
+
+    $('fpDesc').textContent=p.desc||'(Không có giới thiệu)';
+    $('fpDownload').href=p.downloadLink||'#';
+    
+    // Xử lý Vượt Link
+    if(p.isVip && p.shortLink){
+      $('fpShortLink').classList.remove('hidden');
+      $('fpShortLink').href = p.shortLink;
+      $('fpVipMsg').classList.remove('hidden');
+    }else{
+      $('fpShortLink').classList.add('hidden');
+      $('fpVipMsg').classList.add('hidden');
+    }
+
+    if(p.video) {
+      $('fpVideoBox').classList.remove('hidden');
+      $('fpVideoIframe').innerHTML = `<iframe src="${getEmbedUrl(p.video)}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+    } else {
+      $('fpVideoBox').classList.add('hidden');
+      $('fpVideoIframe').innerHTML = '';
+    }
+
+    openModal('freePostModal');
+  });
+}
+
+function toggleVipInput() {
+  if($('fpIsVip').checked) {
+    $('fpVipLinkBox').classList.remove('hidden');
+  } else {
+    $('fpVipLinkBox').classList.add('hidden');
+    $('fpShortInput').value = '';
+  }
+}
+
+function showFreePostForm(id = null){
+  if(id) {
+    db.ref('free_posts/'+id).once('value').then(s => {
+      const p = s.val(); if(!p) return;
+      $('fpEditId').value = id;
+      $('fpName').value = p.name || '';
+      $('fpTypeInput').value = p.type || '';
+      $('fpImgInput').value = p.img || '';
+      $('fpDescInput').value = p.desc || '';
+      $('fpDownloadInput').value = p.downloadLink || '';
+      $('fpVideoInput').value = p.video || '';
+      $('fpPassInput').value = p.pass || '';
+      $('fpIsVip').checked = p.isVip || false;
+      $('fpShortInput').value = p.shortLink || '';
+      
+      toggleVipInput();
+      document.querySelector('#freePostFormBox h4').textContent = '✏️ Sửa Bài Free';
+      openModal('freePostFormBox');
+    });
+  } else {
+    ['fpName','fpTypeInput','fpImgInput','fpDescInput','fpDownloadInput','fpVideoInput','fpPassInput','fpShortInput'].forEach(i=>$(i).value='');
+    $('fpEditId').value = '';
+    $('fpIsVip').checked = false;
+    toggleVipInput();
+    document.querySelector('#freePostFormBox h4').textContent = '➕ Bài Free';
+    openModal('freePostFormBox');
+  }
+}
+
+async function saveFreePost(){
+  const id = $('fpEditId').value;
+  const name=$('fpName').value.trim();
+  const downloadLink=$('fpDownloadInput').value.trim();
+  const isVip=$('fpIsVip').checked;
+  const shortLink=$('fpShortInput').value.trim();
+  
+  if(!name||!downloadLink)return toast('Nhập tên và link tải file','warning');
+  if(isVip && !shortLink) return toast('Đã bật Vượt Link nhưng chưa nhập link rút gọn!','warning');
+  
+  const data = {
+    name, 
+    type: $('fpTypeInput').value.trim(), 
+    img: $('fpImgInput').value.trim(),
+    desc: $('fpDescInput').value.trim(),
+    downloadLink, 
+    video: $('fpVideoInput').value.trim(), 
+    pass: $('fpPassInput').value.trim(), 
+    isVip, shortLink, time: Date.now(), creator: me
+  };
+
+  if (id) {
+    await db.ref('free_posts/' + id).update(data);
+    toast('Đã cập nhật bài Free', 'success');
+  } else {
+    await db.ref('free_posts').push(data);
+    toast('Đã đăng bài Free', 'success');
+  }
+  closeModal('freePostFormBox');
+}
+async function deleteFreePost(id){
+  if(!confirm('Xóa bài này?'))return;
+  await db.ref('free_posts/'+id).remove();toast('Đã xóa','success');
+}
+
+/* ================= PRODUCT DETAIL ================= */
 let currentPid=null;
 function openProduct(pid){
   const p=products[pid];if(!p)return;
   currentPid=pid;currentVoucher=null;
-  
   const n=stock[pid]||0,maint=p.status==='maintenance',out=n===0;
   $('pmName').textContent=p.name;
   $('pmDesc').textContent=p.desc||'(Chưa có mô tả)';
@@ -958,265 +1174,350 @@ function openProduct(pid){
   $('pmStatus').textContent=maint?'Bảo trì':'Undetected';$('pmStatus').className='chip '+(maint?'chip-red':'chip-green');
   $('pmType').textContent=p.type||'Tool';$('pmType').className='chip';
   $('pmStock').textContent=`Còn ${n} key`;$('pmStock').className='chip '+(n>0?'chip-green':'chip-red');
-  $('pmPrice').textContent=fmt(p.price)+'đ';$('pmOldPrice').style.display='none';$('pmVoucher').value='';$('pmVoucherMsg').textContent='';
-  
+  $('pmPrice').textContent=fmt(p.price)+'đ';
+  $('pmOldPrice').style.display='none';$('pmVoucher').value='';$('pmVoucherMsg').textContent='';
   const isAcc=p.type==='Acc Clone FF LV5';
-  $('pmInfo').innerHTML=p.info?`<div class="panel p-2"><span class="lbl">${isAcc?'🎮 Thông tin tài khoản':'📝 Thông tin TK/MK + Key'}</span><div class="text-xs" style="color:var(--green);white-space:pre-wrap">${esc(p.info)}</div></div>`:'';
-
-  // Render Links (Video + File)
-  let linksHtml = '';
-  if (p.file) linksHtml += `<a href="${esc(p.file)}" target="_blank" class="btn-ghost w-full block text-center py-2 text-sm rounded border border-blue-500 text-blue-400 hover:bg-blue-900/20">📥 Tải File (Google Drive/MediaFire)</a>`;
-  if (p.video) linksHtml += `<a href="${esc(p.video)}" target="_blank" class="btn-ghost w-full block text-center py-2 text-sm rounded border border-red-500 text-red-400 hover:bg-red-900/20">▶️ Xem Video Hướng Dẫn</a>`;
-  $('pmLinks').innerHTML = linksHtml;
-  
+  $('pmInfo').innerHTML=p.info?`<div class="panel p-2"><span class="lbl">${isAcc?'🎮 Thông tin TK':'📝 Thông tin'}</span><div class="text-xs" style="color:var(--green);white-space:pre-wrap">${esc(p.info)}</div></div>`:'';
+  let linksHtml='';
+  if(p.file)linksHtml+=`<a href="${esc(p.file)}" target="_blank" class="btn-ghost w-full block text-center py-2 text-sm rounded border border-blue-500 text-blue-400">📥 Tải File</a>`;
+  if(p.video)linksHtml+=`<a href="${esc(p.video)}" target="_blank" class="btn-ghost w-full block text-center py-2 text-sm rounded border border-red-500 text-red-400">▶️ Video HD</a>`;
+  $('pmLinks').innerHTML=linksHtml;
   const btn=$('pmBuyBtn'),btnCart=$('pmCartBtn');
   if(isAdmin||isCTV){btn.textContent='⚠️ Quản trị';btn.disabled=true;btnCart.disabled=true;}
   else if(maint){btn.textContent='🔧 Bảo trì';btn.disabled=true;btnCart.disabled=true;}
   else if(out){btn.textContent='❌ Hết key';btn.disabled=true;btnCart.disabled=true;}
   else if(!me){btn.textContent='🔑 Đăng nhập';btn.disabled=false;btnCart.disabled=false;}
-  else{btn.textContent='⚡ Mua ngay (QR)';btn.disabled=false;btnCart.disabled=false;}
+  else{btn.textContent='⚡ Mua ngay';btn.disabled=false;btnCart.disabled=false;}
   openModal('productModal');
 }
-
 function checkVoucher(){
-  const code = $('pmVoucher').value.trim().toUpperCase();
-  if(!code) return;
-  db.ref('vouchers/'+code).once('value').then(snap => {
-    if(!snap.exists()) {$('pmVoucherMsg').style.color='var(--red)';$('pmVoucherMsg').textContent='Mã giảm giá không tồn tại!';return;}
-    const v = snap.val();
-    if(v.active === false) {$('pmVoucherMsg').style.color='var(--red)';$('pmVoucherMsg').textContent='Mã này đã bị khóa!';return;}
-    currentVoucher = v;
-    const p = products[currentPid];
-    let discount = 0;
-    if(v.type === 'percent') discount = p.price * (v.value / 100);
-    else if (v.type === 'fixed') discount = v.value;
-    let newPrice = p.price - discount;
-    if(newPrice < 0) newPrice = 0;
-    $('pmPrice').textContent = fmt(newPrice) + 'đ';
-    $('pmOldPrice').textContent = fmt(p.price) + 'đ';$('pmOldPrice').style.display = 'inline';
-    $('pmVoucherMsg').style.color='var(--green)';
-    $('pmVoucherMsg').textContent = `Đã áp dụng! Giảm ${v.type==='percent'?v.value+'% (tức '+fmt(discount)+'đ)':fmt(v.value)+'đ'}`;
+  const code=$('pmVoucher').value.trim().toUpperCase();if(!code)return;
+  db.ref('vouchers/'+code).once('value').then(snap=>{
+    const msg=$('pmVoucherMsg');
+    if(!snap.exists()){msg.style.color='var(--red)';msg.textContent='Mã không tồn tại!';return;}
+    const v=snap.val();
+    if(v.active===false){msg.style.color='var(--red)';msg.textContent='Mã bị khóa!';return;}
+    
+    if(v.targetUser && v.targetUser !== me) {
+      msg.style.color='var(--red)';
+      msg.textContent='Mã này không dành cho bạn!';
+      return;
+    }
+
+    currentVoucher=v;const p=products[currentPid];
+    let discount=v.type==='percent'?p.price*(v.value/100):v.value;
+    let newPrice=Math.max(0,p.price-discount);
+    $('pmPrice').textContent=fmt(newPrice)+'đ';
+    $('pmOldPrice').textContent=fmt(p.price)+'đ';$('pmOldPrice').style.display='inline';
+    msg.style.color='var(--green)';
+    msg.textContent=`Đã áp dụng! Giảm ${v.type==='percent'?v.value+'%':fmt(v.value)+'đ'}`;
   });
 }
-
 async function confirmBuy(){
   if(!me){closeModal('productModal');openAuth('login');return toast('Đăng nhập','warning');}
-  if(isAdmin||isCTV)return toast('Quản trị viên không mua','warning');
+  if(isAdmin||isCTV)return toast('Admin không mua','warning');
   const p=products[currentPid];if(!p)return;
-  
-  let finalPrice = p.price;
-  if(currentVoucher) {
-    if(currentVoucher.type === 'percent') finalPrice -= (p.price * currentVoucher.value / 100);
-    else if (currentVoucher.type === 'fixed') finalPrice -= currentVoucher.value;
-    if(finalPrice < 0) finalPrice = 0;
-  }
-  
-  openQrPayment(currentPid, p.name, finalPrice);
-  closeModal('productModal'); 
-}
-
-/* ===== THANH TOÁN VIETQR ===== */
-let currentOrderId = null;
-let checkInterval = null;
-
-function openQrPayment(pid, prodName, price) {
-  if (!me) return toast('Vui lòng đăng nhập!', 'warning');
-  
-  const userPrefix = me.replace(/[^a-zA-Z0-9]/g, '').toUpperCase(); 
-  const randomNum = Math.floor(Math.random() * 900000 + 100000); 
-  const orderCode = `VNX${userPrefix}${randomNum}`; 
-  currentOrderId = orderCode; 
-
-  $('qrOrderId').textContent = orderCode;
-  $('qrProdName').textContent = prodName;
-  $('qrAmount').textContent = fmt(price) + ' VNĐ';
-  $('qrMemo').textContent = orderCode;
-  
-  const qrUrl = `https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${orderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
-  $('qrImage').src = qrUrl;
-  $('qrStatus').textContent = '⏳ Đang chờ thanh toán...';$('qrStatus').style.color = 'var(--gold)';
-  openModal('qrPayModal');
-  
-  db.ref('qr_pending_orders/' + orderCode).set({
-    user: me, productId: pid, productName: prodName, price: price, status: 'pending', createdAt: Date.now()
-  });
-  
-  if (checkInterval) clearInterval(checkInterval);
-  // Tự động check ngầm nhưng không hiện thông báo nếu chưa thanh toán
-  checkInterval = setInterval(() => checkPaymentStatus(false), 3000);
-}
-
-function copyQrMemo() {if (!currentOrderId) return;navigator.clipboard.writeText(currentOrderId).then(() => toast('Đã copy nội dung CK', 'success'));}
-
-function manualCheckPayment() {
-  if (!currentOrderId) return toast('Chưa có mã đơn hàng!', 'error');
-  $('qrStatus').textContent = '⏳ Đang kiểm tra...';
-  $('qrStatus').style.color = 'var(--gold)';
-  checkPaymentStatus(true);
-}
-
-async function checkPaymentStatus(isManual = false) {
-  if (!currentOrderId) return;
-  
-  try {
-    const snap = await db.ref('qr_pending_orders/' + currentOrderId).once('value');
-    const data = snap.val();
+  let finalPrice=p.price;
+  if(currentVoucher){
+    finalPrice=Math.max(0,p.price-(currentVoucher.type==='percent'?p.price*currentVoucher.value/100:currentVoucher.value));
     
-    if (data && data.status === 'paid') {
-      clearInterval(checkInterval);
-      $('qrStatus').textContent = '✅ Thanh toán thành công! Đang lấy key...';
-      $('qrStatus').style.color = 'var(--green)';
-      
-      if (data.productId) {
-        await processQrSuccess(data.productId, data.price, data.productName);
-      } else {
-        for (const item of cart) {
-           await processQrSuccess(item.id, item.price, item.name);
-        }
-        cart = []; saveCart();
-      }
-      
-      setTimeout(() => {
-        closeModal('qrPayModal');
-        toast('Mua hàng thành công!', 'success');
-      }, 1500);
-    } else if (isManual) {
-      $('qrStatus').textContent = '❌ Chưa nhận được thanh toán. Vui lòng thử lại sau!';
-      $('qrStatus').style.color = 'var(--red)';
-      toast('Hệ thống chưa nhận được tiền, vui lòng chờ 1-2 phút!', 'warning');
-    }
-  } catch (e) {
-    console.error('Lỗi kiểm tra:', e);
-    if (isManual) {
-      $('qrStatus').textContent = '❌ Lỗi kết nối. Vui lòng thử lại!';
-      $('qrStatus').style.color = 'var(--red)';
+    if(currentVoucher.targetUser) {
+      db.ref('vouchers/'+$('pmVoucher').value.trim().toUpperCase()).remove();
     }
   }
+  openQrPayment(currentPid,p.name,finalPrice);
+  closeModal('productModal');
 }
 
-async function processQrSuccess(pid, price, prodName) {
+/* ================= THANH TOÁN QR ================= */
+let currentOrderId=null,checkInterval=null;
+function openQrPayment(pid,prodName,price){
+  if(!me)return toast('Đăng nhập!','warning');
+  const userPrefix=me.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+  const randomNum=Math.floor(Math.random()*900000+100000);
+  const orderCode=`VNX${userPrefix}${randomNum}`;
+  currentOrderId=orderCode;
+  $('qrOrderId').textContent=orderCode;
+  $('qrProdName').textContent=prodName;
+  $('qrAmount').textContent=fmt(price)+' VNĐ';
+  $('qrMemo').textContent=orderCode;
+  $('qrImage').src=`https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${orderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
+  $('qrStatus').textContent='⏳ Đang chờ thanh toán...';$('qrStatus').style.color='var(--gold)';
+  openModal('qrPayModal');
+  db.ref('qr_pending_orders/'+orderCode).set({user:me,productId:pid,productName:prodName,price,status:'pending',createdAt:Date.now()});
+  if(checkInterval)clearInterval(checkInterval);
+  checkInterval=setInterval(()=>checkPaymentStatus(false),3000);
+}
+function copyQrMemo(){if(!currentOrderId)return;navigator.clipboard.writeText(currentOrderId).then(()=>toast('Đã copy','success'));}
+function manualCheckPayment(){if(!currentOrderId)return toast('Chưa có mã đơn!','error');$('qrStatus').textContent='⏳ Đang kiểm tra...';checkPaymentStatus(true);}
+async function checkPaymentStatus(isManual=false){
+  if(!currentOrderId)return;
+  try{
+    const snap=await db.ref('qr_pending_orders/'+currentOrderId).once('value');
+    const data=snap.val();
+    if(data&&data.status==='paid'){
+      clearInterval(checkInterval);
+      $('qrStatus').textContent='✅ Thanh toán thành công!';$('qrStatus').style.color='var(--green)';
+      if(data.productId){await processQrSuccess(data.productId,data.price,data.productName);}
+      else{for(const item of cart){await processQrSuccess(item.id,item.price,item.name);}cart=[];saveCart();}
+      setTimeout(()=>{closeModal('qrPayModal');toast('Mua hàng thành công!','success');},1500);
+    }else if(isManual){
+      $('qrStatus').textContent='❌ Chưa nhận được. Thử lại sau!';$('qrStatus').style.color='var(--red)';
+    }
+  }catch(e){if(isManual)$('qrStatus').textContent='❌ Lỗi kết nối!';}
+}
+async function processQrSuccess(pid,price,prodName){
+  let got=null;
+  for(let i=0;i<5&&!got;i++){
+    const first=await db.ref('keys/'+pid).limitToFirst(1).once('value');
+    if(!first.exists())break;
+    const k=Object.keys(first.val())[0];
+    const r=await db.ref(`keys/${pid}/${k}`).transaction(cur=>cur?null:undefined);
+    if(r.committed)got=first.val()[k].key;
+  }
+  if(!got)return toast('Hết key!','error');
+  await db.ref('orders').push({user:me,productId:pid,productName:prodName,price,key:got,time:Date.now(),method:'VietQR'});
+  await db.ref('qr_pending_orders/'+currentOrderId).remove();
+  $('keyProd').textContent=prodName;$('keyVal').textContent=got;openModal('keyModal');
+}
+function copyKey(){navigator.clipboard.writeText($('keyVal').textContent).then(()=>toast('Đã copy','success'));}
+
+/* ================= QUẢN LÝ ĐƠN CHỜ (DUYỆT TAY) ================= */
+// Tự động load danh sách đơn chờ
+db.ref('qr_pending_orders').on('value', s => {
+  const pend = s.val() || {};
+  const arr = Object.entries(pend).filter(([k,v]) => v.status === 'pending').reverse();
+  const el = $('adminPendingOrders');
+  if(el) {
+    if(!arr.length) {
+      el.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--mute);padding:1rem">Không có đơn nào đang chờ.</td></tr>';
+    } else {
+      el.innerHTML = arr.map(([code, o]) => `
+        <tr>
+          <td><b style="color:var(--gold)">${esc(code)}</b></td>
+          <td>${esc(o.user)}</td>
+          <td>${esc(o.productName)}</td>
+          <td style="color:var(--accent)">${fmt(o.price)}đ</td>
+          <td><button class="btn px-3 py-1" onclick="approveOrder('${code}')">✅ Duyệt & Gửi Key</button></td>
+        </tr>
+      `).join('');
+    }
+  }
+});
+
+// Hàm Admin bấm duyệt đơn (Đã tích hợp gửi Email)
+async function approveOrder(orderCode) {
+  if(!isAdmin) return toast('Không có quyền!', 'error');
+  
+  const snap = await db.ref('qr_pending_orders/' + orderCode).once('value');
+  const data = snap.val();
+  if(!data) return toast('Đơn này không tồn tại!', 'warning');
+  
+  if(!confirm(`Bạn đã kiểm tra sao kê ngân hàng và chắc chắn đơn "${orderCode}" đã thanh toán?`)) return;
+
+  // 1. Lấy Key từ kho
   let got = null;
   for (let i = 0; i < 5 && !got; i++) {
-    const first = await db.ref('keys/' + pid).limitToFirst(1).once('value');
+    const first = await db.ref('keys/' + data.productId).limitToFirst(1).once('value');
     if (!first.exists()) break;
     const k = Object.keys(first.val())[0];
-    const r = await db.ref(`keys/${pid}/${k}`).transaction(cur => cur ? null : undefined);
+    const r = await db.ref(`keys/${data.productId}/${k}`).transaction(cur => cur ? null : undefined);
     if (r.committed) got = first.val()[k].key;
   }
-  if (!got) return toast('Hết key, vui lòng liên hệ Admin!', 'error');
   
-  await db.ref('orders').push({user: me, productId: pid, productName: prodName, price: price, key: got, time: Date.now(), method: 'VietQR'});
-  await db.ref('qr_pending_orders/' + currentOrderId).remove();
-  $('keyProd').textContent = prodName;$('keyVal').textContent = got;openModal('keyModal');
+  if (!got) return toast('Sản phẩm này đã hết key! Vui lòng nạp thêm.', 'error');
+  
+  // 2. Lưu vào lịch sử mua
+  await db.ref('orders').push({
+    user: data.user, 
+    productId: data.productId, 
+    productName: data.productName, 
+    price: data.price, 
+    key: got, 
+    time: Date.now(), 
+    method: 'Admin Duyệt Tay'
+  });
+  
+  // 3. Gửi thông báo (Chuông đỏ) trên web
+  await db.ref('notifications/' + data.user).push({
+    title: 'Thanh toán thành công!',
+    body: `Đơn hàng "${data.productName}" đã được duyệt. Key của bạn là: ${got}`,
+    icon: '🎉', time: Date.now(), read: false
+  });
+  
+  // 4. GỬI EMAIL TỰ ĐỘNG
+  try {
+    // Lấy email của khách từ database
+    const userSnap = await db.ref('users/' + data.user).once('value');
+    const userData = userSnap.val();
+    
+    if(userData && userData.email) {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_name: userData.nickname || data.user,
+        to_email: userData.email,
+        product_name: data.productName,
+        key_code: got,
+        price: fmt(data.price) + 'đ'
+      });
+      toast('Đã gửi Key qua Gmail cho khách!', 'success');
+    } else {
+      toast('Khách không có Gmail, chỉ gửi thông báo trên web!', 'warning');
+    }
+  } catch(e) {
+    console.error('Lỗi gửi email:', e);
+    toast('Lỗi gửi email, nhưng key đã lưu vào lịch sử web!', 'warning');
+  }
+  
+  // 5. Xóa đơn chờ
+  await db.ref('qr_pending_orders/' + orderCode).remove();
+  
+  // 6. Hiển thị Key cho Admin
+  $('keyProd').textContent = data.productName + ' (Đơn: ' + orderCode + ')';
+  $('keyVal').textContent = got;
+  openModal('keyModal');
 }
 
-function copyKey(){navigator.clipboard.writeText($('keyVal').textContent).then(()=>toast('Đã sao chép key','success'));}
-
-/* ===== PROFILE ===== */
+/* ================= PROFILE ================= */
 function openProfile(){
   if(!me)return toast('Đăng nhập trước','warning');
   if(isAdmin||isCTV){$('pfUsername').textContent=me;$('pfNick').textContent=meData?.nickname||'-';$('pfEmail').textContent=meData?.email||'-';$('pfCreated').textContent='-';}
-  else{
-    const u=meData||{};
-    $('pfUsername').textContent=u.username||me;$('pfNick').textContent=u.nickname||'-';$('pfEmail').textContent=u.email||'-';$('pfCreated').textContent=u.createdAt?new Date(u.createdAt).toLocaleString('vi-VN'):'-';
-  }
+  else{const u=meData||{};$('pfUsername').textContent=u.username||me;$('pfNick').textContent=u.nickname||'-';$('pfEmail').textContent=u.email||'-';$('pfCreated').textContent=u.createdAt?new Date(u.createdAt).toLocaleString('vi-VN'):'-';}
   switchProfileTab('pass');openModal('profileModal');
 }
 function switchProfileTab(t){
   ['pass','orders'].forEach(x=>{$('pfTab-'+x).classList.toggle('active',x===t);$('pfBody-'+x).classList.toggle('hidden',x!==t);});
   if(t==='orders')renderPfOrders();
 }
-let myOrdersCache=[];
 function renderPfOrders(){
-  if(isAdmin||isCTV){$('pfOrderList').innerHTML='<div style="color:var(--mute);text-align:center;padding:1rem">Quản trị viên không có.</div>';return;}
+  if(isAdmin||isCTV){$('pfOrderList').innerHTML='<div style="color:var(--mute);text-align:center;padding:1rem">Admin không có.</div>';return;}
   if(ordersRef)ordersRef.off();
   ordersRef=db.ref('orders');
   ordersRef.on('value',s=>{
     const rows=[];s.forEach(c=>{const o=c.val()||{};if(o.user===me)rows.push(o);});
-    rows.sort((a,b)=>b.time-a.time);myOrdersCache=rows;
+    rows.sort((a,b)=>b.time-a.time);
     if(!rows.length){$('pfOrderList').innerHTML='<div style="color:var(--mute);text-align:center;padding:1rem">Chưa mua gì.</div>';return;}
-    $('pfOrderList').innerHTML=rows.map(o=>`<div class="history-item"><div class="flex justify-between items-start gap-2 flex-wrap"><div><b class="display text-lg" style="color:var(--accent)">${esc(o.productName)}</b><div class="text-xs" style="color:var(--mute)">${new Date(o.time).toLocaleString('vi-VN')}</div></div><b style="color:var(--gold)">${fmt(o.price)}đ</b></div><div class="mt-2 p-2 panel select-all font-bold text-sm" style="color:var(--green);word-break:break-all">${esc(o.key)}</div><button class="btn-ghost px-3 py-1 mt-2 text-xs" onclick="copyOneKey('${esc(o.key)}')">📋 Sao chép key này</button></div>`).join('');
+    $('pfOrderList').innerHTML=rows.map(o=>`<div class="history-item"><div class="flex justify-between items-start gap-2 flex-wrap"><div><b class="display text-lg" style="color:var(--accent)">${esc(o.productName)}</b><div class="text-xs" style="color:var(--mute)">${new Date(o.time).toLocaleString('vi-VN')}</div></div><b style="color:var(--gold)">${fmt(o.price)}đ</b></div><div class="mt-2 p-2 panel select-all font-bold text-sm" style="color:var(--green);word-break:break-all">${esc(o.key)}</div><button class="btn-ghost px-3 py-1 mt-2 text-xs" onclick="copyOneKey('${esc(o.key)}')">📋 Copy</button></div>`).join('');
   });
 }
-function copyOneKey(k){navigator.clipboard.writeText(k).then(()=>toast('Đã sao chép key','success'));}
+function copyOneKey(k){navigator.clipboard.writeText(k).then(()=>toast('Đã copy','success'));}
 async function changePassword(){
-  if(isAdmin)return toast('Admin đổi MK trong code','warning');
+  if(isAdmin)return toast('Admin đổi trong code','warning');
   const oldP=$('pfOldPass').value,np=$('pfNewPass').value,np2=$('pfNewPass2').value;
-  if(!oldP)return toast('Nhập MK hiện tại','warning');if(np.length<6)return toast('MK mới ≥6 ký tự','warning');if(np!==np2)return toast('MK xác nhận không khớp','error');
-  const oldHash=await sha256(oldP);if(oldHash!==meData.passHash)return toast('MK hiện tại sai','error');
+  if(!oldP)return toast('Nhập MK cũ','warning');if(np.length<6)return toast('MK mới ≥6','warning');if(np!==np2)return toast('MK không khớp','error');
+  const oldHash=await sha256(oldP);if(oldHash!==meData.passHash)return toast('MK cũ sai','error');
   await db.ref('users/'+me+'/passHash').set(await sha256(np));saveSession(me,await sha256(np));
   $('pfOldPass').value='';$('pfNewPass').value='';$('pfNewPass2').value='';toast('Đổi MK thành công!','success');
 }
 
-/* ===== ADMIN PANEL ===== */
+/* ================= ADMIN PANEL ================= */
 let adminWatching=false;
 function openAdmin(){
-  if(!isAdmin && !isCTV) return;
+  if(!isAdmin&&!isCTV)return;
   openModal('adminPanel');
-  
-  if(isCTV) {
-    document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
-    document.querySelectorAll('#adminTabs button').forEach(b => b.classList.remove('btn','btn-ghost'));
-    document.querySelector('[data-tab="aProducts"]').className = 'btn px-5 py-2';
+  if(isCTV){
+    document.querySelectorAll('.admin-only').forEach(el=>el.classList.add('hidden'));
+    document.querySelectorAll('#adminTabs button').forEach(x=>{x.className='btn-ghost px-5 py-2';});
+    const b=document.querySelector('[data-tab="aProducts"]');if(b)b.className='btn px-5 py-2';
     document.querySelectorAll('.atab').forEach(x=>x.classList.add('hidden'));
     $('aProducts').classList.remove('hidden');
-  } else {
-    document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+  }else{
+    document.querySelectorAll('.admin-only').forEach(el=>el.classList.remove('hidden'));
     document.querySelectorAll('.atab').forEach(x=>x.classList.add('hidden'));
     $('aOrders').classList.remove('hidden');
-    document.querySelectorAll('#adminTabs button').forEach(x=>x.className='btn-ghost px-5 py-2');
-    document.querySelector('[data-tab="aOrders"]').className = 'btn px-5 py-2';
+    document.querySelectorAll('#adminTabs button').forEach(x=>{x.className='btn-ghost px-5 py-2';});
+    const b=document.querySelector('[data-tab="aOrders"]');if(b)b.className='btn px-5 py-2';
   }
   watchAdminData();
 }
-
 document.getElementById('adminTabs').addEventListener('click',e=>{
   const b=e.target.closest('button[data-tab]');if(!b)return;
-  document.querySelectorAll('.atab').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden');
+  document.querySelectorAll('.atab').forEach(x=>x.classList.add('hidden'));
+  $(b.dataset.tab).classList.remove('hidden');
   document.querySelectorAll('#adminTabs button').forEach(x=>x.className=(x===b?'btn':'btn-ghost')+' px-5 py-2');
   if(b.dataset.tab==='aProducts')renderAdminProducts();
+  if(b.dataset.tab==='aCustomers')renderCustomers();
 });
-
 function watchAdminData(){
   if(adminWatching)return;adminWatching=true;
-  
-  if(isAdmin) {
+  if(isAdmin){
     db.ref('users').on('value',s=>{
       const rows=[];s.forEach(c=>{
-        const u=c.val()||{};rows.push({key:c.key,username:u.username||c.key,nickname:u.nickname||'-',email:u.email||'-',role:u.role||'user'});
+        const u=c.val()||{};
+        if(u.role === 'ctv') {
+          rows.push({key:c.key,username:u.username||c.key,nickname:u.nickname||'-',email:u.email||'-',role:u.role});
+        }
       });
       rows.sort((a,b)=>a.username.localeCompare(b.username));
-      $('userCount').textContent=rows.length?`(${rows.length})`:'';
-      $('adminUsers').innerHTML=rows.map(u=>`<tr><td><b>${esc(u.username)}</b><br><span style="color:var(--mute);font-size:.8rem">${esc(u.nickname)}</span></td><td>${esc(u.email)}</td><td><span class="chip ${u.role==='ctv'?'chip-gold':'chip-green'}">${u.role==='ctv'?'CTV':'Thành viên'}</span></td><td><button class="btn-ghost px-3 py-1" style="color:var(--red);border-color:#ff4d6d55" onclick="deleteUser('${esc(u.key)}')">🗑️ Xóa</button></td></tr>`).join('');
+      $('adminUsers').innerHTML=rows.map(u=>`<tr><td><b>${esc(u.username)}</b><br><span style="color:var(--mute);font-size:.8rem">${esc(u.nickname)}</span></td><td>${esc(u.email)}</td><td><span class="chip chip-gold">CTV</span></td><td><button class="btn-ghost px-3 py-1" style="color:var(--red)" onclick="deleteUser('${esc(u.key)}')">🗑️</button></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;padding:1rem;color:var(--mute)">Chưa có CTV.</td></tr>';
+    });
+
+    db.ref('vouchers').on('value',s=>{
+      const vs=s.val()||{};
+      $('adminVouchers').innerHTML=Object.entries(vs).map(([code,v])=>`<tr>
+        <td><b>${esc(code)}</b></td>
+        <td>${v.type==='percent'?'Phần trăm':'Số tiền'}</td>
+        <td style="color:var(--gold); font-weight:bold;">${v.type==='percent'?v.value+'%':fmt(v.value)+'đ'}</td>
+        <td>${v.targetUser ? `<span class="chip chip-green">${v.targetUser}</span>` : 'Toàn sàn'}</td>
+        <td><span class="chip ${v.active?'chip-green':'chip-red'}">${v.active?'ON':'OFF'}</span></td>
+        <td><button class="btn-ghost px-3 py-1" onclick="toggleVoucher('${code}',${!v.active})">${v.active?'Khóa':'Mở'}</button><button class="btn-ghost px-3 py-1 ml-1" style="color:var(--red)" onclick="deleteVoucher('${code}')">Xóa</button></td>
+      </tr>`).join('')||'<tr><td colspan="6" style="text-align:center;padding:1rem;color:var(--mute)">Chưa có mã.</td></tr>';
     });
   }
-
   db.ref('orders').limitToLast(300).on('value',s=>{
-    const rows=[];s.forEach(c=>{
-      const o = c.val();const p = products[o.productId];
-      if(isCTV && (!p || p.creator !== me)) return;
-      rows.push(o);
-    });
+    const rows=[];s.forEach(c=>{const o=c.val();const p=products[o.productId];if(isCTV&&(!p||p.creator!==me))return;rows.push(o);});
     rows.reverse();
-    $('adminOrders').innerHTML=rows.map(o=>`<tr><td>${new Date(o.time).toLocaleString('vi-VN')}</td><td>${esc(o.user)}</td><td>${esc(o.productName)}</td><td>${fmt(o.price)}đ</td><td class="select-all">${esc(o.key)}</td></tr>`).join('') || '<tr><td colspan="5" style="color:var(--mute);text-align:center;padding:1rem">Chưa có đơn.</td></tr>';
+    $('adminOrders').innerHTML=rows.map(o=>`<tr><td>${new Date(o.time).toLocaleString('vi-VN')}</td><td>${esc(o.user)}</td><td>${esc(o.productName)}</td><td>${fmt(o.price)}đ</td><td class="select-all">${esc(o.key)}</td></tr>`).join('')||'<tr><td colspan="5" style="color:var(--mute);text-align:center;padding:1rem">Chưa có đơn.</td></tr>';
   });
+}
 
-  if(isAdmin) {
-    db.ref('vouchers').on('value', s => {
-       const vouchers = s.val() || {};
-       const rows = Object.entries(vouchers).map(([code, v]) => `<tr><td><b>${esc(code)}</b></td><td>${v.type === 'percent' ? v.value + '%' : fmt(v.value) + 'đ'}</td><td><span class="chip ${v.active?'chip-green':'chip-red'}">${v.active?'Hoạt động':'Đã khóa'}</span></td><td><button class="btn-ghost px-3 py-1" style="color:var(--red)" onclick="toggleVoucher('${code}', ${!v.active})">${v.active?'Khóa':'Mở'}</button></td></tr>`);
-       $('adminVouchers').innerHTML = rows.join('') || '<tr><td colspan="4" style="color:var(--mute);text-align:center;padding:1rem">Chưa có mã.</td></tr>';
+function renderCustomers() {
+  if(!isAdmin) return;
+  Promise.all([
+    db.ref('users').once('value'),
+    db.ref('orders').once('value')
+  ]).then(([usersSnap, ordersSnap]) => {
+    const users = usersSnap.val() || {};
+    const orders = ordersSnap.val() || {};
+    
+    const spendMap = {};
+    Object.values(orders).forEach(o => {
+      if(o.user) spendMap[o.user] = (spendMap[o.user] || 0) + o.price;
     });
-  }
+
+    const rows = [];
+    Object.entries(users).forEach(([key, u]) => {
+      if(u.role === 'ctv' || key === 'conan') return;
+      rows.push({
+        key,
+        nickname: u.nickname || key,
+        email: u.email || '—',
+        createdAt: u.createdAt ? new Date(u.createdAt).toLocaleDateString('vi-VN') : '—',
+        totalSpend: spendMap[key] || 0,
+        freeClicks: u.free_clicks || 0
+      });
+    });
+
+    rows.sort((a,b) => b.totalSpend - a.totalSpend);
+
+    $('adminCustomers').innerHTML = rows.length ? rows.map(u => `
+      <tr>
+        <td><b>${esc(u.nickname)}</b><br><span style="color:var(--mute);font-size:.75rem">${esc(u.key)}</span></td>
+        <td>${esc(u.email)}</td>
+        <td>${u.createdAt}</td>
+        <td class="font-bold" style="color:${u.totalSpend>0?'var(--green)':'var(--mute)'}">${fmt(u.totalSpend)}đ</td>
+        <td class="font-bold" style="color:${u.freeClicks>0?'var(--gold)':'var(--mute)'}">${u.freeClicks} lần</td>
+        <td><button class="btn-ghost px-3 py-1" style="color:var(--red)" onclick="deleteUser('${esc(u.key)}')">🗑️ Xóa</button></td>
+      </tr>
+    `).join('') : '<tr><td colspan="6" style="text-align:center;padding:1rem;color:var(--mute)">Chưa có khách hàng nào.</td></tr>';
+  });
 }
 
 function renderAdminProducts(){
   const search=($('adminSearch')?.value||'').toLowerCase();
   let ids=Object.keys(products);
   if(search)ids=ids.filter(id=>products[id].name.toLowerCase().includes(search));
-  if(isCTV) ids = ids.filter(id => products[id].creator === me);
+  if(isCTV)ids=ids.filter(id=>products[id].creator===me);
   ids.sort((a,b)=>(products[b].time||0)-(products[a].time||0));
-  
   if(!ids.length){$('adminProducts').innerHTML='<tr><td colspan="8" style="color:var(--mute);text-align:center;padding:1rem">Chưa có SP.</td></tr>';return;}
   
   $('adminProducts').innerHTML=ids.map(id=>{
@@ -1225,90 +1526,112 @@ function renderAdminProducts(){
     const stText=p.status==='maintenance'?'Bảo trì':'Undetected';
     const img=p.img?`<img src="${esc(p.img)}" style="width:50px;height:50px;object-fit:cover" onerror="this.style.display='none'">`:'—';
     
-    let actions = `<button class="btn px-3 py-1" onclick="showProductForm('${id}')">✏️ Sửa</button><button class="btn-ghost px-3 py-1 ml-1" onclick="showKeyFormFor('${id}')">🔑 Key</button>`;
-    if(isAdmin) { actions += `<button class="btn-ghost px-3 py-1 ml-1" onclick="deleteProduct('${id}')">🗑️</button>`; }
-    
+    let actions = '';
+    if(isAdmin) {
+      actions = `<button class="btn px-3 py-1" onclick="showProductForm('${id}')">✏️ Sửa</button>
+                 <button class="btn-ghost px-3 py-1 ml-1" onclick="showKeyFormFor('${id}')">🔑 Key</button>
+                 <button class="btn-ghost px-3 py-1 ml-1" onclick="deleteProduct('${id}')">🗑️</button>`;
+    } else {
+      actions = `<span class="text-xs text-red-400">Chỉ xem</span>`;
+    }
+
     return `<tr><td>${img}</td><td><b>${esc(p.name)}</b><br><span style="color:var(--mute);font-size:.75rem">${esc((p.desc||'').slice(0,50))}</span></td><td>${esc(p.type)}</td><td><b style="color:var(--accent)">${fmt(p.price)}đ</b></td><td><span class="chip ${stColor}">${stText}</span></td><td><b style="color:${n>0?'#00ff9d':'#ff4d6d'}">${n}</b></td><td>${esc(p.creator||'Admin')}</td><td class="whitespace-nowrap">${actions}</td></tr>`;
   }).join('');
 }
 
 function showProductForm(id){
   if(id){
+    if(!isAdmin) return toast('Bạn không có quyền sửa sản phẩm!','error');
     const p=products[id];
     $('pId').value=id;$('pName').value=p.name;$('pImg').value=p.img||'';$('pPrice').value=p.price;
     $('pType').value=p.type||'Tool PC';$('pStatus').value=p.status||'undetected';$('pDesc').value=p.desc||'';
-    $('pFile').value=p.file||''; $('pVideo').value=p.video||'';
+    $('pFile').value=p.file||'';$('pVideo').value=p.video||'';
     $('pFormTitle').textContent='✏️ Sửa: '+p.name;
   }else{
     ['pId','pName','pImg','pPrice','pDesc','pFile','pVideo'].forEach(i=>$(i).value='');
-    $('pType').value='Tool PC';$('pStatus').value='undetected';$('pFormTitle').textContent='➕ Thêm SP Mới';
+    $('pType').value='Tool PC';$('pStatus').value='undetected';$('pFormTitle').textContent='➕ Thêm SP';
   }
   openModal('productFormBox');
 }
-
 async function saveProduct(){
-  const data={ 
-    name:$('pName').value.trim(), img:$('pImg').value.trim(), price:Number($('pPrice').value), 
-    type:$('pType').value, status:$('pStatus').value, desc:$('pDesc').value.trim(), 
-    file:$('pFile').value.trim(), video:$('pVideo').value.trim(), time:Date.now() 
-  };
+  const data={name:$('pName').value.trim(),img:$('pImg').value.trim(),price:Number($('pPrice').value),type:$('pType').value,status:$('pStatus').value,desc:$('pDesc').value.trim(),file:$('pFile').value.trim(),video:$('pVideo').value.trim(),time:Date.now()};
   if(!data.name||$('pPrice').value===''||!(data.price>=0))return toast('Nhập tên và giá','warning');
   const id=$('pId').value;
+  
   if(id){
-    if(isCTV && products[id].creator !== me) return toast('Bạn không có quyền sửa SP này!', 'error');
-    await db.ref('products/'+id).update(data);toast('Đã cập nhật SP','success');closeModal('productFormBox');
+    if(!isAdmin) return toast('Không có quyền!','error');
+    await db.ref('products/'+id).update(data);toast('Đã cập nhật','success');
   }else{
-    data.creator = me;
-    const newRef = await db.ref('products').push(data);
-    toast('Đã thêm SP! Giờ hãy nạp key.','success');closeModal('productFormBox');
-    setTimeout(() => { showKeyFormFor(newRef.key); }, 500);
+    data.creator=me;
+    const newRef=await db.ref('products').push(data);
+    toast('Đã thêm SP!','success');
+    closeModal('productFormBox');
+    if(isAdmin) setTimeout(()=>showKeyFormFor(newRef.key),500);
+    return; 
   }
+  closeModal('productFormBox');
 }
 async function deleteProduct(id){
-  if(isCTV && products[id].creator !== me) return toast('Bạn không có quyền xóa SP này!', 'error');
-  if(!confirm('Xóa SP này? Kho key cũng bị xóa.'))return;
-  await db.ref('products/'+id).remove();await db.ref('keys/'+id).remove();toast('Đã xóa SP','success');
+  if(!isAdmin) return toast('Bạn không có quyền xóa sản phẩm!','error');
+  if(!confirm('Xóa SP này?'))return;
+  await db.ref('products/'+id).remove();await db.ref('keys/'+id).remove();toast('Đã xóa','success');
 }
 function showKeyFormFor(pid){
+  if(!isAdmin) return toast('Bạn không có quyền nạp key!','error');
   const p=products[pid];$('kProd').value=pid;$('kProdName').textContent=p.name;$('kList').value='';openModal('keyFormBox');
 }
 async function addKeys(){
+  if(!isAdmin) return toast('Không có quyền!','error');
   const pid=$('kProd').value,list=lines($('kList').value);
   if(!pid||!list.length)return toast('Chọn SP và nhập key','warning');
   const upd={};list.forEach(k=>upd[db.ref('keys/'+pid).push().key]={key:k});
   await db.ref('keys/'+pid).update(upd);$('kList').value='';toast('Đã thêm '+list.length+' key','success');closeModal('keyFormBox');
 }
 async function deleteUser(u){
-  if(!confirm(`⚠️ XÓA TK "${u}"?`))return;
-  try{await db.ref('users/'+u).remove();toast('Đã xóa '+u,'success');}catch(e){toast(e.message,'error');}
+  if(!isAdmin) return toast('Không có quyền!','error');
+  if(!confirm('Xóa TK '+u+'?'))return;
+  await db.ref('users/'+u).remove();toast('Đã xóa','success');
+}
+async function createCTV(){
+  const username=prompt('Tên đăng nhập CTV:');if(!username)return;
+  const pass=prompt('Mật khẩu (≥6):');if(!pass||pass.length<6)return toast('MK không hợp lệ','error');
+  const nick=prompt('Nickname:');
+  await db.ref('users/'+username.toLowerCase()).set({username:username.toLowerCase(),nickname:nick,email:'ctv_'+username+'@conan.vn',passHash:await sha256(pass),role:'ctv',createdAt:Date.now()});
+  toast('Đã tạo CTV!','success');
 }
 
-async function createCTV() {
-  const username = prompt("Nhập tên đăng nhập cho CTV:");
-  if(!username) return;
-  const pass = prompt("Nhập mật khẩu cho CTV (≥6 ký tự):");
-  if(!pass || pass.length < 6) return toast('MK không hợp lệ', 'error');
-  const nick = prompt("Nhập tên hiển thị (Nickname):");
-  const hash = await sha256(pass);
-  await db.ref('users/' + username.toLowerCase()).set({ username: username.toLowerCase(), nickname: nick, email: 'ctv_'+username+'@conan.vn', passHash: hash, role: 'ctv', createdAt: Date.now() });
-  toast('Đã tạo tài khoản CTV thành công!', 'success');
+function openVoucherForm() {
+  $('vCode').value = '';
+  $('vType').value = 'percent';
+  $('vValue').value = '';
+  $('vUser').value = '';
+  openModal('voucherFormBox');
+}
+async function saveVoucher() {
+  const code = $('vCode').value.trim();
+  const type = $('vType').value;
+  const value = Number($('vValue').value);
+  const targetUser = $('vUser').value.trim().toLowerCase();
+  
+  if(!code) return toast('Nhập tên mã','warning');
+  if(!value || value <= 0) return toast('Nhập giá trị giảm hợp lệ','warning');
+  
+  await db.ref('vouchers/'+code).set({
+    type, value, targetUser: targetUser || null, active: true, createdAt: Date.now()
+  });
+  toast('Đã tạo mã ' + code + ' thành công!', 'success');
+  closeModal('voucherFormBox');
+}
+async function toggleVoucher(code,status){await db.ref('vouchers/'+code+'/active').set(status);toast('Đã cập nhật','success');}
+async function deleteVoucher(code){
+  if(!confirm('Xóa mã '+code+'?'))return;
+  await db.ref('vouchers/'+code).remove();toast('Đã xóa mã','success');
 }
 
-async function createGlobalVoucher() {
-  const code = prompt("Nhập mã giảm giá (VD: GIAM10, VNX50):");
-  if(!code) return;
-  const type = prompt("Nhập 'percent' (giảm %) hoặc 'fixed' (giảm tiền):", "percent");
-  if(type !== 'percent' && type !== 'fixed') return toast('Sai kiểu giảm giá', 'error');
-  const valStr = prompt(type === 'percent' ? "Nhập % giảm (VD: 10):" : "Nhập số tiền giảm (VD: 5000):");
-  const val = Number(valStr);if(!(val > 0)) return toast('Giá trị không hợp lệ', 'error');
-  await db.ref('vouchers/' + code.toUpperCase()).set({ type: type, value: val, active: true, createdAt: Date.now() });
-  toast(`Đã tạo mã ${code.toUpperCase()} toàn sàn!`, 'success');
-}
-async function toggleVoucher(code, status) {await db.ref('vouchers/' + code + '/active').set(status);toast('Đã cập nhật trạng thái mã', 'success');}
-
-/* ===== KHỞI ĐỘNG ===== */
+/* ================= KHỞI ĐỘNG ================= */
 renderHeader();
 restoreSession();
+renderTabsAndSidebar();
 </script>
 </body>
 </html>
