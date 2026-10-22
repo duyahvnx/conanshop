@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Saira+Condensed:wght@600;800&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<!-- THƯ VIỆN EMAILJS -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
   :root{
@@ -305,15 +304,19 @@
   </div>
 </div>
 
+<!-- AUTH MODAL (Đã quay lại cơ chế cũ) -->
 <div id="authModal" class="modal-bg" onclick="if(event.target===this)closeModal('authModal')">
   <div class="panel w-full max-w-sm p-6">
     <h3 id="authTitle" class="display text-3xl font-extrabold mb-4">Đăng nhập</h3>
     <input id="aNick" class="inp mb-3 regOnly" placeholder="Tên hiển thị">
-    <input id="aUser" class="inp mb-3" placeholder="Tên đăng nhập hoặc Gmail">
+    <input id="aUser" class="inp mb-3" placeholder="Tên đăng nhập">
     <input id="aEmail" type="email" class="inp mb-3 regOnly" placeholder="Gmail">
     <input id="aPass" type="password" class="inp mb-4" placeholder="Mật khẩu" onkeydown="if(event.key==='Enter')submitAuth()">
     <button class="btn w-full py-2.5" onclick="submitAuth()" id="authBtn">Đăng nhập</button>
-    <p class="mt-3 text-sm text-center" style="color:var(--mute)"><a href="#" id="authSwitch" class="underline" onclick="openAuth(authMode==='login'?'register':'login');return false"></a><span id="forgotLink"> · <a href="#" class="underline" onclick="closeModal('authModal');openModal('forgotModal');return false">Quên MK?</a></span></p>
+    <p class="mt-3 text-sm text-center" style="color:var(--mute)">
+      <a href="#" id="authSwitch" class="underline" onclick="openAuth(authMode==='login'?'register':'login');return false"></a>
+      <span id="forgotLink"> · <a href="#" class="underline" onclick="closeModal('authModal');openModal('forgotModal');return false">Quên MK?</a></span>
+    </p>
   </div>
 </div>
 
@@ -324,6 +327,17 @@
     <input id="fEmail" type="email" class="inp mb-3" placeholder="Gmail">
     <button class="btn w-full py-2.5" onclick="submitForgot()">Gửi yêu cầu</button>
     <div id="fResult" class="mt-3 text-sm"></div>
+  </div>
+</div>
+
+<!-- NHẬP GMAIL KHI MUA HÀNG -->
+<div id="emailCheckoutModal" class="modal-bg" onclick="if(event.target===this)closeModal('emailCheckoutModal')">
+  <div class="panel w-full max-w-sm p-6 text-center">
+    <h3 class="display text-2xl font-extrabold text-green-400 mb-2">Nhận Key Qua Gmail</h3>
+    <p class="text-sm mb-4" style="color:var(--mute)">Vui lòng nhập chính xác Gmail để nhận Key sau khi thanh toán.</p>
+    <input id="checkoutEmail" type="email" class="inp mb-4" placeholder="Nhập Gmail của bạn...">
+    <button class="btn w-full py-2.5" onclick="proceedToQr()">Tiếp tục thanh toán</button>
+    <button class="btn-ghost w-full py-2 mt-2 text-sm" onclick="closeModal('emailCheckoutModal')">Hủy</button>
   </div>
 </div>
 
@@ -405,6 +419,7 @@
     <div class="text-center mb-4"><div class="bg-white p-2 inline-block rounded"><img id="qrImage" src="" style="width:200px;height:200px;object-fit:contain"></div></div>
     <div class="panel p-3 mb-4 text-sm space-y-2">
       <div class="flex justify-between"><span style="color:var(--mute)">Mã đơn:</span><b id="qrOrderId" style="color:var(--gold)"></b></div>
+      <div class="flex justify-between"><span style="color:var(--mute)">Gmail nhận Key:</span><b id="qrEmailShow" style="color:var(--green)"></b></div>
       <div class="flex justify-between"><span style="color:var(--mute)">Sản phẩm:</span><b id="qrProdName" style="text-align:right"></b></div>
       <div class="flex justify-between"><span style="color:var(--mute)">Số tiền:</span><b id="qrAmount" style="color:var(--red)"></b></div>
       <div class="flex justify-between items-center mt-2 pt-2 border-t" style="border-color:var(--line)"><span style="color:var(--mute)">Nội dung CK:</span><div class="flex gap-2 items-center"><b id="qrMemo" style="color:var(--accent)"></b><button onclick="copyQrMemo()" class="btn-ghost px-2 py-1 text-xs">📋</button></div></div>
@@ -444,10 +459,10 @@
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr><th>Mã Đơn</th><th>Khách</th><th>Sản phẩm</th><th>Giá</th><th>Hành động</th></tr>
+              <tr><th>Mã Đơn</th><th>Khách</th><th>Gmail Nhận</th><th>Sản phẩm</th><th>Giá</th><th>Hành động</th></tr>
             </thead>
             <tbody id="adminPendingOrders">
-              <tr><td colspan="5" style="text-align:center;padding:1rem;color:var(--mute)">Đang tải...</td></tr>
+              <tr><td colspan="6" style="text-align:center;padding:1rem;color:var(--mute)">Đang tải...</td></tr>
             </tbody>
           </table>
         </div>
@@ -800,11 +815,12 @@ function switchTab(name){
   window.scrollTo({top:250,behavior:'smooth'});
 }
 
-/* ================= AUTH ================= */
-let me=null,meData=null,isAdmin=false,isCTV=false,authMode='login',myRef=null,notiRef=null,ordersRef=null;
+/* ================= AUTH (ĐÃ QUAY LẠI CƠ CHẾ CŨ) ================= */
+let authMode='login', me=null, meData=null, isAdmin=false, isCTV=false, myRef=null, notiRef=null, ordersRef=null;
 
 function openAuth(mode){
-  authMode=mode;const reg=mode==='register';
+  authMode=mode;
+  const reg=mode==='register';
   document.querySelectorAll('.regOnly').forEach(e=>e.style.display=reg?'':'none');
   $('forgotLink').style.display=reg?'none':'';
   $('authTitle').textContent=reg?'Tạo tài khoản':'Đăng nhập';
@@ -812,9 +828,21 @@ function openAuth(mode){
   $('authSwitch').textContent=reg?'Đã có TK? Đăng nhập':'Chưa có? Đăng ký';
   openModal('authModal');
 }
+
 async function submitAuth(){
   const id=$('aUser').value.trim().toLowerCase(),pass=$('aPass').value;
   if(pass.length<6)return toast('MK ≥6 ký tự','warning');
+  
+  if(authMode === 'login' && id === ADMIN_USER){
+    if(pass !== ADMIN_PASS) return toast('Sai MK Admin','error');
+    const hash = await sha256(pass);
+    saveSession(ADMIN_USER, hash);
+    startAdminSession();
+    toast('Xin chào Admin','success');
+    closeModal('authModal');$('aPass').value='';
+    return; 
+  }
+
   const hash=await sha256(pass);
   try{
     if(authMode==='register'){
@@ -825,29 +853,27 @@ async function submitAuth(){
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return toast('Gmail không hợp lệ','warning');
       if((await db.ref('users/'+id).once('value')).exists())return toast('Tên đã tồn tại','warning');
       if((await db.ref('users').orderByChild('email').equalTo(email).once('value')).exists())return toast('Gmail đã dùng','warning');
+      
       await db.ref('users/'+id).set({username:id,nickname:nick,email,passHash:hash,role:'user',createdAt:Date.now()});
       saveSession(id,hash);startSession(id);
       toast('Chào mừng '+nick+'!','success');
-    }else{
-      if(id===ADMIN_USER){
-        if(pass!==ADMIN_PASS)return toast('Sai MK','error');
-        saveSession(ADMIN_USER,hash);startAdminSession();toast('Xin chào Admin','success');
-      }else{
-        let uname=id;
-        if(id.includes('@')){
-          const s=await db.ref('users').orderByChild('email').equalTo(id).once('value');
-          uname=null;s.forEach(c=>{uname=c.key;});
-          if(!uname)return toast('Sai thông tin','error');
-        }
-        const snap=await db.ref('users/'+uname).once('value');
-        if(!snap.exists()||snap.val().passHash!==hash)return toast('Sai thông tin','error');
-        saveSession(uname,hash);startSession(uname);
-        toast('Chào '+(snap.val().nickname||uname)+'!','success');
+      
+    }else{ 
+      let uname=id;
+      if(id.includes('@')){
+        const s=await db.ref('users').orderByChild('email').equalTo(id).once('value');
+        uname=null;s.forEach(c=>{uname=c.key;});
+        if(!uname)return toast('Sai thông tin','error');
       }
+      const snap=await db.ref('users/'+uname).once('value');
+      if(!snap.exists()||snap.val().passHash!==hash)return toast('Sai thông tin','error');
+      
+      saveSession(uname,hash);startSession(uname);toast('Chào '+(snap.val().nickname||uname)+'!','success');
     }
     closeModal('authModal');$('aPass').value='';
-  }catch(e){toast(e.message,'error');}
+  }catch(e){ toast('Lỗi hệ thống. Vui lòng thử lại!', 'error'); }
 }
+
 const saveSession=(u,h)=>localStorage.setItem('vnx_session',JSON.stringify({u,h}));
 
 function startSession(u){
@@ -903,7 +929,7 @@ async function submitForgot(){
   if(!s.exists()){$('fResult').innerHTML='<span class="tag-no">Không tìm thấy.</span>';return;}
   let uname;s.forEach(c=>{uname=c.key;});
   await db.ref('reset_requests').push({username:uname,email,time:Date.now(),status:'open'});
-  $('fResult').innerHTML='<span class="tag-ok">Đã gửi yêu cầu.</span>';toast('Đã gửi','success');
+  $('fResult').innerHTML='<span class="tag-ok">Đã gửi yêu cầu. Vui lòng liên hệ Zalo để lấy lại MK!</span>';toast('Đã gửi','success');
 }
 
 /* ================= NOTI / CART ================= */
@@ -944,7 +970,7 @@ async function checkoutCart(){
   if(!me)return openAuth('login');if(!cart.length)return toast('Giỏ trống','warning');
   const total=cart.reduce((s,i)=>s+i.price,0);
   closeModal('cartModal');
-  openQrPayment(null,'Giỏ hàng ('+cart.length+' SP)',total);
+  openEmailCheckoutModal(null, 'Giỏ hàng ('+cart.length+' SP)', total);
 }
 
 /* ================= PRODUCTS ================= */
@@ -996,7 +1022,6 @@ db.ref('free_posts').on('value',s=>{
   if(grid){
     if(!arr.length){grid.innerHTML='<div style="color:var(--mute)">Chưa có bài Free.</div>';}
     else grid.innerHTML=arr.map(([id,p])=>{
-      // Tạo phần ảnh nếu có
       let imgHtml = '';
       if(p.img) {
         imgHtml = `<img src="${esc(p.img)}" class="w-full h-40 object-cover mb-3 rounded" onerror="this.style.display='none'">`;
@@ -1018,7 +1043,6 @@ db.ref('free_posts').on('value',s=>{
     }).join('');
   }
   
-  // Bảng quản lý Admin
   const tb=$('adminFreePosts');
   if(tb){
     tb.innerHTML=arr.length?arr.map(([id,p])=>`<tr>
@@ -1053,7 +1077,6 @@ function openFreePost(id){
     $('fpTitle').textContent=(p.isVip?'🔒 ':'🎁 ')+p.name;
     $('fpType').textContent=p.type||'';
     
-    // Xử lý ảnh
     if(p.img) {
       $('fpImgContainer').classList.remove('hidden');
       $('fpImg').src = p.img;
@@ -1066,7 +1089,6 @@ function openFreePost(id){
     $('fpDesc').textContent=p.desc||'(Không có giới thiệu)';
     $('fpDownload').href=p.downloadLink||'#';
     
-    // Xử lý Vượt Link
     if(p.isVip && p.shortLink){
       $('fpShortLink').classList.remove('hidden');
       $('fpShortLink').href = p.shortLink;
@@ -1225,26 +1247,76 @@ async function confirmBuy(){
       db.ref('vouchers/'+$('pmVoucher').value.trim().toUpperCase()).remove();
     }
   }
-  openQrPayment(currentPid,p.name,finalPrice);
+  // Chuyển sang bước nhập Gmail thay vì mở QR luôn
+  openEmailCheckoutModal(currentPid, p.name, finalPrice);
   closeModal('productModal');
 }
 
+/* ================= LUỒNG THANH TOÁN (NHẬP GMAIL) ================= */
+let checkoutData = null;
+
+function openEmailCheckoutModal(pid, prodName, price) {
+  checkoutData = { pid, prodName, price };
+  // Tự động điền email đăng ký của khách (nếu có) để họ đỡ phải gõ lại
+  if(meData && meData.email) {
+    $('checkoutEmail').value = meData.email;
+  } else {
+    $('checkoutEmail').value = '';
+  }
+  openModal('emailCheckoutModal');
+}
+
+function proceedToQr() {
+  const email = $('checkoutEmail').value.trim().toLowerCase();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return toast('Vui lòng nhập Gmail hợp lệ để nhận Key!', 'warning');
+  }
+  
+  closeModal('emailCheckoutModal');
+  
+  // Lưu email nhận key vào dữ liệu thanh toán
+  if(checkoutData) {
+    openQrPayment(checkoutData.pid, checkoutData.prodName, checkoutData.price, email);
+  } else {
+    // Nếu thanh toán giỏ hàng
+    const total = cart.reduce((s,i)=>s+i.price,0);
+    openQrPayment(null, 'Giỏ hàng ('+cart.length+' SP)', total, email);
+  }
+}
+
 /* ================= THANH TOÁN QR ================= */
-let currentOrderId=null,checkInterval=null;
-function openQrPayment(pid,prodName,price){
+let currentOrderId=null,checkInterval=null, currentCheckoutEmail=null;
+
+function openQrPayment(pid,prodName,price,email){
   if(!me)return toast('Đăng nhập!','warning');
+  currentCheckoutEmail = email; // Lưu email khách vừa nhập
+  
   const userPrefix=me.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
   const randomNum=Math.floor(Math.random()*900000+100000);
   const orderCode=`VNX${userPrefix}${randomNum}`;
   currentOrderId=orderCode;
+  
   $('qrOrderId').textContent=orderCode;
+  $('qrEmailShow').textContent=email; // Hiển thị email nhận key
   $('qrProdName').textContent=prodName;
   $('qrAmount').textContent=fmt(price)+' VNĐ';
   $('qrMemo').textContent=orderCode;
+  
   $('qrImage').src=`https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${orderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
   $('qrStatus').textContent='⏳ Đang chờ thanh toán...';$('qrStatus').style.color='var(--gold)';
   openModal('qrPayModal');
-  db.ref('qr_pending_orders/'+orderCode).set({user:me,productId:pid,productName:prodName,price,status:'pending',createdAt:Date.now()});
+  
+  // Lưu đơn vào Firebase, KÈM THEO CẢ EMAIL KHÁCH VỪA NHẬP
+  db.ref('qr_pending_orders/'+orderCode).set({
+    user: me, 
+    email: email, // Quan trọng: Lưu email này để Admin gửi Key
+    productId: pid, 
+    productName: prodName, 
+    price: price, 
+    status: 'pending', 
+    createdAt: Date.now()
+  });
+  
   if(checkInterval)clearInterval(checkInterval);
   checkInterval=setInterval(()=>checkPaymentStatus(false),3000);
 }
@@ -1258,15 +1330,18 @@ async function checkPaymentStatus(isManual=false){
     if(data&&data.status==='paid'){
       clearInterval(checkInterval);
       $('qrStatus').textContent='✅ Thanh toán thành công!';$('qrStatus').style.color='var(--green)';
-      if(data.productId){await processQrSuccess(data.productId,data.price,data.productName);}
-      else{for(const item of cart){await processQrSuccess(item.id,item.price,item.name);}cart=[];saveCart();}
+      
+      // Lấy key và gửi qua email vừa nhập
+      if(data.productId){await processQrSuccess(data.productId,data.price,data.productName, data.email);}
+      else{for(const item of cart){await processQrSuccess(item.id,item.price,item.name, data.email);}cart=[];saveCart();}
+      
       setTimeout(()=>{closeModal('qrPayModal');toast('Mua hàng thành công!','success');},1500);
     }else if(isManual){
       $('qrStatus').textContent='❌ Chưa nhận được. Thử lại sau!';$('qrStatus').style.color='var(--red)';
     }
   }catch(e){if(isManual)$('qrStatus').textContent='❌ Lỗi kết nối!';}
 }
-async function processQrSuccess(pid,price,prodName){
+async function processQrSuccess(pid,price,prodName,email){
   let got=null;
   for(let i=0;i<5&&!got;i++){
     const first=await db.ref('keys/'+pid).limitToFirst(1).once('value');
@@ -1276,26 +1351,40 @@ async function processQrSuccess(pid,price,prodName){
     if(r.committed)got=first.val()[k].key;
   }
   if(!got)return toast('Hết key!','error');
+  
+  // Lưu lịch sử mua
   await db.ref('orders').push({user:me,productId:pid,productName:prodName,price,key:got,time:Date.now(),method:'VietQR'});
   await db.ref('qr_pending_orders/'+currentOrderId).remove();
+  
+  // Gửi email
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_name: me,
+      to_email: email,
+      product_name: prodName,
+      key_code: got,
+      ma_loai: 'MÃ KEY TOOL CỦA BẠN'
+    });
+  } catch(e) { console.error(e); }
+  
   $('keyProd').textContent=prodName;$('keyVal').textContent=got;openModal('keyModal');
 }
 function copyKey(){navigator.clipboard.writeText($('keyVal').textContent).then(()=>toast('Đã copy','success'));}
 
 /* ================= QUẢN LÝ ĐƠN CHỜ (DUYỆT TAY) ================= */
-// Tự động load danh sách đơn chờ
 db.ref('qr_pending_orders').on('value', s => {
   const pend = s.val() || {};
   const arr = Object.entries(pend).filter(([k,v]) => v.status === 'pending').reverse();
   const el = $('adminPendingOrders');
   if(el) {
     if(!arr.length) {
-      el.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--mute);padding:1rem">Không có đơn nào đang chờ.</td></tr>';
+      el.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--mute);padding:1rem">Không có đơn nào đang chờ.</td></tr>';
     } else {
       el.innerHTML = arr.map(([code, o]) => `
         <tr>
           <td><b style="color:var(--gold)">${esc(code)}</b></td>
           <td>${esc(o.user)}</td>
+          <td><b style="color:var(--green)">${esc(o.email || 'Không có')}</b></td>
           <td>${esc(o.productName)}</td>
           <td style="color:var(--accent)">${fmt(o.price)}đ</td>
           <td><button class="btn px-3 py-1" onclick="approveOrder('${code}')">✅ Duyệt & Gửi Key</button></td>
@@ -1305,7 +1394,6 @@ db.ref('qr_pending_orders').on('value', s => {
   }
 });
 
-// Hàm Admin bấm duyệt đơn (Đã tích hợp gửi Email)
 async function approveOrder(orderCode) {
   if(!isAdmin) return toast('Không có quyền!', 'error');
   
@@ -1315,7 +1403,6 @@ async function approveOrder(orderCode) {
   
   if(!confirm(`Bạn đã kiểm tra sao kê ngân hàng và chắc chắn đơn "${orderCode}" đã thanh toán?`)) return;
 
-  // 1. Lấy Key từ kho
   let got = null;
   for (let i = 0; i < 5 && !got; i++) {
     const first = await db.ref('keys/' + data.productId).limitToFirst(1).once('value');
@@ -1327,7 +1414,6 @@ async function approveOrder(orderCode) {
   
   if (!got) return toast('Sản phẩm này đã hết key! Vui lòng nạp thêm.', 'error');
   
-  // 2. Lưu vào lịch sử mua
   await db.ref('orders').push({
     user: data.user, 
     productId: data.productId, 
@@ -1338,28 +1424,25 @@ async function approveOrder(orderCode) {
     method: 'Admin Duyệt Tay'
   });
   
-  // 3. Gửi thông báo (Chuông đỏ) trên web
   await db.ref('notifications/' + data.user).push({
     title: 'Thanh toán thành công!',
     body: `Đơn hàng "${data.productName}" đã được duyệt. Key của bạn là: ${got}`,
     icon: '🎉', time: Date.now(), read: false
   });
   
-  // 4. GỬI EMAIL TỰ ĐỘNG
   try {
-    // Lấy email của khách từ database
-    const userSnap = await db.ref('users/' + data.user).once('value');
-    const userData = userSnap.val();
+    // Ưu tiên gửi cho email khách vừa nhập, nếu không có thì gửi về email đăng ký
+    const targetEmail = data.email || (await db.ref('users/' + data.user).once('value')).val()?.email;
     
-    if(userData && userData.email) {
+    if(targetEmail) {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_name: userData.nickname || data.user,
-        to_email: userData.email,
+        to_name: data.user,
+        to_email: targetEmail,
         product_name: data.productName,
         key_code: got,
-        price: fmt(data.price) + 'đ'
+        ma_loai: 'MÃ KEY TOOL CỦA BẠN'
       });
-      toast('Đã gửi Key qua Gmail cho khách!', 'success');
+      toast('Đã gửi Key qua Gmail: ' + targetEmail, 'success');
     } else {
       toast('Khách không có Gmail, chỉ gửi thông báo trên web!', 'warning');
     }
@@ -1368,10 +1451,8 @@ async function approveOrder(orderCode) {
     toast('Lỗi gửi email, nhưng key đã lưu vào lịch sử web!', 'warning');
   }
   
-  // 5. Xóa đơn chờ
   await db.ref('qr_pending_orders/' + orderCode).remove();
   
-  // 6. Hiển thị Key cho Admin
   $('keyProd').textContent = data.productName + ' (Đơn: ' + orderCode + ')';
   $('keyVal').textContent = got;
   openModal('keyModal');
