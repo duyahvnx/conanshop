@@ -3,7 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CONAN VNX - Sàn Tool & Panel Free Fire</title>
+
+<!-- ============================================================ -->
+<!-- 🔥 SEO & META TAGS (Đã thêm theo yêu cầu)                     -->
+<!-- ============================================================ -->
+<title>CONAN VNX - Sàn Tool & Panel Free Fire Uy Tín #1 Việt Nam</title>
+<meta name="description" content="CONAN VNX - Sàn giao dịch Tool & Panel Free Fire uy tín hàng đầu Việt Nam. Thanh toán tự động qua VietQR, nhận key qua Gmail ngay, hỗ trợ 24/7. Giá rẻ, bảo hành 1-1.">
+<meta name="keywords" content="tool free fire, panel free fire, tool ff, panel ff, mua tool free fire, conan vnx, tool ff giá rẻ, panel ff ios, panel ff android">
+<meta name="author" content="CONAN VNX">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#00d4ff">
+<link rel="canonical" href="https://duyahvnx.github.io/conanshop/">
+
+<!-- Open Graph (Facebook, Zalo) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CONAN VNX">
+<meta property="og:title" content="CONAN VNX - Sàn Tool & Panel Free Fire Uy Tín #1">
+<meta property="og:description" content="Mua tool Free Fire, panel FF giá rẻ, uy tín. Thanh toán VietQR tự động, nhận key qua Gmail ngay lập tức.">
+<meta property="og:url" content="https://duyahvnx.github.io/conanshop/">
+<meta property="og:image" content="https://duyahvnx.github.io/conanshop/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CONAN VNX - Sàn Tool & Panel Free Fire">
+<meta name="twitter:description" content="Mua tool Free Fire uy tín, thanh toán tự động, nhận key ngay.">
+<meta name="twitter:image" content="https://duyahvnx.github.io/conanshop/og-image.jpg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+
+<!-- JSON-LD Structured Data (Google hiểu site) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CONAN VNX",
+  "url": "https://duyahvnx.github.io/conanshop/",
+  "description": "Sàn giao dịch Tool & Panel Free Fire uy tín hàng đầu Việt Nam",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://duyahvnx.github.io/conanshop/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Saira+Condensed:wght@600;800&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -425,6 +472,7 @@
   <div class="panel w-full max-w-md p-5 md:p-6" style="border-color:var(--accent)">
     <div class="flex justify-between items-center mb-4"><h3 class="display text-xl md:text-2xl font-extrabold" style="color:var(--accent)">Thanh Toán</h3><button onclick="closeModal('qrPayModal')" class="text-2xl">✕</button></div>
     <div class="text-center mb-4"><div class="bg-white p-2 inline-block rounded"><img id="qrImage" src="" style="width:180px;height:180px;object-fit:contain" class="md:w-[200px] md:h-[200px]"></div></div>
+    
     <div class="panel p-3 mb-3 md:mb-4 text-xs md:text-sm space-y-1.5 md:space-y-2">
       <div class="flex justify-between"><span style="color:var(--mute)">Mã đơn:</span><b id="qrOrderId" style="color:var(--gold)"></b></div>
       <div class="flex justify-between"><span style="color:var(--mute)">Gmail:</span><b id="qrEmailShow" style="color:var(--green);text-align:right;max-width:60%;word-break:break-all;"></b></div>
@@ -475,7 +523,7 @@
         <h4 class="display text-xl md:text-2xl font-extrabold mb-3" style="color:var(--gold)">⚠️ Đơn Đang Chờ Thanh Toán (Duyệt Tay)</h4>
         <div class="overflow-x-auto">
           <table class="w-full">
-            <thead><tr><th>Mã Đơn</th><th>Khách</th><th>Gmail Nhận</th><th>Sản phẩm</th><th>Giá</th><th>Hành động</th></tr></thead>
+            <thead><tr><th>Mã Đơn (Memo)</th><th>Khách</th><th>Gmail Nhận</th><th>Sản phẩm</th><th>Giá</th><th>Hành động</th></tr></thead>
             <tbody id="adminPendingOrders"><tr><td colspan="6" style="text-align:center;padding:1rem;color:var(--mute)">Đang tải...</td></tr></tbody>
           </table>
         </div>
@@ -669,10 +717,7 @@ const BANK_INFO = { bankId:'MBBank', accountNo:'0971139244', accountName:'LE VAN
 emailjs.init("v8RfR_mKxVbheNOsO");
 const EMAILJS_SERVICE_ID = "service_fni0aea";
 const EMAILJS_TEMPLATE_ID = "template_625b2gf";       
-const EMAILJS_ADMIN_TEMPLATE_ID = "template_b4jn3tl"; 
 const OTP_TTL_MS = 5 * 60 * 1000; 
-
-const WEBSITE_URL = "https://duyahvnx.github.io/conanshop/";
 
 /* ================= UTILS ================= */
 const $ = id => document.getElementById(id);
@@ -684,7 +729,7 @@ const lines = t => String(t||'').split('\n').map(s=>s.trim()).filter(Boolean);
 async function sha256(s){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');}
 const genOtp = () => String(Math.floor(100000 + Math.random()*900000));
 
-/* ================= GỬI MAIL DÙNG CHUNG 1 TEMPLATE ================= */
+/* ================= GỬI MAIL ================= */
 async function sendOtpEmail(email, username, code) {
   await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
     to_name: username || email,
@@ -877,7 +922,6 @@ function switchTab(name){
 /* ================= AUTH ================= */
 let authMode='login', me=null, meData=null, isAdmin=false, isCTV=false, myRef=null, notiRef=null, ordersRef=null;
 let currentVoucher=null, currentPid=null, currentOrderId=null, checkInterval=null;
-let notifyEmails = ['duyanhvnx@gmail.com'];
 let pendingForgotUser = null;
 
 function openAuth(mode){
@@ -1074,10 +1118,11 @@ function proceedToQr() {
 
 function openQrPayment(pid,prodName,price,email){
   if(!me)return toast('Đăng nhập!','warning');
-  const userPrefix=me.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
-  const randomNum=Math.floor(Math.random()*900000+100000);
-  const orderCode=`VNX${userPrefix}${randomNum}`;
-  currentOrderId=orderCode;
+  // Nội dung CK theo yêu cầu: TÊN_HIỂN_THỊ-VNX-MÃ 4 SỐ RANDOM
+  const safeNickname = (meData?.nickname || me).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10);
+  const random4 = Math.floor(1000 + Math.random() * 9000);
+  const orderCode = `${safeNickname}-VNX-${random4}`;
+  currentOrderId = orderCode;
 
   $('qrOrderId').textContent=orderCode;
   $('qrEmailShow').textContent=email;
@@ -1096,8 +1141,33 @@ function openQrPayment(pid,prodName,price,email){
     user: me, email: email, productId: pid, productName: prodName, price: price, status: 'pending', createdAt: Date.now()
   });
 
-  if(checkInterval)clearInterval(checkInterval);
-  checkInterval=setInterval(()=>checkPaymentStatus(false),3000);
+  // Tự động load lại mã QR sau mỗi 5 phút (300000 ms) để đổi mã mới
+  if(checkInterval) clearInterval(checkInterval);
+  checkInterval = setInterval(() => {
+    if(!$('qrPayModal').classList.contains('open')) {
+      clearInterval(checkInterval);
+      return;
+    }
+    // Tạo mã mới
+    const newRandom4 = Math.floor(1000 + Math.random() * 9000);
+    const newOrderCode = `${safeNickname}-VNX-${newRandom4}`;
+    
+    // Hủy mã cũ trên Firebase
+    db.ref('qr_pending_orders/' + currentOrderId).remove();
+    
+    // Cập nhật UI với mã mới
+    currentOrderId = newOrderCode;
+    $('qrOrderId').textContent = newOrderCode;
+    $('qrMemo').textContent = newOrderCode;
+    $('qrImage').src = `https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${newOrderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
+    
+    // Tạo lại trên Firebase
+    db.ref('qr_pending_orders/' + newOrderCode).set({
+      user: me, email: email, productId: pid, productName: prodName, price: price, status: 'pending', createdAt: Date.now()
+    });
+    
+    toast('Đã đổi mã QR mới để bảo mật!', 'info', 'Cập nhật thanh toán');
+  }, 5 * 60 * 1000);
 }
 
 async function khachBaoDaChuyenKhoan() {
@@ -1108,6 +1178,7 @@ async function khachBaoDaChuyenKhoan() {
 
   await db.ref('qr_pending_orders/' + currentOrderId + '/khach_bao_chuyen').set(true);
   
+  // Gửi thông báo trên web cho admin
   await db.ref('notifications/' + ADMIN_USER).push({
     title: '💰 KHÁCH BÁO ĐÃ CHUYỂN KHOẢN!',
     body: `Khách hàng vừa bấm "Đã chuyển khoản" cho đơn ${currentOrderId}. Vui lòng kiểm tra ngân hàng và duyệt đơn!`,
@@ -1134,34 +1205,7 @@ async function checkPaymentStatus(manual){
   }
 }
 
-// CHỐNG SPAM MAIL ADMIN
-async function sendAdminNotificationEmail(orderCode, orderData) {
-  if (!notifyEmails || notifyEmails.length === 0) return;
-  
-  let sentOrders = JSON.parse(localStorage.getItem('sent_admin_emails') || '[]');
-  if (sentOrders.includes(orderCode)) return; 
-
-  const webUrl = WEBSITE_URL + "?duyet_don=true";
-
-  for (const email of notifyEmails) {
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ADMIN_TEMPLATE_ID, {
-        to_name: 'ADMIN / CTV',
-        to_email: email,
-        customer_name: orderData.user,
-        product_name: orderData.productName,
-        price: fmt(orderData.price) + 'đ',
-        customer_email: orderData.email,
-        link_web: webUrl
-      });
-    } catch (e) { console.error("Lỗi gửi mail Admin:", e); }
-  }
-  
-  sentOrders.push(orderCode);
-  if(sentOrders.length > 50) sentOrders.shift(); 
-  localStorage.setItem('sent_admin_emails', JSON.stringify(sentOrders));
-}
-
+// LẮNG NGHE ĐƠN CHỜ ĐỂ HIỂN THỊ CHO ADMIN VÀ BÁO CHUÔNG
 db.ref('qr_pending_orders').on('value', s => {
   const pend = s.val() || {};
   const arr = Object.entries(pend).filter(([k,v]) => v.status === 'pending').reverse();
@@ -1200,10 +1244,6 @@ db.ref('qr_pending_orders').on('value', s => {
 
     if (Notification.permission === 'granted') {
       new Notification("🔔 CÓ ĐƠN HÀNG MỚI!", { body: `Khách ${newestOrderData.user} vừa mua ${newestOrderData.productName}.`, tag: "new-order" });
-    }
-    
-    if(typeof sendAdminNotificationEmail === 'function') {
-      sendAdminNotificationEmail(newestOrderCode, newestOrderData);
     }
   }
 
@@ -1283,19 +1323,17 @@ async function approveOrder(orderCode) {
 
 async function cancelPendingOrder(orderCode) {
   if(!isAdmin) return toast('Không có quyền!', 'error');
-  if(!confirm(`Bạn có chắc chắn muốn HỦY đơn hàng "${orderCode}" này không? (Dùng khi khách báo lỗi hoặc không chuyển khoản)`)) return;
+  if(!confirm(`Bạn có chắc chắn muốn HỦY đơn hàng "${orderCode}" này không?`)) return;
   
   const snap = await db.ref('qr_pending_orders/' + orderCode).once('value');
   const data = snap.val();
   
   if(data) {
-    // Lưu lịch sử đơn bị hủy cho khách
     await db.ref('orders').push({
       user: data.user, productId: data.productId, productName: data.productName,
       price: data.price, key: 'Đơn hàng bị hủy do chưa nhận được thanh toán', time: Date.now(), method: 'Admin Hủy', status: 'cancelled'
     });
     
-    // Gửi thông báo cho khách
     await db.ref('notifications/' + data.user).push({
       title: 'Đơn hàng bị hủy!',
       body: `Đơn hàng "${data.productName}" đã bị hủy do chưa nhận được thanh toán. Vui lòng liên hệ Zalo Admin nếu có thắc mắc.`,
@@ -1611,42 +1649,6 @@ async function confirmBuy(){
   }
   openEmailCheckoutModal(currentPid, p.name, finalPrice);
   closeModal('productModal');
-}
-
-db.ref('settings/notify_emails').on('value', s => {
-  const data = s.val();
-  notifyEmails = (data && Array.isArray(data)) ? data : [];
-  renderAdminEmailList();
-});
-
-function renderAdminEmailList() {
-  const el = $('adminEmailList');
-  if (!el) return;
-  if (notifyEmails.length === 0) {
-    el.innerHTML = '<span style="color:var(--red); font-size:0.9rem;">Chưa có Gmail nào được thêm!</span>';
-    return;
-  }
-  el.innerHTML = notifyEmails.map(email => `
-    <div class="flex items-center gap-2 panel p-2 pr-3" style="background:rgba(0,255,157,0.05); border-color:#00ff9d55">
-      <span class="text-xs md:text-sm text-green-400">✅ ${esc(email)}</span>
-      <button class="btn-ghost px-2 py-1 text-xs" style="color:var(--red); border:none" onclick="removeNotifyEmail('${esc(email)}')">🗑️</button>
-    </div>
-  `).join('');
-}
-
-async function addNewEmail() {
-  const newEmail = $('newNotifyEmail').value.trim().toLowerCase();
-  if (!newEmail || !newEmail.includes('@')) return toast('Vui lòng nhập Gmail hợp lệ!', 'warning');
-  if (notifyEmails.includes(newEmail)) return toast('Gmail này đã có trong danh sách!', 'warning');
-  await db.ref('settings/notify_emails').set([...notifyEmails, newEmail]);
-  $('newNotifyEmail').value = '';
-  toast('Đã thêm Gmail mới!', 'success');
-}
-
-async function removeNotifyEmail(emailToRemove) {
-  if (!confirm(`Bạn có chắc muốn xóa Gmail "${emailToRemove}" khỏi danh sách nhận thông báo?`)) return;
-  await db.ref('settings/notify_emails').set(notifyEmails.filter(e => e !== emailToRemove));
-  toast('Đã xóa Gmail!', 'success');
 }
 
 function openProfile(){
