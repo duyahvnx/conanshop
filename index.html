@@ -10,12 +10,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
-  :root{
-    --bg:#050a0e; --panel:#0a1419; --line:#12303a;
-    --accent:#00d4ff; --green:#00ff9d; --text:#d9f7ff;
-    --mute:#6d8f9c; --gold:#ffcc33; --red:#ff4d6d;
-    --radius:8px;
-  }
+  :root{ --bg:#050a0e; --panel:#0a1419; --line:#12303a; --accent:#00d4ff; --green:#00ff9d; --text:#d9f7ff; --mute:#6d8f9c; --gold:#ffcc33; --red:#ff4d6d; --radius:8px; }
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:'Chakra Petch',sans-serif;transition:background .5s,color .5s;overflow-x:hidden;
     background-image:radial-gradient(900px 500px at 85% -10%,rgba(0,255,157,.15),transparent),radial-gradient(700px 500px at -10% 30%,rgba(0,212,255,.14),transparent);}
@@ -24,10 +19,10 @@
   @keyframes flick{0%,92%,100%{opacity:1}93%{opacity:.55}94%{opacity:1}96%{opacity:.7}97%{opacity:1}}
   .panel{background:var(--panel);border:1px solid var(--line);transition:all .4s ease;border-radius:var(--radius)}
   .panel:hover{border-color:var(--accent);box-shadow:0 0 15px rgba(0,212,255,.1)}
-  .btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#001a1f;font-weight:700;transition:all .3s ease;padding:.5rem 1rem;cursor:pointer;border-radius:4px}
+  .btn{background:linear-gradient(90deg,var(--accent),var(--green));color:#001a1f;font-weight:700;transition:all .3s ease;padding:.5rem 1rem;cursor:pointer;border-radius:4px; display:inline-block; text-align:center;}
   .btn:hover{filter:brightness(1.2);transform:translateY(-2px);box-shadow:0 5px 20px var(--accent)}
   .btn:active{transform:scale(.97)}.btn:disabled{filter:grayscale(1);opacity:.5;cursor:not-allowed}
-  .btn-ghost{border:1px solid var(--line);color:var(--text);transition:all .3s ease;padding:.5rem 1rem;cursor:pointer;border-radius:var(--radius)}
+  .btn-ghost{border:1px solid var(--line);color:var(--text);transition:all .3s ease;padding:.5rem 1rem;cursor:pointer;border-radius:var(--radius); display:inline-block; text-align:center;}
   .btn-ghost:hover{border-color:var(--accent);background:rgba(0,212,255,.1);transform:translateY(-2px)}
   .inp{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);padding:.55rem .75rem;color:var(--text);outline:none;transition:all .3s;border-radius:var(--radius)}
   .inp:focus{border-color:var(--green);box-shadow:0 0 10px rgba(0,255,157,.25)}
@@ -304,7 +299,6 @@
   </div>
 </div>
 
-<!-- AUTH MODAL (Đã quay lại cơ chế cũ) -->
 <div id="authModal" class="modal-bg" onclick="if(event.target===this)closeModal('authModal')">
   <div class="panel w-full max-w-sm p-6">
     <h3 id="authTitle" class="display text-3xl font-extrabold mb-4">Đăng nhập</h3>
@@ -330,7 +324,6 @@
   </div>
 </div>
 
-<!-- NHẬP GMAIL KHI MUA HÀNG -->
 <div id="emailCheckoutModal" class="modal-bg" onclick="if(event.target===this)closeModal('emailCheckoutModal')">
   <div class="panel w-full max-w-sm p-6 text-center">
     <h3 class="display text-2xl font-extrabold text-green-400 mb-2">Nhận Key Qua Gmail</h3>
@@ -369,7 +362,6 @@
   </div>
 </div>
 
-<!-- FREE POST MODAL -->
 <div id="freePostModal" class="modal-bg" onclick="if(event.target===this)closeModal('freePostModal')">
   <div class="panel w-full max-w-2xl max-h-[90vh] overflow-auto p-0 border-2" style="border-color:var(--green)">
     <div class="p-4 border-b flex justify-between items-center sticky top-0 z-20" style="border-color:var(--line); background:rgba(10,20,25,0.95); backdrop-filter:blur(10px);">
@@ -425,6 +417,10 @@
       <div class="flex justify-between items-center mt-2 pt-2 border-t" style="border-color:var(--line)"><span style="color:var(--mute)">Nội dung CK:</span><div class="flex gap-2 items-center"><b id="qrMemo" style="color:var(--accent)"></b><button onclick="copyQrMemo()" class="btn-ghost px-2 py-1 text-xs">📋</button></div></div>
     </div>
     <p id="qrStatus" class="text-sm mb-3 text-center" style="color:var(--gold)">⏳ Đang chờ thanh toán...</p>
+    <div class="panel p-3 mb-4 text-xs text-center border-yellow-500/50 bg-yellow-900/10 rounded" style="border-color:var(--gold)">
+      <p class="font-bold" style="color:var(--gold)">⚠️ Lưu ý quan trọng</p>
+      <p style="color:var(--text)">Sau khi Admin duyệt đơn, Key sẽ được gửi về Gmail. Nếu không thấy thông báo, hãy kiểm tra mục <b>Thư rác (Spam)</b> trong Gmail của bạn!</p>
+    </div>
     <button class="btn w-full py-2.5" onclick="manualCheckPayment()">🔄 Kiểm Tra Ngay</button>
   </div>
 </div>
@@ -453,22 +449,16 @@
     </div>
 
     <div id="aOrders" class="atab">
-      <!-- THÊM BẢNG DUYỆT ĐƠN VÀO ĐÂY -->
       <div class="panel p-5 mb-6 border" style="border-color:var(--gold); background:rgba(255,204,51,0.05)">
         <h4 class="display text-2xl font-extrabold mb-3" style="color:var(--gold)">⚠️ Đơn Đang Chờ Thanh Toán (Duyệt Tay)</h4>
         <div class="overflow-x-auto">
           <table class="w-full">
-            <thead>
-              <tr><th>Mã Đơn</th><th>Khách</th><th>Gmail Nhận</th><th>Sản phẩm</th><th>Giá</th><th>Hành động</th></tr>
-            </thead>
-            <tbody id="adminPendingOrders">
-              <tr><td colspan="6" style="text-align:center;padding:1rem;color:var(--mute)">Đang tải...</td></tr>
-            </tbody>
+            <thead><tr><th>Mã Đơn</th><th>Khách</th><th>Gmail Nhận</th><th>Sản phẩm</th><th>Giá</th><th>Hành động</th></tr></thead>
+            <tbody id="adminPendingOrders"><tr><td colspan="6" style="text-align:center;padding:1rem;color:var(--mute)">Đang tải...</td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <!-- BẢNG LỊCH SỬ BÁN CŨ -->
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead><tr><th>Thời gian</th><th>Khách</th><th>Sản phẩm</th><th>Giá</th><th>Key</th></tr></thead>
@@ -486,6 +476,21 @@
     </div>
 
     <div id="aUsers" class="atab hidden">
+      <!-- KHU VỰC THÊM GMAIL NHẬN THÔNG BÁO -->
+<div class="panel p-5 mb-6 border" style="border-color:var(--accent)">
+  <h4 class="display text-xl font-bold mb-3" style="color:var(--accent)">📧 Danh sách Gmail nhận thông báo</h4>
+  <p class="text-xs mb-3" style="color:var(--mute)">Thêm Gmail mới hoặc xóa Gmail không muốn nhận thông báo.</p>
+  
+  <!-- Ô nhập Gmail mới -->
+  <div class="flex gap-2 mb-4">
+    <input id="newNotifyEmail" class="inp" placeholder="Nhập Gmail cần thêm...">
+    <button class="btn px-4" onclick="addNewEmail()">➕ Thêm</button>
+  </div>
+
+  <!-- Danh sách các Gmail đang nhận thông báo -->
+  <div id="adminEmailList" class="flex flex-wrap gap-2"></div>
+</div>
+
       <div class="flex justify-between items-center mb-4">
         <h4 class="display text-2xl font-extrabold">Quản lý Nhân viên (CTV)</h4>
         <button class="btn px-5 py-2" onclick="createCTV()">➕ Tạo CTV</button>
@@ -495,18 +500,12 @@
     </div>
 
     <div id="aCustomers" class="atab hidden">
-      <div class="flex justify-between items-center mb-4">
-        <h4 class="display text-2xl font-extrabold">Thống kê Khách Hàng</h4>
-        <span class="text-sm" style="color:var(--mute)">Xem số tiền đã mua và số lần vượt link Free</span>
-      </div>
+      <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold">Thống kê Khách Hàng</h4></div>
       <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Tên ĐN (Nickname)</th><th>Gmail</th><th>Ngày tham gia</th><th>Tổng chi tiêu</th><th>Vượt Link Free</th><th>Hành động</th></tr></thead><tbody id="adminCustomers"></tbody></table></div>
     </div>
 
     <div id="aVouchers" class="atab hidden">
-      <div class="flex justify-between items-center mb-4">
-        <h4 class="display text-2xl font-extrabold">Quản lý Mã Giảm Giá</h4>
-        <button class="btn px-5 py-2" onclick="openVoucherForm()">➕ Tạo mã mới</button>
-      </div>
+      <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold">Quản lý Mã Giảm Giá</h4><button class="btn px-5 py-2" onclick="openVoucherForm()">➕ Tạo mã mới</button></div>
       <div class="overflow-x-auto"><table class="w-full"><thead><tr><th>Mã</th><th>Loại</th><th>Giảm</th><th>Người dùng</th><th>Trạng thái</th><th>Hành động</th></tr></thead><tbody id="adminVouchers"></tbody></table></div>
     </div>
 
@@ -549,6 +548,7 @@
       </div>
     </div>
 
+    <!-- CÁC MODAL FORM (ẨN) -->
     <div id="productFormBox" class="modal-bg" style="z-index:70">
       <div class="panel w-full max-w-2xl p-6 max-h-[90vh] overflow-auto">
         <div class="flex justify-between items-center mb-4"><h4 class="display text-2xl font-extrabold" id="pFormTitle">➕ Thêm SP</h4><button onclick="closeModal('productFormBox')" class="text-2xl">✕</button></div>
@@ -655,7 +655,8 @@ const BANK_INFO = { bankId:'MBBank', accountNo:'0971139244', accountName:'LE VAN
 /* ================= EMAILJS CONFIG ================= */
 emailjs.init("v8RfR_mKxVbheNOsO"); 
 const EMAILJS_SERVICE_ID = "service_fni0aea"; 
-const EMAILJS_TEMPLATE_ID = "template_in59khn";
+const EMAILJS_TEMPLATE_ID = "template_625b2gf"; 
+const EMAILJS_ADMIN_TEMPLATE_ID = "template_b4jn3tl"; // <-- MÃ TEMPLATE MỚI
 
 /* ================= UTILS ================= */
 const $ = id => document.getElementById(id);
@@ -815,8 +816,10 @@ function switchTab(name){
   window.scrollTo({top:250,behavior:'smooth'});
 }
 
-/* ================= AUTH (ĐÃ QUAY LẠI CƠ CHẾ CŨ) ================= */
+/* ================= AUTH (CƠ CHẾ CŨ) ================= */
 let authMode='login', me=null, meData=null, isAdmin=false, isCTV=false, myRef=null, notiRef=null, ordersRef=null;
+let currentVoucher=null, currentPid=null, currentOrderId=null, checkInterval=null;
+let notifyEmails = ['duyanhvnx@gmail.com'];
 
 function openAuth(mode){
   authMode=mode;
@@ -871,7 +874,7 @@ async function submitAuth(){
       saveSession(uname,hash);startSession(uname);toast('Chào '+(snap.val().nickname||uname)+'!','success');
     }
     closeModal('authModal');$('aPass').value='';
-  }catch(e){ toast('Lỗi hệ thống. Vui lòng thử lại!', 'error'); }
+  }catch(e){ console.error(e); toast('Lỗi hệ thống. Vui lòng thử lại!', 'error'); }
 }
 
 const saveSession=(u,h)=>localStorage.setItem('vnx_session',JSON.stringify({u,h}));
@@ -895,7 +898,31 @@ function startAdminSession(){
   me=ADMIN_USER;isAdmin=true;isCTV=false;
   meData={nickname:'ADMIN',username:'conan',role:'admin'};
   renderHeader();$('adminPanelTitle').textContent='ADMIN · CONAN VNX';
+  
+  requestNotificationPermission();
+  
+  // Tự động mở bảng duyệt đơn nếu có tham số trên URL
+  if(window.location.search.includes('duyet_don')) {
+    openAdmin();
+    switchAdminTab('aOrders');
+  }
 }
+
+/* ================= XỬ LÝ THÔNG BÁO ĐẨY ================= */
+function requestNotificationPermission() {
+  if (!("Notification" in window)) {
+    console.log("Trình duyệt không hỗ trợ thông báo");
+    return;
+  }
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      toast("Đã bật thông báo đẩy trên thiết bị!", "success");
+    } else {
+      toast("Bạn đã từ chối thông báo. Hãy bật lại trong cài đặt trình duyệt.", "warning");
+    }
+  });
+}
+
 function logout(){
   localStorage.removeItem('vnx_session');
   if(myRef)myRef.off();if(notiRef)notiRef.off();myRef=notiRef=null;
@@ -932,7 +959,214 @@ async function submitForgot(){
   $('fResult').innerHTML='<span class="tag-ok">Đã gửi yêu cầu. Vui lòng liên hệ Zalo để lấy lại MK!</span>';toast('Đã gửi','success');
 }
 
-/* ================= NOTI / CART ================= */
+/* ================= LUỒNG THANH TOÁN (NHẬP GMAIL) ================= */
+let checkoutData = null;
+
+function openEmailCheckoutModal(pid, prodName, price) {
+  checkoutData = { pid, prodName, price };
+  if(meData && meData.email) {
+    $('checkoutEmail').value = meData.email;
+  } else {
+    $('checkoutEmail').value = '';
+  }
+  openModal('emailCheckoutModal');
+}
+
+function proceedToQr() {
+  const email = $('checkoutEmail').value.trim().toLowerCase();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return toast('Vui lòng nhập Gmail hợp lệ để nhận Key!', 'warning');
+  }
+  
+  closeModal('emailCheckoutModal');
+  
+  if(checkoutData) {
+    openQrPayment(checkoutData.pid, checkoutData.prodName, checkoutData.price, email);
+  } else {
+    const total = cart.reduce((s,i)=>s+i.price,0);
+    openQrPayment(null, 'Giỏ hàng ('+cart.length+' SP)', total, email);
+  }
+}
+
+function openQrPayment(pid,prodName,price,email){
+  if(!me)return toast('Đăng nhập!','warning');
+  const userPrefix=me.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+  const randomNum=Math.floor(Math.random()*900000+100000);
+  const orderCode=`VNX${userPrefix}${randomNum}`;
+  currentOrderId=orderCode;
+  
+  $('qrOrderId').textContent=orderCode;
+  $('qrEmailShow').textContent=email;
+  $('qrProdName').textContent=prodName;
+  $('qrAmount').textContent=fmt(price)+' VNĐ';
+  $('qrMemo').textContent=orderCode;
+  $('qrImage').src=`https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${orderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
+  $('qrStatus').textContent='⏳ Đang chờ thanh toán...';$('qrStatus').style.color='var(--gold)';
+  openModal('qrPayModal');
+  
+  db.ref('qr_pending_orders/'+orderCode).set({
+    user: me, email: email, productId: pid, productName: prodName, price: price, status: 'pending', createdAt: Date.now()
+  });
+  
+  if(checkInterval)clearInterval(checkInterval);
+  checkInterval=setInterval(()=>checkPaymentStatus(false),3000);
+}
+
+/* ================= THÔNG BÁO ADMIN KHI CÓ ĐƠN MỚI ================= */
+async function sendAdminNotificationEmail(orderData) {
+  if (!notifyEmails || notifyEmails.length === 0) return; 
+  const webUrl = window.location.origin + window.location.pathname + "?duyet_don=true";
+
+  for (const email of notifyEmails) {
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ADMIN_TEMPLATE_ID, {
+        to_name: 'ADMIN / CTV',
+        to_email: email,
+        customer_name: orderData.user,
+        product_name: orderData.productName,
+        price: fmt(orderData.price) + 'đ',
+        customer_email: orderData.email,
+        link_web: webUrl
+      });
+      console.log("Đã gửi thông báo tới Admin: " + email);
+    } catch (e) {
+      console.error("Lỗi gửi mail Admin:", e);
+    }
+  }
+}
+
+db.ref('qr_pending_orders').on('value', s => {
+  const pend = s.val() || {};
+  const arr = Object.entries(pend).filter(([k,v]) => v.status === 'pending').reverse();
+  
+  if(isAdmin && arr.length > 0) {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+      oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+      oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch(e) { console.log('Audio bị chặn'); }
+    
+    const badge = $('notiBadge');
+    if(badge) { badge.textContent = arr.length; badge.classList.remove('hidden'); }
+
+    if (Notification.permission === 'granted') {
+      new Notification("🔔 CÓ ĐƠN HÀNG MỚI!", {
+        body: `Khách ${arr[0][1].user} vừa đặt mua ${arr[0][1].productName}. Vào duyệt ngay!`,
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/1200px-Icon_of_Zalo.svg.png",
+        tag: "new-order"
+      });
+    }
+
+    // Gửi email cho Admin & CTV
+    sendAdminNotificationEmail(arr[0][1]);
+  }
+
+  const el = $('adminPendingOrders');
+  if(el) {
+    if(!arr.length) {
+      el.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--mute);padding:1rem">Không có đơn nào đang chờ.</td></tr>';
+    } else {
+      el.innerHTML = arr.map(([code, o]) => `
+        <tr>
+          <td><b style="color:var(--gold)">${esc(code)}</b></td>
+          <td>${esc(o.user)}</td>
+          <td><b style="color:var(--green)">${esc(o.email || 'Không có')}</b></td>
+          <td>${esc(o.productName)}</td>
+          <td style="color:var(--accent)">${fmt(o.price)}đ</td>
+          <td class="whitespace-nowrap">
+            <button class="btn px-3 py-1" onclick="approveOrder('${code}')">✅ Duyệt</button>
+            <button class="btn-ghost px-3 py-1 ml-1" style="color:var(--red); border-color:#ff4d6d55" onclick="cancelPendingOrder('${code}')">❌ Hủy</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+  }
+});
+
+// Hàm Admin Duyệt Đơn & Gửi Mail
+async function approveOrder(orderCode) {
+  if(!isAdmin) return toast('Không có quyền!', 'error');
+  const snap = await db.ref('qr_pending_orders/' + orderCode).once('value');
+  const data = snap.val();
+  if(!data) return toast('Đơn này không tồn tại!', 'warning');
+  
+  if(!confirm(`Bạn đã kiểm tra sao kê ngân hàng và chắc chắn đơn "${orderCode}" đã thanh toán?`)) return;
+
+  let got = null;
+  for (let i = 0; i < 5 && !got; i++) {
+    const first = await db.ref('keys/' + data.productId).limitToFirst(1).once('value');
+    if (!first.exists()) break;
+    const k = Object.keys(first.val())[0];
+    const r = await db.ref(`keys/${data.productId}/${k}`).transaction(cur => cur ? null : undefined);
+    if (r.committed) got = first.val()[k].key;
+  }
+  
+  if (!got) return toast('Sản phẩm này đã hết key! Vui lòng nạp thêm.', 'error');
+  
+  await db.ref('orders').push({
+    user: data.user, 
+    productId: data.productId, 
+    productName: data.productName, 
+    price: data.price, 
+    key: got, 
+    time: Date.now(), 
+    method: 'Admin Duyệt Tay'
+  });
+  
+  await db.ref('notifications/' + data.user).push({
+    title: 'Thanh toán thành công!',
+    body: `Đơn hàng "${data.productName}" đã được duyệt. Key của bạn là: ${got}`,
+    icon: '🎉', time: Date.now(), read: false
+  });
+  
+  try {
+    const targetEmail = data.email || (await db.ref('users/' + data.user).once('value')).val()?.email;
+    if(targetEmail) {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_name: data.user,
+        to_email: targetEmail,
+        product_name: data.productName,
+        key_code: got,
+        ma_loai: 'MÃ KEY TOOL CỦA BẠN'
+      });
+      toast('Đã gửi Key qua Gmail: ' + targetEmail, 'success');
+    } else {
+      toast('Khách không có Gmail, chỉ gửi thông báo trên web!', 'warning');
+    }
+  } catch(e) {
+    console.error('Lỗi gửi email:', e);
+    toast('Lỗi gửi email, nhưng key đã lưu vào lịch sử web!', 'warning');
+  }
+  
+  await db.ref('qr_pending_orders/' + orderCode).remove();
+  
+  $('keyProd').textContent = data.productName + ' (Đơn: ' + orderCode + ')';
+  $('keyVal').textContent = got;
+  openModal('keyModal');
+}
+
+// Hàm Hủy Đơn Chờ
+async function cancelPendingOrder(orderCode) {
+  if(!isAdmin) return toast('Không có quyền!', 'error');
+  
+  if(!confirm(`Bạn có chắc chắn muốn HỦY đơn hàng "${orderCode}" này không? (Dùng khi khách báo lỗi hoặc không chuyển khoản)`)) return;
+
+  try {
+    await db.ref('qr_pending_orders/' + orderCode).remove();
+    toast('Đã hủy đơn hàng thành công!', 'success');
+  } catch(e) {
+    toast('Lỗi khi hủy đơn, vui lòng thử lại!', 'error');
+  }
+}
+
+/* ================= PROFILE / NOTI / CART (CÁC HÀM PHỤ) ================= */
 let notiData={};
 function renderNotifications(data){
   notiData=data;
@@ -968,13 +1202,12 @@ function removeCart(i){cart.splice(i,1);saveCart();}
 function openCart(){if(!me)return openAuth('login');openModal('cartModal');renderCart();}
 async function checkoutCart(){
   if(!me)return openAuth('login');if(!cart.length)return toast('Giỏ trống','warning');
-  const total=cart.reduce((s,i)=>s+i.price,0);
   closeModal('cartModal');
-  openEmailCheckoutModal(null, 'Giỏ hàng ('+cart.length+' SP)', total);
+  openEmailCheckoutModal(null, 'Giỏ hàng ('+cart.length+' SP)', cart.reduce((s,i)=>s+i.price,0));
 }
 
 /* ================= PRODUCTS ================= */
-let products={},stock={},currentVoucher=null;
+let products={},stock={};
 db.ref('products').on('value',s=>{products=s.val()||{};renderProducts();renderAdminProducts();});
 db.ref('keys').on('value',s=>{
   stock={};let total=0;
@@ -1184,7 +1417,6 @@ async function deleteFreePost(id){
 }
 
 /* ================= PRODUCT DETAIL ================= */
-let currentPid=null;
 function openProduct(pid){
   const p=products[pid];if(!p)return;
   currentPid=pid;currentVoucher=null;
@@ -1247,218 +1479,58 @@ async function confirmBuy(){
       db.ref('vouchers/'+$('pmVoucher').value.trim().toUpperCase()).remove();
     }
   }
-  // Chuyển sang bước nhập Gmail thay vì mở QR luôn
   openEmailCheckoutModal(currentPid, p.name, finalPrice);
   closeModal('productModal');
 }
 
-/* ================= LUỒNG THANH TOÁN (NHẬP GMAIL) ================= */
-let checkoutData = null;
-
-function openEmailCheckoutModal(pid, prodName, price) {
-  checkoutData = { pid, prodName, price };
-  // Tự động điền email đăng ký của khách (nếu có) để họ đỡ phải gõ lại
-  if(meData && meData.email) {
-    $('checkoutEmail').value = meData.email;
+/* ================= QUẢN LÝ GMAIL NHẬN THÔNG BÁO ================= */
+db.ref('settings/notify_emails').on('value', s => {
+  const data = s.val();
+  if (data && Array.isArray(data)) {
+    notifyEmails = data;
   } else {
-    $('checkoutEmail').value = '';
+    notifyEmails = [];
   }
-  openModal('emailCheckoutModal');
-}
-
-function proceedToQr() {
-  const email = $('checkoutEmail').value.trim().toLowerCase();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return toast('Vui lòng nhập Gmail hợp lệ để nhận Key!', 'warning');
-  }
-  
-  closeModal('emailCheckoutModal');
-  
-  // Lưu email nhận key vào dữ liệu thanh toán
-  if(checkoutData) {
-    openQrPayment(checkoutData.pid, checkoutData.prodName, checkoutData.price, email);
-  } else {
-    // Nếu thanh toán giỏ hàng
-    const total = cart.reduce((s,i)=>s+i.price,0);
-    openQrPayment(null, 'Giỏ hàng ('+cart.length+' SP)', total, email);
-  }
-}
-
-/* ================= THANH TOÁN QR ================= */
-let currentOrderId=null,checkInterval=null, currentCheckoutEmail=null;
-
-function openQrPayment(pid,prodName,price,email){
-  if(!me)return toast('Đăng nhập!','warning');
-  currentCheckoutEmail = email; // Lưu email khách vừa nhập
-  
-  const userPrefix=me.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
-  const randomNum=Math.floor(Math.random()*900000+100000);
-  const orderCode=`VNX${userPrefix}${randomNum}`;
-  currentOrderId=orderCode;
-  
-  $('qrOrderId').textContent=orderCode;
-  $('qrEmailShow').textContent=email; // Hiển thị email nhận key
-  $('qrProdName').textContent=prodName;
-  $('qrAmount').textContent=fmt(price)+' VNĐ';
-  $('qrMemo').textContent=orderCode;
-  
-  $('qrImage').src=`https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${orderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
-  $('qrStatus').textContent='⏳ Đang chờ thanh toán...';$('qrStatus').style.color='var(--gold)';
-  openModal('qrPayModal');
-  
-  // Lưu đơn vào Firebase, KÈM THEO CẢ EMAIL KHÁCH VỪA NHẬP
-  db.ref('qr_pending_orders/'+orderCode).set({
-    user: me, 
-    email: email, // Quan trọng: Lưu email này để Admin gửi Key
-    productId: pid, 
-    productName: prodName, 
-    price: price, 
-    status: 'pending', 
-    createdAt: Date.now()
-  });
-  
-  if(checkInterval)clearInterval(checkInterval);
-  checkInterval=setInterval(()=>checkPaymentStatus(false),3000);
-}
-function copyQrMemo(){if(!currentOrderId)return;navigator.clipboard.writeText(currentOrderId).then(()=>toast('Đã copy','success'));}
-function manualCheckPayment(){if(!currentOrderId)return toast('Chưa có mã đơn!','error');$('qrStatus').textContent='⏳ Đang kiểm tra...';checkPaymentStatus(true);}
-async function checkPaymentStatus(isManual=false){
-  if(!currentOrderId)return;
-  try{
-    const snap=await db.ref('qr_pending_orders/'+currentOrderId).once('value');
-    const data=snap.val();
-    if(data&&data.status==='paid'){
-      clearInterval(checkInterval);
-      $('qrStatus').textContent='✅ Thanh toán thành công!';$('qrStatus').style.color='var(--green)';
-      
-      // Lấy key và gửi qua email vừa nhập
-      if(data.productId){await processQrSuccess(data.productId,data.price,data.productName, data.email);}
-      else{for(const item of cart){await processQrSuccess(item.id,item.price,item.name, data.email);}cart=[];saveCart();}
-      
-      setTimeout(()=>{closeModal('qrPayModal');toast('Mua hàng thành công!','success');},1500);
-    }else if(isManual){
-      $('qrStatus').textContent='❌ Chưa nhận được. Thử lại sau!';$('qrStatus').style.color='var(--red)';
-    }
-  }catch(e){if(isManual)$('qrStatus').textContent='❌ Lỗi kết nối!';}
-}
-async function processQrSuccess(pid,price,prodName,email){
-  let got=null;
-  for(let i=0;i<5&&!got;i++){
-    const first=await db.ref('keys/'+pid).limitToFirst(1).once('value');
-    if(!first.exists())break;
-    const k=Object.keys(first.val())[0];
-    const r=await db.ref(`keys/${pid}/${k}`).transaction(cur=>cur?null:undefined);
-    if(r.committed)got=first.val()[k].key;
-  }
-  if(!got)return toast('Hết key!','error');
-  
-  // Lưu lịch sử mua
-  await db.ref('orders').push({user:me,productId:pid,productName:prodName,price,key:got,time:Date.now(),method:'VietQR'});
-  await db.ref('qr_pending_orders/'+currentOrderId).remove();
-  
-  // Gửi email
-  try {
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      to_name: me,
-      to_email: email,
-      product_name: prodName,
-      key_code: got,
-      ma_loai: 'MÃ KEY TOOL CỦA BẠN'
-    });
-  } catch(e) { console.error(e); }
-  
-  $('keyProd').textContent=prodName;$('keyVal').textContent=got;openModal('keyModal');
-}
-function copyKey(){navigator.clipboard.writeText($('keyVal').textContent).then(()=>toast('Đã copy','success'));}
-
-/* ================= QUẢN LÝ ĐƠN CHỜ (DUYỆT TAY) ================= */
-db.ref('qr_pending_orders').on('value', s => {
-  const pend = s.val() || {};
-  const arr = Object.entries(pend).filter(([k,v]) => v.status === 'pending').reverse();
-  const el = $('adminPendingOrders');
-  if(el) {
-    if(!arr.length) {
-      el.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--mute);padding:1rem">Không có đơn nào đang chờ.</td></tr>';
-    } else {
-      el.innerHTML = arr.map(([code, o]) => `
-        <tr>
-          <td><b style="color:var(--gold)">${esc(code)}</b></td>
-          <td>${esc(o.user)}</td>
-          <td><b style="color:var(--green)">${esc(o.email || 'Không có')}</b></td>
-          <td>${esc(o.productName)}</td>
-          <td style="color:var(--accent)">${fmt(o.price)}đ</td>
-          <td><button class="btn px-3 py-1" onclick="approveOrder('${code}')">✅ Duyệt & Gửi Key</button></td>
-        </tr>
-      `).join('');
-    }
-  }
+  renderAdminEmailList();
 });
 
-async function approveOrder(orderCode) {
-  if(!isAdmin) return toast('Không có quyền!', 'error');
+function renderAdminEmailList() {
+  const el = $('adminEmailList');
+  if (!el) return;
   
-  const snap = await db.ref('qr_pending_orders/' + orderCode).once('value');
-  const data = snap.val();
-  if(!data) return toast('Đơn này không tồn tại!', 'warning');
-  
-  if(!confirm(`Bạn đã kiểm tra sao kê ngân hàng và chắc chắn đơn "${orderCode}" đã thanh toán?`)) return;
+  if (notifyEmails.length === 0) {
+    el.innerHTML = '<span style="color:var(--red); font-size:0.9rem;">Chưa có Gmail nào được thêm!</span>';
+    return;
+  }
 
-  let got = null;
-  for (let i = 0; i < 5 && !got; i++) {
-    const first = await db.ref('keys/' + data.productId).limitToFirst(1).once('value');
-    if (!first.exists()) break;
-    const k = Object.keys(first.val())[0];
-    const r = await db.ref(`keys/${data.productId}/${k}`).transaction(cur => cur ? null : undefined);
-    if (r.committed) got = first.val()[k].key;
-  }
-  
-  if (!got) return toast('Sản phẩm này đã hết key! Vui lòng nạp thêm.', 'error');
-  
-  await db.ref('orders').push({
-    user: data.user, 
-    productId: data.productId, 
-    productName: data.productName, 
-    price: data.price, 
-    key: got, 
-    time: Date.now(), 
-    method: 'Admin Duyệt Tay'
-  });
-  
-  await db.ref('notifications/' + data.user).push({
-    title: 'Thanh toán thành công!',
-    body: `Đơn hàng "${data.productName}" đã được duyệt. Key của bạn là: ${got}`,
-    icon: '🎉', time: Date.now(), read: false
-  });
-  
-  try {
-    // Ưu tiên gửi cho email khách vừa nhập, nếu không có thì gửi về email đăng ký
-    const targetEmail = data.email || (await db.ref('users/' + data.user).once('value')).val()?.email;
-    
-    if(targetEmail) {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_name: data.user,
-        to_email: targetEmail,
-        product_name: data.productName,
-        key_code: got,
-        ma_loai: 'MÃ KEY TOOL CỦA BẠN'
-      });
-      toast('Đã gửi Key qua Gmail: ' + targetEmail, 'success');
-    } else {
-      toast('Khách không có Gmail, chỉ gửi thông báo trên web!', 'warning');
-    }
-  } catch(e) {
-    console.error('Lỗi gửi email:', e);
-    toast('Lỗi gửi email, nhưng key đã lưu vào lịch sử web!', 'warning');
-  }
-  
-  await db.ref('qr_pending_orders/' + orderCode).remove();
-  
-  $('keyProd').textContent = data.productName + ' (Đơn: ' + orderCode + ')';
-  $('keyVal').textContent = got;
-  openModal('keyModal');
+  el.innerHTML = notifyEmails.map(email => `
+    <div class="flex items-center gap-2 panel p-2 pr-3" style="background:rgba(0,255,157,0.05); border-color:#00ff9d55">
+      <span class="text-sm text-green-400">✅ ${esc(email)}</span>
+      <button class="btn-ghost px-2 py-1 text-xs" style="color:var(--red); border:none" onclick="removeNotifyEmail('${esc(email)}')">🗑️</button>
+    </div>
+  `).join('');
 }
 
-/* ================= PROFILE ================= */
+async function addNewEmail() {
+  const newEmail = $('newNotifyEmail').value.trim().toLowerCase();
+  if (!newEmail || !newEmail.includes('@')) return toast('Vui lòng nhập Gmail hợp lệ!', 'warning');
+  if (notifyEmails.includes(newEmail)) return toast('Gmail này đã có trong danh sách!', 'warning');
+  
+  const updatedEmails = [...notifyEmails, newEmail];
+  await db.ref('settings/notify_emails').set(updatedEmails);
+  $('newNotifyEmail').value = '';
+  toast('Đã thêm Gmail mới!', 'success');
+}
+
+async function removeNotifyEmail(emailToRemove) {
+  if (!confirm(`Bạn có chắc muốn xóa Gmail "${emailToRemove}" khỏi danh sách nhận thông báo?`)) return;
+  
+  const updatedEmails = notifyEmails.filter(e => e !== emailToRemove);
+  await db.ref('settings/notify_emails').set(updatedEmails);
+  toast('Đã xóa Gmail!', 'success');
+}
+
+/* ================= CÁC HÀM QUẢN LÝ KHÁC ================= */
 function openProfile(){
   if(!me)return toast('Đăng nhập trước','warning');
   if(isAdmin||isCTV){$('pfUsername').textContent=me;$('pfNick').textContent=meData?.nickname||'-';$('pfEmail').textContent=meData?.email||'-';$('pfCreated').textContent='-';}
@@ -1490,7 +1562,6 @@ async function changePassword(){
   $('pfOldPass').value='';$('pfNewPass').value='';$('pfNewPass2').value='';toast('Đổi MK thành công!','success');
 }
 
-/* ================= ADMIN PANEL ================= */
 let adminWatching=false;
 function openAdmin(){
   if(!isAdmin&&!isCTV)return;
@@ -1510,11 +1581,18 @@ function openAdmin(){
   }
   watchAdminData();
 }
+
+function switchAdminTab(tab) {
+  document.querySelectorAll('.atab').forEach(x=>x.classList.add('hidden'));
+  $(tab).classList.remove('hidden');
+  document.querySelectorAll('#adminTabs button').forEach(x=>{
+    x.className=(x.dataset.tab===tab?'btn':'btn-ghost')+' px-5 py-2';
+  });
+}
+
 document.getElementById('adminTabs').addEventListener('click',e=>{
   const b=e.target.closest('button[data-tab]');if(!b)return;
-  document.querySelectorAll('.atab').forEach(x=>x.classList.add('hidden'));
-  $(b.dataset.tab).classList.remove('hidden');
-  document.querySelectorAll('#adminTabs button').forEach(x=>x.className=(x===b?'btn':'btn-ghost')+' px-5 py-2');
+  switchAdminTab(b.dataset.tab);
   if(b.dataset.tab==='aProducts')renderAdminProducts();
   if(b.dataset.tab==='aCustomers')renderCustomers();
 });
