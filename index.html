@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- ============================================================ -->
-<!-- 🔥 SEO & META TAGS (Đã thêm theo yêu cầu)                     -->
-<!-- ============================================================ -->
 <title>CONAN VNX - Sàn Tool & Panel Free Fire Uy Tín #1 Việt Nam</title>
 <meta name="description" content="CONAN VNX - Sàn giao dịch Tool & Panel Free Fire uy tín hàng đầu Việt Nam. Thanh toán tự động qua VietQR, nhận key qua Gmail ngay, hỗ trợ 24/7. Giá rẻ, bảo hành 1-1.">
 <meta name="keywords" content="tool free fire, panel free fire, tool ff, panel ff, mua tool free fire, conan vnx, tool ff giá rẻ, panel ff ios, panel ff android">
@@ -15,51 +12,26 @@
 <meta name="theme-color" content="#00d4ff">
 <link rel="canonical" href="https://duyahvnx.github.io/conanshop/">
 
-<!-- Open Graph (Facebook, Zalo) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CONAN VNX">
 <meta property="og:title" content="CONAN VNX - Sàn Tool & Panel Free Fire Uy Tín #1">
 <meta property="og:description" content="Mua tool Free Fire, panel FF giá rẻ, uy tín. Thanh toán VietQR tự động, nhận key qua Gmail ngay lập tức.">
 <meta property="og:url" content="https://duyahvnx.github.io/conanshop/">
 <meta property="og:image" content="https://duyahvnx.github.io/conanshop/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta property="og:locale" content="vi_VN">
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CONAN VNX - Sàn Tool & Panel Free Fire">
-<meta name="twitter:description" content="Mua tool Free Fire uy tín, thanh toán tự động, nhận key ngay.">
-<meta name="twitter:image" content="https://duyahvnx.github.io/conanshop/og-image.jpg">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
-
-<!-- JSON-LD Structured Data (Google hiểu site) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "CONAN VNX",
-  "url": "https://duyahvnx.github.io/conanshop/",
-  "description": "Sàn giao dịch Tool & Panel Free Fire uy tín hàng đầu Việt Nam",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://duyahvnx.github.io/conanshop/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
+<link rel="icon" type="image/png" id="dynamicFavicon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Saira+Condensed:wght@600;800&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 <style>
   :root{ --bg:#050a0e; --panel:#0a1419; --line:#12303a; --accent:#00d4ff; --green:#00ff9d; --text:#d9f7ff; --mute:#6d8f9c; --gold:#ffcc33; --red:#ff4d6d; --radius:8px; }
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:'Chakra Petch',sans-serif;transition:background .5s,color .5s;overflow-x:hidden;
+  html{scroll-behavior:smooth; overflow-x: hidden;}
+  body{background:var(--bg);color:var(--text);font-family:'Chakra Petch',sans-serif;transition:background .5s,color .5s;overflow-x:hidden; padding-bottom: 70px;
     background-image:radial-gradient(900px 500px at 85% -10%,rgba(0,255,157,.15),transparent),radial-gradient(700px 500px at -10% 30%,rgba(0,212,255,.14),transparent);}
   .display{font-family:'Saira Condensed',sans-serif;letter-spacing:.02em}
   .neon{color:#fff;text-shadow:0 0 6px var(--accent),0 0 18px var(--accent),0 0 38px var(--green);animation:flick 5s infinite}
@@ -144,9 +116,111 @@
   #adminTabs { -webkit-overflow-scrolling: touch; }
   #adminTabs button { white-space: nowrap; }
   .overflow-x-auto { -webkit-overflow-scrolling: touch; }
+
+  /* Nút Chat Zalo nổi (Desktop & Mobile) */
+  .float-contact { position: fixed; bottom: 80px; left: 20px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
+  .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: 0.3s; text-decoration: none; }
+  .float-btn:hover { transform: scale(1.1); }
+  .float-zalo { background: #0068FF; }
+
+  /* Bottom Navigation (Chỉ hiển thị trên điện thoại) */
+  .bottom-nav { display: none; }
+  @media (max-width: 1023px) {
+    .bottom-nav {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 20, 25, 0.98);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+      z-index: 50;
+      justify-content: space-around;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .bottom-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      color: var(--mute);
+      font-size: 0.7rem;
+      font-weight: 600;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .bottom-nav-item.active {
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--accent);
+    }
+    .bottom-nav-item .icon {
+      font-size: 1.3rem;
+      margin-bottom: 3px;
+    }
+  }
+
+  /* Hiệu ứng nháy sáng đơn hàng cần duyệt */
+  @keyframes highlightRow {
+    0% { background-color: rgba(255, 204, 51, 0.5); }
+    100% { background-color: transparent; }
+  }
+  .highlight-row {
+    animation: highlightRow 2s ease-out;
+  }
+  
+  /* Tăng kích thước QR thanh toán */
+  .qr-image-box img {
+    width: 250px !important; 
+    height: 250px !important;
+  }
+  @media(min-width: 768px){
+    .qr-image-box img {
+      width: 300px !important; 
+      height: 300px !important;
+    }
+  }
+
+  /* Marquee Banner */
+  .marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    padding: 8px 0;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+  .marquee-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 20s linear infinite;
+  }
+  @keyframes marquee {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+  }
 </style>
 </head>
 <body>
+
+<!-- Marquee Banner -->
+<div id="marqueeBanner" class="marquee-container">
+  <div class="marquee-content" id="marqueeText"></div>
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav" id="bottomNav">
+  <!-- Sẽ được render bằng JS -->
+</div>
+
+<!-- Nút Chat Zalo nổi -->
+<div class="float-contact">
+  <a href="https://zalo.me/0971139244" target="_blank" class="float-btn float-zalo" title="Chat Zalo Admin">💬</a>
+</div>
 
 <div id="livePurchasePopup" class="fixed bottom-4 left-4 z-50 transform -translate-x-[150%] transition-transform duration-500 ease-in-out">
   <div class="panel p-3 pr-8 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-l-green-500 relative" style="background:rgba(10,20,25,0.95); backdrop-filter:blur(10px); border-color:var(--line);">
@@ -162,7 +236,10 @@
 
 <header class="sticky top-0 z-40 border-b shadow-lg" style="background:rgba(5,10,14,.95);backdrop-filter:blur(15px);border-color:var(--line)">
   <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-    <a href="#" onclick="switchTab('shop');return false" class="display neon text-3xl md:text-4xl font-extrabold tracking-wider">CONAN VNX</a>
+    <a href="#" onclick="switchTab('shop');return false" class="flex items-center gap-2">
+      <img id="headerLogoImg" src="" alt="Logo" class="h-10 hidden">
+      <span id="headerLogoText" class="display neon text-3xl md:text-4xl font-extrabold tracking-wider">CONAN VNX</span>
+    </a>
     <div class="flex flex-wrap items-center gap-2 md:gap-3 text-sm">
       <div id="userBox" class="hidden flex-wrap items-center gap-2">
         <div class="relative">
@@ -286,6 +363,7 @@
               <a href="https://zalo.me/0971139244" target="_blank" class="flex items-center gap-3 md:gap-4 panel p-3 md:p-4 rounded-lg"><span style="font-size:2rem" class="md:text-4xl">💬</span><div><b class="display text-lg md:text-xl">Zalo: 0971139244</b><br><span class="text-xs md:text-sm" style="color:var(--mute)">Phản hồi 24/7</span></div></a>
               <a href="mailto:duyanhvnx@gmail.com" class="flex items-center gap-3 md:gap-4 panel p-3 md:p-4 rounded-lg"><span style="font-size:2rem" class="md:text-4xl">📧</span><div><b class="display text-lg md:text-xl">Gmail</b><br><span class="text-xs md:text-sm" style="color:var(--mute)">duyanhvnx@gmail.com</span></div></a>
               <a href="https://www.tiktok.com/@ahduy.93210" target="_blank" class="flex items-center gap-3 md:gap-4 panel p-3 md:p-4 rounded-lg"><span style="font-size:2rem" class="md:text-4xl">🎵</span><div><b class="display text-lg md:text-xl">TikTok</b><br><span class="text-xs md:text-sm" style="color:var(--mute)">@ahduy.93210</span></div></a>
+              <a href="https://discord.gg/AAB7kdqdT" target="_blank" class="flex items-center gap-3 md:gap-4 panel p-3 md:p-4 rounded-lg" style="border-color:#5865F2"><span style="font-size:2rem" class="md:text-4xl">💬</span><div><b class="display text-lg md:text-xl" style="color:#5865F2">Server Discord</b><br><span class="text-xs md:text-sm" style="color:var(--mute)">Nhắn tin / Hỗ trợ trực tiếp</span></div></a>
             </div>
           </div>
           <div class="panel p-5 md:p-8 rounded-xl">
@@ -388,12 +466,22 @@
 </div>
 
 <div id="emailCheckoutModal" class="modal-bg" onclick="if(event.target===this)closeModal('emailCheckoutModal')">
-  <div class="panel w-full max-w-sm p-5 md:p-6 text-center">
-    <h3 class="display text-2xl font-extrabold text-green-400 mb-2">Nhận Key Qua Gmail</h3>
-    <p class="text-sm mb-4" style="color:var(--mute)">Vui lòng nhập chính xác Gmail để nhận Key sau khi thanh toán.</p>
-    <input id="checkoutEmail" type="email" class="inp mb-4" placeholder="Nhập Gmail của bạn...">
-    <button class="btn w-full py-2.5" onclick="proceedToQr()">Tiếp tục thanh toán</button>
-    <button class="btn-ghost w-full py-2 mt-2 text-sm" onclick="closeModal('emailCheckoutModal')">Hủy</button>
+  <div class="panel w-full max-w-md p-6 md:p-8 text-center border-2" style="border-color:var(--green)">
+    <h3 class="display text-3xl font-extrabold text-green-400 mb-3">Nhận Key Qua Gmail</h3>
+    
+    <div class="text-left text-sm mb-4 p-3 rounded" style="background:rgba(0,0,0,0.3); border-left: 3px solid var(--accent);">
+      <p class="font-bold mb-1" style="color:var(--accent)">📌 Hướng dẫn & Điều khoản:</p>
+      <ul class="list-disc pl-4 space-y-1" style="color:var(--mute)">
+        <li>Vui lòng nhập <b>chính xác Gmail</b> để nhận Key.</li>
+        <li>Key sẽ được gửi tự động sau khi Admin duyệt thanh toán.</li>
+        <li>Không chia sẻ Key cho người khác.</li>
+        <li>Bảo hành đổi Key 1-1 trong 24h nếu lỗi.</li>
+      </ul>
+    </div>
+
+    <input id="checkoutEmail" type="email" class="inp mb-4 text-center text-lg" placeholder="Nhập Gmail của bạn...">
+    <button class="btn w-full py-3 text-lg font-bold" onclick="proceedToQr()">Tiếp tục thanh toán</button>
+    <button class="btn-ghost w-full py-2.5 mt-3 text-sm" onclick="closeModal('emailCheckoutModal')">Hủy</button>
   </div>
 </div>
 
@@ -469,25 +557,29 @@
 </div>
 
 <div id="qrPayModal" class="modal-bg" onclick="if(event.target===this)closeModal('qrPayModal')">
-  <div class="panel w-full max-w-md p-5 md:p-6" style="border-color:var(--accent)">
-    <div class="flex justify-between items-center mb-4"><h3 class="display text-xl md:text-2xl font-extrabold" style="color:var(--accent)">Thanh Toán</h3><button onclick="closeModal('qrPayModal')" class="text-2xl">✕</button></div>
-    <div class="text-center mb-4"><div class="bg-white p-2 inline-block rounded"><img id="qrImage" src="" style="width:180px;height:180px;object-fit:contain" class="md:w-[200px] md:h-[200px]"></div></div>
+  <div class="panel w-full max-w-lg p-5 md:p-8" style="border-color:var(--accent)">
+    <div class="flex justify-between items-center mb-4"><h3 class="display text-2xl md:text-3xl font-extrabold" style="color:var(--accent)">Thanh Toán</h3><button onclick="closeModal('qrPayModal')" class="text-3xl">✕</button></div>
     
-    <div class="panel p-3 mb-3 md:mb-4 text-xs md:text-sm space-y-1.5 md:space-y-2">
+    <!-- Phóng to QR -->
+    <div class="text-center mb-4 qr-image-box"><div class="bg-white p-3 inline-block rounded-xl shadow-lg"><img id="qrImage" src="" style="object-fit:contain"></div></div>
+    
+    <div class="panel p-4 mb-4 text-sm md:text-base space-y-2 bg-black/30">
       <div class="flex justify-between"><span style="color:var(--mute)">Mã đơn:</span><b id="qrOrderId" style="color:var(--gold)"></b></div>
       <div class="flex justify-between"><span style="color:var(--mute)">Gmail:</span><b id="qrEmailShow" style="color:var(--green);text-align:right;max-width:60%;word-break:break-all;"></b></div>
       <div class="flex justify-between"><span style="color:var(--mute)">Sản phẩm:</span><b id="qrProdName" style="text-align:right;max-width:60%;"></b></div>
       <div class="flex justify-between"><span style="color:var(--mute)">Số tiền:</span><b id="qrAmount" style="color:var(--red)"></b></div>
-      <div class="flex justify-between items-center mt-2 pt-2 border-t" style="border-color:var(--line)"><span style="color:var(--mute)">Nội dung CK:</span><div class="flex gap-2 items-center"><b id="qrMemo" style="color:var(--accent)"></b><button onclick="copyQrMemo()" class="btn-ghost px-2 py-0.5 text-[10px] md:text-xs">📋</button></div></div>
+      <div class="flex justify-between items-center mt-2 pt-2 border-t" style="border-color:var(--line)"><span style="color:var(--mute)">Nội dung CK:</span><div class="flex gap-2 items-center"><b id="qrMemo" style="color:var(--accent);font-size:1.1rem"></b><button onclick="copyQrMemo()" class="btn-ghost px-2 py-1 text-xs md:text-sm">📋</button></div></div>
     </div>
     
-    <p id="qrStatus" class="text-xs md:text-sm mb-3 text-center" style="color:var(--gold)">⏳ Đang chờ thanh toán...</p>
+    <p id="qrStatus" class="text-sm md:text-base mb-3 text-center font-bold" style="color:var(--gold)">⏳ Đang chờ thanh toán...</p>
     
-    <button id="btnKhachBaoCK" class="btn w-full py-2.5 mb-3 text-sm md:text-base" style="background:linear-gradient(90deg, #ffcc33, #ff9933); color:#001a1f" onclick="khachBaoDaChuyenKhoan()">💸 Tôi Đã Chuyển Khoản</button>
+    <!-- Nút to đùng -->
+    <button id="btnKhachBaoCK" class="btn w-full py-4 mb-4 text-lg md:text-xl font-extrabold tracking-wide" style="background:linear-gradient(90deg, #ffcc33, #ff9933); color:#001a1f; box-shadow: 0 4px 15px rgba(255,204,51,0.4)" onclick="khachBaoDaChuyenKhoan()">💸 Tôi Đã Chuyển Khoản</button>
 
-    <div class="panel p-2 md:p-3 mb-3 md:mb-4 text-[10px] md:text-xs text-center border-yellow-500/50 bg-yellow-900/10 rounded" style="border-color:var(--gold)">
-      <p class="font-bold" style="color:var(--gold)">⚠️ Lưu ý</p>
-      <p style="color:var(--text)">Vui lòng đợi Admin duyệt và gửi Key qua Gmail. Nếu quá <b>30 phút - 2 tiếng</b> chưa nhận được, hãy liên hệ <b>Zalo: 0971139244</b> để được hỗ trợ!</p>
+    <div class="panel p-3 md:p-4 mb-3 text-xs md:text-sm text-center border-2 rounded-xl" style="border-color:var(--gold); background:rgba(255, 204, 51, 0.05)">
+      <p class="font-extrabold text-base mb-1" style="color:var(--gold)">⚠️ Lưu ý quan trọng</p>
+      <p style="color:var(--text)">Bấm nút <b style="color:var(--gold)">"Tôi Đã Chuyển Khoản"</b> thì hệ thống mới gửi thông báo cho Admin duyệt nhé!</p>
+      <p style="color:var(--mute)" class="mt-1">Vui lòng đợi vài phút để gửi Key qua Gmail. Nếu quá <b>30 phút - 2 tiếng</b> chưa nhận được, hãy liên hệ <b>Zalo: 0971139244</b> để được hỗ trợ!</p>
     </div>
   </div>
 </div>
@@ -607,6 +699,40 @@
           </div>
         </div>
       </div>
+
+      <!-- Cài đặt Logo & Banner -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6">
+        <div class="panel p-4 md:p-5">
+          <h5 class="font-bold mb-3 text-sm md:text-base">Logo & Favicon</h5>
+          <span class="lbl">Link Ảnh Logo (Bỏ trống để dùng chữ)</span>
+          <input id="settingLogo" class="inp text-sm mb-2" placeholder="https://...">
+          <span class="lbl">Link Favicon (Icon tab)</span>
+          <input id="settingFavicon" class="inp text-sm mb-3" placeholder="https://...">
+          <button class="btn px-4 py-2 text-xs md:text-sm w-full" onclick="saveSetting('logo', $('settingLogo').value, null);saveSetting('favicon', $('settingFavicon').value, null)">💾 Lưu Logo</button>
+        </div>
+        
+        <div class="panel p-4 md:p-5">
+          <h5 class="font-bold mb-3 text-sm md:text-base">Chữ Chạy (Marquee)</h5>
+          <span class="lbl">Nội dung chữ</span>
+          <input id="settingMarqueeText" class="inp text-sm mb-2" placeholder="🔥 Khuyến mãi...">
+          <div class="flex gap-2 mb-2">
+            <div class="flex-1">
+              <span class="lbl">Màu chữ</span>
+              <input type="color" id="settingMarqueeColor" value="#ffffff" style="width:100%;height:34px;border:none;background:none;cursor:pointer">
+            </div>
+            <div class="flex-1">
+              <span class="lbl">Màu nền</span>
+              <input type="color" id="settingMarqueeBg" value="#ff0000" style="width:100%;height:34px;border:none;background:none;cursor:pointer">
+            </div>
+          </div>
+          <label class="flex items-center gap-2 mb-3 cursor-pointer">
+            <input type="checkbox" id="settingMarqueeActive" class="w-4 h-4">
+            <span class="text-sm font-bold">Bật chữ chạy</span>
+          </label>
+          <button class="btn px-4 py-2 text-xs md:text-sm w-full" onclick="saveMarquee()">💾 Lưu Banner</button>
+        </div>
+      </div>
+
       <div class="panel p-4 md:p-5 mt-4 md:mt-6">
         <h5 class="font-bold mb-3 text-sm md:text-base">Sắp xếp vị trí các mục</h5>
         <div id="orderList" class="space-y-2"></div>
@@ -713,6 +839,70 @@ const ADMIN_USER = 'conan';
 const ADMIN_PASS = 'conanvnx';
 const BANK_INFO = { bankId:'MBBank', accountNo:'0971139244', accountName:'LE VAN ANH DUY' };
 
+/* ================= DISCORD WEBHOOK ================= */
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1563163164823003166/80zGuAOjceyLtMtJyrWfWBisNaO2JdLCNW5O-RUXCx3T0lQuBjDUVjVz3dDQcXTs4M-0';
+const DISCORD_INVITE_URL = 'https://discord.gg/AAB7kdqdT';
+const WEB_URL = "https://duyahvnx.github.io/conanshop/";
+
+async function sendDiscordNotify(pid, prodName, price, email, orderCode) {
+  if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === '') return;
+  
+  const now = new Date();
+  const timeStr = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+
+  const embed = {
+    title: "💰 KHÁCH BÁO ĐÃ CHUYỂN KHOẢN!",
+    description: "Khách hàng vừa bấm nút **\"Tôi Đã Chuyển Khoản\"**. Vui lòng kiểm tra ngân hàng và duyệt đơn!",
+    color: 0xffcc33,
+    fields: [
+      { name: "👤 Khách hàng", value: `\`${me}\``, inline: true },
+      { name: "📦 Sản phẩm", value: `**${prodName}**`, inline: true },
+      { name: "💰 Số tiền", value: `**${fmt(price)} VNĐ**`, inline: true },
+      { name: "📧 Gmail nhận Key", value: `\`${email}\``, inline: false },
+      { name: "🔑 Nội dung CK", value: `\`${orderCode}\``, inline: false },
+      { name: "⏰ Thời gian", value: `${timeStr}`, inline: false }
+    ],
+    footer: {
+      text: "CONAN VNX - Hệ thống báo đơn tự động",
+      icon_url: "https://duyahvnx.github.io/conanshop/og-image.jpg"
+    },
+    timestamp: new Date().toISOString()
+  };
+
+  const components = [
+    {
+      type: 1,
+      components: [
+        {
+          type: 2,
+          label: "✅ Duyệt Đơn Trên Web",
+          style: 5,
+          url: WEB_URL
+        },
+        {
+          type: 2,
+          label: "❌ Hủy Đơn Trên Web",
+          style: 5,
+          url: WEB_URL
+        }
+      ]
+    }
+  ];
+
+  try {
+    await fetch(DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: "CONAN VNX BOT",
+        avatar_url: "https://duyahvnx.github.io/conanshop/og-image.jpg",
+        embeds: [embed],
+        components: components
+      })
+    });
+  } catch(e) { console.error("Lỗi gửi Discord:", e); }
+}
+
 /* ================= EMAILJS CONFIG ================= */
 emailjs.init("v8RfR_mKxVbheNOsO");
 const EMAILJS_SERVICE_ID = "service_fni0aea";
@@ -803,10 +993,55 @@ db.ref('settings/rgb').on('value',s=>setRgb(s.val()===true));
 db.ref('settings/customAccent').on('value',s=>{if(s.val())document.documentElement.style.setProperty('--accent',s.val());});
 db.ref('settings/customGreen').on('value',s=>{if(s.val())document.documentElement.style.setProperty('--green',s.val());});
 
+// LOGO & FAVICON
+db.ref('settings/logo').on('value',s=>{
+  const url = s.val();
+  if(url){
+    $('headerLogoImg').src = url;
+    $('headerLogoImg').classList.remove('hidden');
+    $('headerLogoText').classList.add('hidden');
+  } else {
+    $('headerLogoImg').classList.add('hidden');
+    $('headerLogoText').classList.remove('hidden');
+  }
+});
+db.ref('settings/favicon').on('value',s=>{
+  const url = s.val();
+  if(url) $('dynamicFavicon').href = url;
+});
+
+// MARQUEE BANNER
+db.ref('settings/marquee').on('value',s=>{
+  const data = s.val() || {};
+  const container = $('marqueeBanner');
+  const textEl = $('marqueeText');
+  
+  if (data.active && data.text) {
+    container.style.display = 'block';
+    container.style.backgroundColor = data.bg || '#ff0000';
+    textEl.style.color = data.color || '#ffffff';
+    textEl.textContent = data.text;
+  } else {
+    container.style.display = 'none';
+  }
+});
+
 async function saveSetting(k,v,el){
   if(el){const p=el.parentElement;p.querySelectorAll('.card-select').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');}
   await db.ref('settings/'+k).set(v);toast('Đã lưu','success');
 }
+
+function saveMarquee() {
+  const data = {
+    text: $('settingMarqueeText').value,
+    color: $('settingMarqueeColor').value,
+    bg: $('settingMarqueeBg').value,
+    active: $('settingMarqueeActive').checked
+  };
+  db.ref('settings/marquee').set(data);
+  toast('Đã lưu Banner!', 'success');
+}
+
 function setRgb(on){
   if(rgbInterval){clearInterval(rgbInterval);rgbInterval=null;}
   if(on){
@@ -828,24 +1063,39 @@ const tabLabels = {
   seller:{icon:'🏪',label:'Hợp tác'},
   contact:{icon:'💬',label:'Liên hệ'}
 };
+
 function renderTabsAndSidebar(){
-  const nav=$('mainTabs'), side=$('sidebarItems');
-  nav.innerHTML='';side.innerHTML='';
+  const nav=$('mainTabs'), side=$('sidebarItems'), bottomNav=$('bottomNav');
+  nav.innerHTML='';side.innerHTML='';bottomNav.innerHTML='';
+  
   currentOrder.forEach(key=>{
     const t=tabLabels[key];if(!t)return;
+    
+    // Top Nav
     const d=document.createElement('div');
     d.className='nav-tab'+(key==='shop'?' active':'');
     d.dataset.tab=key;
     d.textContent=t.icon+' '+t.label;
     d.onclick=()=>switchTab(key);
     nav.appendChild(d);
+    
+    // Sidebar (Desktop)
     const s=document.createElement('div');
     s.className='sidebar-item'+(key==='shop'?' active':'');
     s.dataset.tab=key;
     s.textContent=t.icon+' '+t.label;
     s.onclick=()=>switchTab(key);
     side.appendChild(s);
+    
+    // Bottom Nav (Mobile)
+    const b=document.createElement('div');
+    b.className='bottom-nav-item'+(key==='shop'?' active':'');
+    b.dataset.tab=key;
+    b.innerHTML=`<span class="icon">${t.icon}</span><span>${t.label}</span>`;
+    b.onclick=()=>switchTab(key);
+    bottomNav.appendChild(b);
   });
+  
   const ol=$('orderList');
   if(ol) ol.innerHTML = currentOrder.map((k,i)=>`
     <div class="order-item">
@@ -916,6 +1166,7 @@ function switchTab(name){
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   const el=$('tab-'+name);if(el)el.classList.add('active');
   document.querySelectorAll('.sidebar-item[data-tab]').forEach(s=>s.classList.toggle('active',s.dataset.tab===name));
+  document.querySelectorAll('.bottom-nav-item[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
   window.scrollTo({top:200,behavior:'smooth'});
 }
 
@@ -1019,6 +1270,21 @@ function startAdminSession(){
     openAdmin();
     switchAdminTab('aOrders');
   }
+
+  // Điền thông tin cài đặt hiện tại
+  db.ref('settings/marquee').once('value').then(s=>{
+    const d = s.val() || {};
+    if(d.text) $('settingMarqueeText').value = d.text;
+    if(d.color) $('settingMarqueeColor').value = d.color;
+    if(d.bg) $('settingMarqueeBg').value = d.bg;
+    $('settingMarqueeActive').checked = !!d.active;
+  });
+  db.ref('settings/logo').once('value').then(s=>{
+    if(s.val()) $('settingLogo').value = s.val();
+  });
+  db.ref('settings/favicon').once('value').then(s=>{
+    if(s.val()) $('settingFavicon').value = s.val();
+  });
 }
 
 function requestNotificationPermission() {
@@ -1118,7 +1384,6 @@ function proceedToQr() {
 
 function openQrPayment(pid,prodName,price,email){
   if(!me)return toast('Đăng nhập!','warning');
-  // Nội dung CK theo yêu cầu: TÊN_HIỂN_THỊ-VNX-MÃ 4 SỐ RANDOM
   const safeNickname = (meData?.nickname || me).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10);
   const random4 = Math.floor(1000 + Math.random() * 9000);
   const orderCode = `${safeNickname}-VNX-${random4}`;
@@ -1141,27 +1406,22 @@ function openQrPayment(pid,prodName,price,email){
     user: me, email: email, productId: pid, productName: prodName, price: price, status: 'pending', createdAt: Date.now()
   });
 
-  // Tự động load lại mã QR sau mỗi 5 phút (300000 ms) để đổi mã mới
   if(checkInterval) clearInterval(checkInterval);
   checkInterval = setInterval(() => {
     if(!$('qrPayModal').classList.contains('open')) {
       clearInterval(checkInterval);
       return;
     }
-    // Tạo mã mới
     const newRandom4 = Math.floor(1000 + Math.random() * 9000);
     const newOrderCode = `${safeNickname}-VNX-${newRandom4}`;
     
-    // Hủy mã cũ trên Firebase
     db.ref('qr_pending_orders/' + currentOrderId).remove();
     
-    // Cập nhật UI với mã mới
     currentOrderId = newOrderCode;
     $('qrOrderId').textContent = newOrderCode;
     $('qrMemo').textContent = newOrderCode;
     $('qrImage').src = `https://img.vietqr.io/image/${BANK_INFO.bankId}-${BANK_INFO.accountNo}-compact2.png?amount=${price}&addInfo=${newOrderCode}&accountName=${encodeURIComponent(BANK_INFO.accountName)}`;
     
-    // Tạo lại trên Firebase
     db.ref('qr_pending_orders/' + newOrderCode).set({
       user: me, email: email, productId: pid, productName: prodName, price: price, status: 'pending', createdAt: Date.now()
     });
@@ -1178,12 +1438,17 @@ async function khachBaoDaChuyenKhoan() {
 
   await db.ref('qr_pending_orders/' + currentOrderId + '/khach_bao_chuyen').set(true);
   
-  // Gửi thông báo trên web cho admin
   await db.ref('notifications/' + ADMIN_USER).push({
     title: '💰 KHÁCH BÁO ĐÃ CHUYỂN KHOẢN!',
     body: `Khách hàng vừa bấm "Đã chuyển khoản" cho đơn ${currentOrderId}. Vui lòng kiểm tra ngân hàng và duyệt đơn!`,
     icon: '💸', time: Date.now(), read: false
   });
+
+  const snap = await db.ref('qr_pending_orders/' + currentOrderId).once('value');
+  if (snap.exists()) {
+    const data = snap.val();
+    sendDiscordNotify(data.productId, data.productName, data.price, data.email, currentOrderId);
+  }
 
   $('qrStatus').textContent = '✅ Đã ghi nhận! Vui lòng đợi Admin kiểm tra và gửi Key qua Gmail.';
   $('qrStatus').style.color = 'var(--green)';
@@ -1205,7 +1470,6 @@ async function checkPaymentStatus(manual){
   }
 }
 
-// LẮNG NGHE ĐƠN CHỜ ĐỂ HIỂN THỊ CHO ADMIN VÀ BÁO CHUÔNG
 db.ref('qr_pending_orders').on('value', s => {
   const pend = s.val() || {};
   const arr = Object.entries(pend).filter(([k,v]) => v.status === 'pending').reverse();
@@ -1215,35 +1479,36 @@ db.ref('qr_pending_orders').on('value', s => {
     const newestOrderData = arr[0][1];
 
     let adminNotiStr = localStorage.getItem('admin_notified_' + newestOrderCode);
-    if (!adminNotiStr) {
+    // CHỈ HIỂN THỊ THÔNG BÁO KHI KHÁCH ĐÃ BẤM NÚT CHUYỂN KHOẢN
+    if (!adminNotiStr && newestOrderData.khach_bao_chuyen) {
       db.ref('notifications/' + ADMIN_USER).push({
         title: '🔔 CÓ ĐƠN HÀNG MỚI CẦN DUYỆT!',
-        body: `Khách ${newestOrderData.user} vừa đặt mua ${newestOrderData.productName} (${fmt(newestOrderData.price)}đ).`,
+        body: `Khách ${newestOrderData.user} vừa báo đã chuyển khoản mua ${newestOrderData.productName} (${fmt(newestOrderData.price)}đ).`,
         icon: '🛒', time: Date.now(), read: false
       });
       localStorage.setItem('admin_notified_' + newestOrderCode, 'true');
-    }
 
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        const audioCtx = new AudioContext();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-        gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
-        oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.5);
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          const audioCtx = new AudioContext();
+          const oscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+          gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+          oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+          oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.5);
+        }
+      } catch(e) {}
+
+      toast(`Khách ${newestOrderData.user} vừa báo chuyển khoản mua ${newestOrderData.productName}`, 'warning', '🔔 CÓ ĐƠN HÀNG MỚI!');
+
+      if (Notification.permission === 'granted') {
+        new Notification("🔔 CÓ ĐƠN HÀNG MỚI!", { body: `Khách ${newestOrderData.user} vừa báo chuyển khoản mua ${newestOrderData.productName}.`, tag: "new-order" });
       }
-    } catch(e) {}
-
-    toast(`Khách ${newestOrderData.user} vừa đặt ${newestOrderData.productName}`, 'warning', '🔔 CÓ ĐƠN HÀNG MỚI!');
-
-    if (Notification.permission === 'granted') {
-      new Notification("🔔 CÓ ĐƠN HÀNG MỚI!", { body: `Khách ${newestOrderData.user} vừa mua ${newestOrderData.productName}.`, tag: "new-order" });
     }
   }
 
@@ -1253,7 +1518,7 @@ db.ref('qr_pending_orders').on('value', s => {
       el.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--mute);padding:1rem">Không có đơn nào đang chờ.</td></tr>';
     } else {
       el.innerHTML = arr.map(([code, o]) => `
-        <tr>
+        <tr class="highlight-row">
           <td><b style="color:var(--gold)">${esc(code)}</b></td>
           <td>${esc(o.user)}</td>
           <td><b style="color:var(--green)">${esc(o.email || 'Không có')}</b></td>
